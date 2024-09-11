@@ -1,0 +1,20 @@
+{
+	"name": "yellow-admin",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "*",
+		"@sveltejs/kit": "*",
+		"@sveltejs/vite-plugin-svelte": "*",
+		"svelte": "*",
+		"vite": "*"
+	},
+	"type": "module",
+	"dependencies": {
+		"@sveltejs/adapter-static": "*"
+	}
+}

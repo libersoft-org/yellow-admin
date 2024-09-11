@@ -1,0 +1,12 @@
+.git/
+.svelte-kit/
+.vscode/
+node_modules/
+build/
+bun.lockb
+package-lock.json
+*.crt
+*.key
+.secret_git
+.output
+.vercel
