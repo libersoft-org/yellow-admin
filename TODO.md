@@ -1,9 +1,10 @@
 # Bugs
 
-
+- Connection status is sometimes not showing after login
 
 # Features
 
+- Move sending the login command from "login.svelte" to "core.js"
 - Fix status bar position
 - Create menu with menu items in sidebar
 - System info

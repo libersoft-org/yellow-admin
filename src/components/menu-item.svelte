@@ -1,0 +1,32 @@
+<script>
+ export let title;
+ export let icon;
+ export let clickFunction;
+ export let keyFunction;
+</script>
+
+<style>
+ .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px;
+  font-weight: bold;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+ }
+
+ .item:hover {
+  background-color: #333;
+ }
+
+ .item img {
+  width: 32px;
+  height: 32px;
+ }
+</style>
+
+<div class="item" role="button" tabindex="0" on:click={clickFunction} on:keydown={keyFunction}>
+ <img src="img/{icon}" alt="{title}" />
+ <div>{title}</div>
+</div>

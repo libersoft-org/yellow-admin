@@ -71,10 +71,14 @@
  .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
  }
 
- .sidebar {
+ .main {
+  display: flex;
+  height: calc(100vh - 51px);
+ }
+
+ .main .sidebar {
   display: flex;
   flex-direction: column;
   min-width: 300px;
@@ -82,54 +86,57 @@
   background-color: #fff;
  }
 
- .resizer {
+ .main .resizer {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 300px;
-  width: 10px;
-  margin-left: -5px;
+  width: 5px;
   cursor: ew-resize;
   background-color: transparent;
  }
 
- .content {
+ .main .content {
   flex-grow: 1;
  }
 
- .status-bar {
+ .status {
   display: flex;
   align-items: center;
-  height: 100px;
-  background-color: #aaa;
-  border-top: 1px solid #777;
+  gap: 10px;
+  height: 30px;
+  padding: 10px;
+  background-color: #222;
+  color: #fff;
   box-shadow: var(--shadow);
  }
 
- .status.info {
-  color: #080;
-  background-color: #dfd;
-  border: 1px solid #080;
+ .status .indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
  }
 
- .status.error {
-  color: #800;
-  background-color: #fdd;
-  border: 1px solid #800;
+ .status .indicator.info {
+  background-color: #080;
+ }
+
+ .status .indicator.error {
+  background-color: #800;
  }
 
  @media (max-width: 768px) {
-  .sidebar {
+  .main .sidebar {
    position: absolute;
    width: 100%;
-   height: 100%;
+   /*height: 100%;*/
   }
 
-  .sidebar.hidden {
+  .main .sidebar.hidden {
    display: none;
   }
 
-  .resizer {
+  .main .resizer {
    display: none;
   }
  }
@@ -143,15 +150,18 @@
  {#if !isLoggedIn}
   <Login bind:isLoggedIn {product} {version} {link} />
  {:else}
- <div>
-  <div class="sidebar {$hideSidebarMobile ? 'hidden' : ''}" bind:this={sideBar}>
-   <Menu />
+  <div class="main">
+   <div class="sidebar {$hideSidebarMobile ? 'hidden' : ''}" bind:this={sideBar}>
+    <Menu />
+   </div>
+   <div class="resizer" role="none" bind:this={resizer} on:mousedown={startResizeSideBar}></div>
+   <div class="content">
+    <WelcomeContent {product} {version} {link} />
+   </div>
   </div>
-  <div class="resizer" role="none" bind:this={resizer} on:mousedown={startResizeSideBar}></div>
-  <div class="content">
-   <WelcomeContent {product} {version} {link} />
+  <div class="status">
+   <div class="indicator {status?.class ? status.class : ''}"></div>
+   <div>{status?.message ? status.message : ''}</div>
   </div>
- </div>
- <div class="status-bar">123 {status?.class ? status.class : ''} {status?.message ? status.message : ''}</div>
  {/if}
 </div>
