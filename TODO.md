@@ -1,5 +1,6 @@
 # Bugs
 
+- Resizer is missing and the menu widht is too high
 - Connection status is sometimes not showing after login
 
 # Features

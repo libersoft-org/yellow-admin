@@ -68,6 +68,10 @@
 </script>
 
 <style>
+ :root {
+  --status-height: 50px;
+ }
+ 
  .app {
   display: flex;
   flex-direction: column;
@@ -75,12 +79,14 @@
 
  .main {
   display: flex;
+  flex-grow: 1;
   height: calc(100vh - 51px);
  }
 
  .main .sidebar {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   min-width: 300px;
   box-shadow: var(--shadow);
   background-color: #fff;
@@ -104,7 +110,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 30px;
+  height: var(--status-height);
   padding: 10px;
   background-color: #222;
   color: #fff;
@@ -129,7 +135,7 @@
   .main .sidebar {
    position: absolute;
    width: 100%;
-   /*height: 100%;*/
+   height: 100%;
   }
 
   .main .sidebar.hidden {
