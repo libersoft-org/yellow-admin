@@ -1,9 +1,7 @@
 <script>
  import { onMount } from 'svelte';
- import Core from '../core.js';
- import Socket from '../socket.js';
- export let error;
- export let isLoggedIn;
+ import { socketState, socketStates, connect } from '../socket.js';
+ import { isLoggedIn, loginError, login } from '../core.js';
  export let product;
  export let version;
  export let link;
@@ -13,41 +11,14 @@
  onMount(() => {
   credentials.server = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/';
  });
-
- export function login(credentials) {
-  if (Socket.status() === WebSocket.OPEN) {
-   sendLoginCommand(credentials);
-   return;
-  }
-  Socket.events.addEventListener('open', event => {
-   console.log('Connected to WebSocket:', event);
-   sendLoginCommand(credentials);
-  });
-  Socket.events.addEventListener('error', event => {
-   console.error('WebSocket error:', event);
-   error = 'Cannot connect to server';
-   loggingIn = false;
-  });
-  Socket.events.addEventListener('close', event => {
-   console.log('WebSocket closed:', event);
-   loggingIn = false;
-  });
-  Socket.connect(credentials.server);
+ 
+ $: if ($socketState === socketStates.OPEN && loggingIn) login(credentials);
+ $: if ($socketState === socketStates.CLOSED && loggingIn) {
+  loginError.set('Cannot connect to server');
+  loggingIn = false;
  }
-
- function sendLoginCommand(credentials) {
-  Socket.send('admin_login', { username: credentials.address, password: credentials.password }, false, (req, res) => {
-   loggingIn = false;
-   if (res.error !== 0) {
-    error = res.message;
-    return;
-   }
-   error = null;
-   Core.userAddress = credentials.address;
-   Core.sessionID = res.data.sessionID;
-   isLoggedIn = true;
-  });
- }
+ $: if ($loginError) loggingIn = false;
+ $: if ($isLoggedIn) loggingIn = false;
 
  function clickLogo() {
   window.open(link, '_blank');
@@ -63,8 +34,8 @@
  function clickLogin() {
   if (loggingIn) return;
   loggingIn = true;
-  error = null;
-  login(credentials);
+  loginError.set(null);
+  connect(credentials.server);
  }
 
  function keyLogin() {
@@ -180,10 +151,10 @@
     <div class="label">Password:</div>
     <input type="password" placeholder="Password" bind:value={credentials.password} on:keydown={keyLogin} />
    </div>
-   {#if error}
+   {#if $loginError}
     <div class="error">
      <div class="bold">Error:</div>
-     <div>{error}</div>
+     <div>{$loginError}</div>
     </div>
    {/if}
    <div class="button{loggingIn ? ' disabled' : ''}" role="button" tabindex="0" on:click={clickLogin} on:keydown={keyLogin}>

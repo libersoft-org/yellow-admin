@@ -1,75 +1,71 @@
-import Core from './core.js';
-const events = new EventTarget();
+import { get, writable } from 'svelte/store';
+export const socketState = writable(null);
+export const socketStates = {
+ CONNECTING: 0,
+ OPEN: 1,
+ CLOSING: 2,
+ CLOSED: 3
+}
+export let url;
 const requests = {};
 let socket;
-export let url;
 
-export function connect(server) {
- if (server) url = server;
- if (socket && socket.readyState !== WebSocket.CLOSED) {
+export function connect(server = null) {
+ if (socket && get(socketState) !== socketStates.CLOSED) {
   console.error('Socket is already connected');
   return;
  }
+ if (server) url = server;
  socket = new WebSocket(url);
- socket.onopen = event => events.dispatchEvent(new CustomEvent('open', { event }));
- socket.onerror = event => events.dispatchEvent(new CustomEvent('error', { event }));
- socket.onclose = event => events.dispatchEvent(new CustomEvent('close', { event }));
+ socketState.set(socket.readyState);
+ socket.onopen = () => socketState.set(socket.readyState);
+ socket.onerror = () => socketState.set(socket.readyState);
+ socket.onclose = () => socketState.set(socket.readyState);
  socket.onmessage = event => handleResponse(JSON.parse(event.data));
 }
 
 export function disconnect() {
- if (!socket || socket.readyState === WebSocket.CLOSED) {
-  console.error('Socket is not yet connected or already disconnected');
+ if (!socket) {
+  console.error('Socket is not yet created');
+  return;
+ }
+ if (socketState !== socketStates.OPEN) {
+  console.error('Socket is opened');
   return;
  }
  socket.close();
 }
 
-export function send(command, params = {}, sendSessionID = true, callback = null) {
+export function send(command, params = {}, sessionID = null, callback = null) {
  //console.log('------------------');
  //console.log('SENDING COMMAND:');
  //console.log('COMMAND:', command);
  //console.log('PARAMS:', params);
- //console.log('SEND SESSION ID:', sendSessionID);
+ //console.log('SESSION ID:', sessionID);
  //console.log('CALLBACK:', callback);
  //console.log('------------------');
- if (!socket || socket.readyState !== WebSocket.OPEN) {
+ if (!socket || get(socketState) !== socketStates.OPEN) {
   console.error('Error while sending command: WebSocket is not open');
   return;
  }
  const requestID = getRandomString();
  const req = { requestID };
- if (sendSessionID) req.sessionID = Core.sessionID;
+ if (sessionID) req.sessionID = sessionID;
  if (command) req.command = command;
  if (params) req.params = params;
  requests[requestID] = { req, callback };
  socket.send(JSON.stringify(req));
 }
 
-export function status() {
- return socket?.readyState;
-}
-
 function handleResponse(res) {
  //console.log('RESPONSE', res);
  if (res.requestID) {
-  // it is response to command:
   const reqData = requests[res.requestID];
   if (reqData?.req?.command) {
    //console.log('REQUEST', reqData.req);
    if (reqData.callback) reqData.callback(reqData.req, res);
    delete requests[res.requestID];
   } else console.log('Request command not found');
- } else if (res.event) {
-  // it is event:
-  //TODO: different types of events should also be tied with command and callback that requested them, use the same thing as with commands - to have a request ID
-  switch (res.event) {
-   case 'new_message':
-    console.log('GOT EVENT', res);
-    //TODO: send event to messages module:
-    events.dispatchEvent(new CustomEvent('new_message', { detail: res }));
-    break;
-  }
  } else console.log('Unknown command from server');
 }
 
@@ -80,10 +76,10 @@ function getRandomString(length = 40) {
 }
 
 export default {
+ socketState,
+ socketStates,
  connect,
  disconnect,
  send,
- status,
- events,
  url
 };

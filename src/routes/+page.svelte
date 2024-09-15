@@ -1,45 +1,28 @@
 <script>
  import "../app.css";
- import { onMount } from 'svelte';
- import Socket from '../socket.js';
- import { hideSidebarMobile } from '../core.js';
+ import { socketState, socketStates, connect } from '../socket.js';
+ import { hideSidebarMobile, isLoggedIn } from '../core.js';
  import Login from '../components/login.svelte';
  import Menu from '../components/menu.svelte';
  import WelcomeContent from '../components/welcome-content.svelte';
-
  const product = 'Yellow - Administration';
  const version = '0.01';
  const link = 'https://yellow.libersoft.org';
  let status;
- let isLoggedIn = false;
  let sideBar;
  let resizer;
  let isResizingSideBar = false;
 
- onMount(() => {
-  Socket.events.addEventListener('open', event => {
-   console.log('Connected to WebSocket:', event);
-   status = { class: 'info', message: 'Connected to server' };
-  });
-  Socket.events.addEventListener('error', event => {
-   console.error('WebSocket error:', event);
-   status = { class: 'error', message: 'ERROR' };
-  });
-  Socket.events.addEventListener('close', event => {
-   console.log('WebSocket closed:', event);
-   status = { class: 'error', message: 'Disconnected from server' };
-   let time = 5;
-   const intervalID = setInterval(() => {
-    time--;
-    status = { class: 'error', message: 'Reconnecting in ' + time + ' ...' };
-    if (time <= 0) {
-     status = { class: 'error', message: 'Reconnecting to server ...' };
-     Socket.connect();
-     clearInterval(intervalID);
-    }
-   }, 1000);
-  });
- });
+ $: if ($isLoggedIn && $socketState === socketStates.OPEN) {
+  console.log('Connected to server');
+  status = { class: 'info', message: 'Connected to server' };
+ }
+
+ $: if ($isLoggedIn && $socketState === socketStates.CLOSED) {
+  console.error('Disconnected from server - reconnecting ...');
+  status = { class: 'error', message: 'Disconnected from server - reconnecting ...' };
+  connect();
+ }
 
  function startResizeSideBar() {
   isResizingSideBar = true;
@@ -56,7 +39,7 @@
  }
  
  function resizeSideBar(e) {
-  const min = 250;
+  const min = 200;
   const max = 500;
   if (isResizingSideBar) {
    let sideBarWidth = e.clientX < max ? e.clientX : max;
@@ -70,6 +53,7 @@
 <style>
  :root {
   --status-height: 50px;
+  --sidebar-width: 250px;
  }
  
  .app {
@@ -80,14 +64,13 @@
  .main {
   display: flex;
   flex-grow: 1;
-  height: calc(100vh - 51px);
+  height: calc(100vh - var(--status-height) - 21px);
  }
 
  .main .sidebar {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  min-width: 300px;
+  min-width: var(--sidebar-width);
   box-shadow: var(--shadow);
   background-color: #fff;
  }
@@ -96,7 +79,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 300px;
+  left: var(--sidebar-width);
   width: 5px;
   cursor: ew-resize;
   background-color: transparent;
@@ -153,8 +136,8 @@
 </svelte:head>
 
 <div class="app">
- {#if !isLoggedIn}
-  <Login bind:isLoggedIn {product} {version} {link} />
+ {#if !$isLoggedIn}
+  <Login {product} {version} {link} />
  {:else}
   <div class="main">
    <div class="sidebar {$hideSidebarMobile ? 'hidden' : ''}" bind:this={sideBar}>
