@@ -65,8 +65,10 @@
      <td>{d.name}</td>
      <td>{new Date(d.created.replace(' ', 'T') + 'Z').toLocaleString()}</td>
      <td>
-      <div class="icon" role="button" tabindex="0" on:click={() => clickEdit(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
-      <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/del.svg" alt="Delete" /></div>
+      <div class="icons">
+       <div class="icon" role="button" tabindex="0" on:click={() => clickEdit(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
+       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/del.svg" alt="Delete" /></div>
+      </div>
      </td>
     </tr>
    {/each}
