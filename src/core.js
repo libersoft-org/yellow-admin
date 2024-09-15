@@ -3,17 +3,22 @@ import Socket from './socket.js';
 export const hideSidebarMobile = writable(false);
 export const isLoggedIn = writable(false);
 export const loginError = writable(null);
-export let userAddress = null;
+export const sysInfo = writable([]);
+export const adminsArray = writable([]);
+export const domainsArray = writable([]);
+export const usersArray = writable([]);
+export const sessionsArray = writable([]);
+export let username = null;
 export let sessionID = null;
 
 export function login(credentials) {
- Socket.send('admin_login', { username: credentials.address, password: credentials.password }, null, (req, res) => {
+ Socket.send('admin_login', { username: credentials.username, password: credentials.password }, null, (req, res) => {
   if (res.error !== 0) {
    loginError.set(res.message);
    return;
   }
   loginError.set(null);
-  userAddress = credentials.address;
+  username = credentials.username;
   sessionID = res.data.sessionID;
   isLoggedIn.set(true);
  });
@@ -23,14 +28,19 @@ export function logout() {
  hideSidebarMobile.set(false);
  isLoggedIn.set(false);
  loginError.set(null);
- userAddress = null;
+ username = null;
  sessionID = null;
 }
 
-function sysInfo() {
+export function sysInfoList() {
  Socket.send('admin_sysinfo', null, sessionID, (req, res) => {
-  return res;
+  console.log(res);
+  //sysInfo = res;
  });
 }
 
-export default { hideSidebarMobile, isLoggedIn, loginError, userAddress, sessionID, login, logout, sysInfo };
+export function domainsList() {
+ Socket.send('admin_list_domains', { count: 10, offset: 0 }, sessionID, (req, res) => domainsArray.set(res.data.domains));
+}
+
+export default { hideSidebarMobile, isLoggedIn, loginError, username, sessionID, login, logout, sysInfoList, domainsArray, domainsList };

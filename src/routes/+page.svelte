@@ -65,7 +65,6 @@
  }
 
  function onSelectPage(name) {
-  console.log('STRANKA', name);
   selectedPage = pages[name];
  }
 </script>

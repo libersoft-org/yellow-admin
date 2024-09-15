@@ -17,6 +17,7 @@ body {
  display: flex;
  align-items: center;
  justify-content: center;
+ gap: 5px;
  text-align: center;
  padding: 10px;
  border-radius: 10px;
@@ -27,6 +28,11 @@ body {
 
 .button.disabled {
  background-color: #bbb;
+}
+
+.button img {
+ width: 20px;
+ height: 20px;
 }
 
 .bold {
@@ -108,4 +114,56 @@ input:checked + .slider:before {
  padding: 10px;
  border: 1px solid #999;
  border-radius: 10px;
+}
+
+.page {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ padding: 10px;
+}
+
+.page table {
+ border-spacing: 0;
+ border: 1px solid #000;
+ border-radius: 10px;
+ overflow: hidden;
+}
+
+.page table thead tr {
+ background-color: #222;
+ color: #fff;
+ text-align: left;
+}
+
+.page table thead tr th, .page table tbody tr td {
+ padding: 10px;
+}
+
+/* .page table thead tr td {
+ display: flex;
+ flex-direction: row;
+}*/
+
+.page table tbody tr td .icon {
+ padding: 5px;
+ cursor: pointer;
+ background-color: lightblue;
+}
+
+.page table tbody tr td .icon img {
+ width: 20px;
+ height: 20px;
+}
+
+.page table tbody tr:nth-child(even) {
+ background-color: #ffdd1130;
+}
+
+.page table tbody tr:nth-child(odd) {
+ background-color: #ffdd1150;
+}
+
+.page table tbody tr:hover {
+ background-color: #fd1;
 }

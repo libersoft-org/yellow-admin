@@ -5,11 +5,18 @@
  export let product;
  export let version;
  export let link;
- let credentials = { server: '', address: '', password: '' };
+ let credentials = { server: '', username: '', password: '' };
  let loggingIn = false;
 
  onMount(() => {
   credentials.server = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/';
+  //TODO: delete the following when not needed anymore:
+  credentials = {
+   server: credentials.server.replace(':4000', ''),
+   username: 'admin',
+   password: 'admin123'
+  };
+  clickLogin();
  });
  
  $: if ($socketState === socketStates.OPEN && loggingIn) login(credentials);
@@ -145,7 +152,7 @@
    </div>
    <div class="group">
     <div class="label">User name:</div>
-    <input type="text" placeholder="Administrator's user name" bind:value={credentials.address} on:keydown={keyLogin} />
+    <input type="text" placeholder="Administrator's user name" bind:value={credentials.username} on:keydown={keyLogin} />
    </div>
    <div class="group">
     <div class="label">Password:</div>

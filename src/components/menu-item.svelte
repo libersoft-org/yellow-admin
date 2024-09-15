@@ -3,6 +3,7 @@
  export let icon;
  export let clickFunction;
  export let keyFunction;
+ export let active = false;
 </script>
 
 <style>
@@ -20,13 +21,17 @@
   background-color: #333;
  }
 
+ .item.active {
+  background-color: #555;
+ }
+
  .item img {
   width: 32px;
   height: 32px;
  }
 </style>
 
-<div class="item" role="button" tabindex="0" on:click={clickFunction} on:keydown={keyFunction}>
+<div class="item {active ? 'active' : ''}" role="button" tabindex="0" on:click={clickFunction} on:keydown={keyFunction}>
  <img src="img/{icon}" alt="{title}" />
  <div>{title}</div>
 </div>
