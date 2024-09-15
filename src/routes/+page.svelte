@@ -20,11 +20,11 @@
   users: UsersList,
   sessions: SessionsList
  }
+ let selectedPage = null;
  let status;
  let sideBar;
  let resizer;
  let isResizingSideBar = false;
- let selectedPage;
 
  $: if ($isLoggedIn && $socketState === socketStates.OPEN) {
   console.log('Connected to server');
@@ -159,7 +159,7 @@
 
 <div class="app">
  {#if !$isLoggedIn}
-  <Login {selectedPage} {product} {version} {link} />
+  <Login {product} {version} {link} />
  {:else}
   <div class="main">
    <div class="sidebar {$hideSidebarMobile ? 'hidden' : ''}" bind:this={sideBar}>
