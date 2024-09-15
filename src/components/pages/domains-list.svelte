@@ -1,8 +1,19 @@
 <script>
  import { onMount } from 'svelte';
- import { domainsArray, domainsList } from '../../core.js';
+ import { hideSidebarMobile, domainsArray, domainsList } from '../../core.js';
 
  onMount(() => domainsList());
+
+ function clickMenu() {
+  hideSidebarMobile.set(false);
+ }
+
+ function keyMenu() {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   clickMenu();
+  }
+ }
 
  function clickAdd() {
   // TODO
@@ -45,9 +56,14 @@
 </style>
 
 <div class="page">
- <div class="button" role="button" tabindex="0" on:click={clickAdd} on:keydown={keyAdd}>
-  <img src="img/add.svg" alt="Add a new domain" />
-  <div>Add a new domain</div>
+ <div class="buttons">
+  <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
+   <img src="img/menu.svg" alt="☰" />
+  </div>
+  <div class="button" role="button" tabindex="0" on:click={clickAdd} on:keydown={keyAdd}>
+   <img src="img/add.svg" alt="Add a new domain" />
+   <div>Add a new domain</div>
+  </div>
  </div>
  <table>
   <thead>

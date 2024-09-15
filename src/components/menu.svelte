@@ -16,6 +16,7 @@
  }
 
  function clickSelectPage(name) {
+  Core.hideSidebarMobile.set(true);
   selectedMenuItem = name;
   onSelectPage(name);
  }
