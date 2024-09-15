@@ -41,6 +41,7 @@
  .welcome .logo .product {
   font-size: 30px;
   font-weight: bold;
+  text-align: center;
  }
 
  .welcome .version {

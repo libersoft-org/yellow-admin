@@ -108,6 +108,7 @@
   background: url('/img/background.webp') repeat;
   background-size: 400px;
   flex-grow: 1;
+  padding: 10px;
  }
 
  .status {
