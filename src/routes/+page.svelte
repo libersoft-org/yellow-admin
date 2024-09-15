@@ -5,13 +5,26 @@
  import Login from '../components/login.svelte';
  import Menu from '../components/menu.svelte';
  import WelcomeContent from '../components/welcome-content.svelte';
+ import SysInfo from '../components/pages/sysinfo.svelte';
+ import AdminsList from '../components/pages/admins-list.svelte';
+ import DomainsList from '../components/pages/domains-list.svelte';
+ import UsersList from '../components/pages/users-list.svelte';
+ import SessionsList from '../components/pages/sessions-list.svelte';
  const product = 'Yellow - Administration';
  const version = '0.01';
  const link = 'https://yellow.libersoft.org';
+ const pages = {
+  sysinfo: SysInfo,
+  admins: AdminsList,
+  domains: DomainsList,
+  users: UsersList,
+  sessions: SessionsList
+ }
  let status;
  let sideBar;
  let resizer;
  let isResizingSideBar = false;
+ let selectedPage;
 
  $: if ($isLoggedIn && $socketState === socketStates.OPEN) {
   console.log('Connected to server');
@@ -23,6 +36,8 @@
   status = { class: 'error', message: 'Disconnected from server - reconnecting ...' };
   connect();
  }
+
+ $: if ($isLoggedIn) selectedPage = null;
 
  function startResizeSideBar() {
   isResizingSideBar = true;
@@ -47,6 +62,11 @@
    sideBar.style.minWidth = sideBarWidth + 'px';
    resizer.style.left = sideBarWidth + 'px';
   }
+ }
+
+ function onSelectPage(name) {
+  console.log('STRANKA', name);
+  selectedPage = pages[name];
  }
 </script>
 
@@ -107,11 +127,11 @@
  }
 
  .status .indicator.info {
-  background-color: #080;
+  background-color: #0C0;
  }
 
  .status .indicator.error {
-  background-color: #800;
+  background-color: #C00;
  }
 
  @media (max-width: 768px) {
@@ -137,15 +157,19 @@
 
 <div class="app">
  {#if !$isLoggedIn}
-  <Login {product} {version} {link} />
+  <Login {selectedPage} {product} {version} {link} />
  {:else}
   <div class="main">
    <div class="sidebar {$hideSidebarMobile ? 'hidden' : ''}" bind:this={sideBar}>
-    <Menu />
+    <Menu {onSelectPage} />
    </div>
    <div class="resizer" role="none" bind:this={resizer} on:mousedown={startResizeSideBar}></div>
    <div class="content">
-    <WelcomeContent {product} {version} {link} />
+    {#if selectedPage}
+     <svelte:component this={selectedPage} />
+    {:else}
+     <WelcomeContent {product} {version} {link} />
+    {/if}
    </div>
   </div>
   <div class="status">

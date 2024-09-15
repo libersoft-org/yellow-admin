@@ -1,38 +1,28 @@
 <script>
  import Core from '../core.js';
  import MenuItem from './menu-item.svelte';
+ export let onSelectPage;
 
  function clickLogout() {
   Core.logout();
  }
 
- function clickStatus() {
-  
+ function keyLogout(name) {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   clickLogout();
+  }
  }
 
- function clickAdmins() {
-  
+ function clickSelectPage(name) {
+  onSelectPage(name);
  }
 
- function clickDomains() {
-  
- }
-
- function clickUsers() {
-  
- }
-
- function clickSessions() {
-  
- }
-
- function keyFunction(clickFunction) {
-  return function(event) {
-   if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    clickFunction();
-   }
-  };
+ function keySelectedPage(name) {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   clickSelectedPage(name);
+  }
  }
 </script>
 
@@ -48,10 +38,10 @@
 </style>
 
 <div class="menu">
- <MenuItem title="System status" icon="status.svg" clickFunction={clickStatus} keyFunction={keyFunction(clickStatus)} />
- <MenuItem title="Administrators" icon="admins.svg" clickFunction={clickAdmins} keyFunction={keyFunction(clickAdmins)} />
- <MenuItem title="Domains" icon="domains.svg" clickFunction={clickDomains} keyFunction={keyFunction(clickDomains)} />
- <MenuItem title="Users" icon="users.svg" clickFunction={clickUsers} keyFunction={keyFunction(clickUsers)} />
- <MenuItem title="Sessions" icon="sessions.svg" clickFunction={clickSessions} keyFunction={keyFunction(clickSessions)} />
- <MenuItem title="Logout" icon="logout.svg" clickFunction={clickLogout} keyFunction={keyFunction(clickLogout)} />
+ <MenuItem title="System status" icon="status.svg" clickFunction={() => clickSelectPage('sysinfo')} keyFunction={() => keySelectPage('sysinfo')} />
+ <MenuItem title="Administrators" icon="admins.svg" clickFunction={() => clickSelectPage('admins')} keyFunction={() => keySelectPage('admins')} />
+ <MenuItem title="Domains" icon="domains.svg" clickFunction={() => clickSelectPage('domains')} keyFunction={() => keySelectPage('domains')} />
+ <MenuItem title="Users" icon="users.svg" clickFunction={() => clickSelectPage('users')} keyFunction={() => keySelectPage('users')} />
+ <MenuItem title="Sessions" icon="sessions.svg" clickFunction={() => clickSelectPage('sessions')} keyFunction={() => keySelectPage('sessions')} />
+ <MenuItem title="Logout" icon="logout.svg" clickFunction={clickLogout} keyFunction={keyLogout} />
 </div>

@@ -25,7 +25,12 @@ export function logout() {
  loginError.set(null);
  userAddress = null;
  sessionID = null;
- console.log('LOGOUTNUL JSEM');
 }
 
-export default { hideSidebarMobile, isLoggedIn, loginError, userAddress, sessionID, login, logout };
+function sysInfo() {
+ Socket.send('admin_sysinfo', null, sessionID, (req, res) => {
+  return res;
+ });
+}
+
+export default { hideSidebarMobile, isLoggedIn, loginError, userAddress, sessionID, login, logout, sysInfo };
