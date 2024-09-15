@@ -52,7 +52,7 @@
 
 <style>
  :root {
-  --status-height: 50px;
+  --status-height: 30px;
   --sidebar-width: 250px;
  }
  
