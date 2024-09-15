@@ -106,6 +106,8 @@
  }
 
  .main .content {
+  background: url('/img/background.webp') repeat;
+  background-size: 400px;
   flex-grow: 1;
  }
 
