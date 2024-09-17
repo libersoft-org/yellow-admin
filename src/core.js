@@ -43,14 +43,10 @@ export function domainsList() {
  Socket.send('admin_list_domains', { count: 10, offset: 0 }, sessionID, (req, res) => domainsArray.set(res.data.domains));
 }
 
-export function domainsAdd(name) {
+export function domainsAdd(name, callback = null) {
  Socket.send('admin_add_domain', { name }, sessionID, (req, res) => {
-  console.log(res);
-  if (res?.error === 0) {
-   // TODO: close modal and refresh the table
-  } else {
-   // TODO: show a modal with an error
-  }
+  //console.log(res);
+  if (callback) callback(res);
  });
 }
 

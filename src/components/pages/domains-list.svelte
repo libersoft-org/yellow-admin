@@ -3,9 +3,7 @@
  import { hideSidebarMobile, domainsArray, domainsList } from '../../core.js';
  import Modal from '../modal.svelte';
  import ModalDomainsAdd from '../modal-domains-add.svelte';
- let isModalOpen = false;
- let isErrorModalOpen = false;
- let error = null;
+ let isModalAddOpen = false;
 
  onMount(() => domainsList());
 
@@ -23,7 +21,7 @@
  function clickAdd() {
   // TODO
   console.log('ADD');
-  isModalOpen = true;
+  isModalAddOpen = true;
  }
 
  function keyAdd() {
@@ -31,6 +29,11 @@
    event.preventDefault();
    clickAdd();
   }
+ }
+
+ function onModalAddClose(reload = false) {
+  isModalAddOpen = false;
+  if (reload) domainsList();
  }
 
  function clickEdit(id) {
@@ -99,14 +102,8 @@
   </tbody>
  </table>
 </div>
-{#if isModalOpen}
- <Modal title="Add a new domain" onClose={() => isModalOpen = false}>
-  <ModalDomainsAdd onClose={() => isModalOpen = false} />
- </Modal>
-{/if}
-{#if error !== null}
- <Modal title="Error" onClose={() => (isErrorModalOpen = false)}>
-  <div>{error}</div>
-  <div class="button" role="button" tabindex="0" on:click={() => isErrorModalOpen = false} on:keydown={() => isErrorModalOpen = false}>OK</div>
+{#if isModalAddOpen}
+ <Modal title="Add a new domain" onClose={onModalAddClose}>
+  <ModalDomainsAdd onClose={onModalAddClose} />
  </Modal>
 {/if}

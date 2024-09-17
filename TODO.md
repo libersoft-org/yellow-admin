@@ -4,7 +4,7 @@
 
 # Features
 
-- Domains - add, edit, delete
+- Domains - edit, delete
 - Admins - list, add, edit, delete
 - Sessions - list, add, delete
 - Users - list, add, edit, delete
