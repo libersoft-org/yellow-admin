@@ -1,10 +1,11 @@
 # Bugs
 
+- Domains - fix lazy loader - it doesn't load more records when no need for scrolling
 - When session is expired, it doesn't show any error
 
 # Features
 
-- Domains - edit, load more records (lazy loader)
+- Domains - edit
 - Admins - list, add, edit, delete
 - Sessions - list, add, delete
 - Users - list, add, edit, delete

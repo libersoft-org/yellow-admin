@@ -1,5 +1,5 @@
 <script>
- import { onMount } from 'svelte';
+ import { onMount, onDestroy } from 'svelte';
  import { hideSidebarMobile, domainsList } from '../../core.js';
  import Modal from '../modal.svelte';
  import ModalDomainsAdd from '../modal-domains-add.svelte';
@@ -10,12 +10,50 @@
  let domainID = null;
  let domainName = null;
 
- onMount(() => showTable());
+ let loading = false;
+ let count = 10;
+ let offset = 0;
+ let hasMore = true;
+ let observer;
+ let loaderElement;
+
+ onMount(() => {
+  observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 });
+ });
+
+ onDestroy(() => {
+  if (observer) observer.disconnect();
+ });
+
+ $: if (observer && loaderElement) {
+  observer.observe(loaderElement);
+  const rect = loaderElement.getBoundingClientRect();
+  if (rect.top < window.innerHeight && rect.bottom > 0) {
+   handleIntersect([{ isIntersecting: true }]);
+  }
+ }
 
  function showTable() {
+  if (loading || !hasMore) return;
+  loading = true;
   domainsList((res) => {
-   domainsArray = res.data.domains;
-  });
+   if (res.error === 0) {
+    domainsArray = [...domainsArray, ...res.data.domains];
+    loading = false;
+    offset += res.data.domains.length;
+    if (res.data.domains.length < count) {
+     hasMore = false;
+     if (observer) observer.disconnect();
+    }
+   } else {
+    console.error('Error: ' + res.message);
+    loading = false;
+   }
+  }, count, offset);
+ }
+
+ function handleIntersect(entries) {
+  if (entries[0].isIntersecting && !loading && hasMore) showTable();
  }
 
  function clickMenu() {
@@ -131,6 +169,9 @@
    {/each}
   </tbody>
  </table>
+ {#if hasMore}
+  <div class="loader" bind:this={loaderElement}></div>
+ {/if}
 </div>
 {#if isModalAddOpen}
  <Modal title="Add a new domain" onClose={onModalAddClose}>
