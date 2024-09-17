@@ -50,4 +50,12 @@ export function domainsAdd(name, callback = null) {
  });
 }
 
+export function domainsDel(id, callback = null) {
+ Socket.send('admin_del_domain', { domainID: id }, sessionID, (req, res) => {
+  //console.log(res);
+  if (callback) callback(res);
+ });
+}
+
+
 export default { hideSidebarMobile, isLoggedIn, loginError, username, sessionID, login, logout, sysInfoList, domainsArray, domainsList };

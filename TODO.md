@@ -4,7 +4,7 @@
 
 # Features
 
-- Domains - edit, delete, load more records (lazy loader)
+- Domains - edit, load more records (lazy loader)
 - Admins - list, add, edit, delete
 - Sessions - list, add, delete
 - Users - list, add, edit, delete

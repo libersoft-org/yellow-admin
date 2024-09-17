@@ -3,7 +3,11 @@
  import { hideSidebarMobile, domainsArray, domainsList } from '../../core.js';
  import Modal from '../modal.svelte';
  import ModalDomainsAdd from '../modal-domains-add.svelte';
+ import ModalDomainsDel from '../modal-domains-del.svelte';
  let isModalAddOpen = false;
+ let isModalDelOpen = false;
+ let domainID = null;
+ let domainName = null;
 
  onMount(() => domainsList());
 
@@ -19,8 +23,6 @@
  }
 
  function clickAdd() {
-  // TODO
-  console.log('ADD');
   isModalAddOpen = true;
  }
 
@@ -36,6 +38,11 @@
   if (reload) domainsList();
  }
 
+ function onModalDelClose(reload = false) {
+  isModalDelOpen = false;
+  if (reload) domainsList();
+ }
+
  function clickEdit(id) {
   // TODO
   console.log('EDIT', id);
@@ -48,9 +55,10 @@
   }
  }
 
- function clickDel(id) {
-  // TODO
-  console.log('DEL', id);
+ function clickDel(id, name) {
+  domainID = id;
+  domainName = name;
+  isModalDelOpen = true;
  }
 
  function keyDel(id) {
@@ -94,7 +102,7 @@
      <td class="center">
       <div class="icons">
        <div class="icon" role="button" tabindex="0" on:click={() => clickEdit(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
-       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/del.svg" alt="Delete" /></div>
+       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id, d.name)} on:keydown={() => keyEdit(d.id)}><img src="img/del.svg" alt="Delete" /></div>
       </div>
      </td>
     </tr>
@@ -105,5 +113,10 @@
 {#if isModalAddOpen}
  <Modal title="Add a new domain" onClose={onModalAddClose}>
   <ModalDomainsAdd onClose={onModalAddClose} />
+ </Modal>
+{/if}
+{#if isModalDelOpen}
+ <Modal title="Delete the domain" onClose={onModalDelClose}>
+  <ModalDomainsDel id={domainID} name={domainName} onClose={onModalDelClose} />
  </Modal>
 {/if}
