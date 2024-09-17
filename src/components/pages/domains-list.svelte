@@ -38,6 +38,17 @@
   if (reload) domainsList();
  }
 
+ function clickReload() {
+  domainsList();
+ }
+
+ function keyReload() {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   clickReload();
+  }
+ }
+
  function onModalDelClose(reload = false) {
   isModalDelOpen = false;
   if (reload) domainsList();
@@ -80,6 +91,10 @@
   <div class="button" role="button" tabindex="0" on:click={clickAdd} on:keydown={keyAdd}>
    <img src="img/add.svg" alt="Add a new domain" />
    <div>Add a new domain</div>
+  </div>
+  <div class="button" role="button" tabindex="0" on:click={clickReload} on:keydown={keyReload}>
+   <img src="img/reload.svg" alt="Reload" />
+   <div>Reload</div>
   </div>
  </div>
  <table>
