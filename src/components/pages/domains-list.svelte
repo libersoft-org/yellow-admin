@@ -1,15 +1,22 @@
 <script>
  import { onMount } from 'svelte';
- import { hideSidebarMobile, domainsArray, domainsList } from '../../core.js';
+ import { hideSidebarMobile, domainsList } from '../../core.js';
  import Modal from '../modal.svelte';
  import ModalDomainsAdd from '../modal-domains-add.svelte';
  import ModalDomainsDel from '../modal-domains-del.svelte';
+ let domainsArray = [];
  let isModalAddOpen = false;
  let isModalDelOpen = false;
  let domainID = null;
  let domainName = null;
 
- onMount(() => domainsList());
+ onMount(() => showTable());
+
+ function showTable() {
+  domainsList((res) => {
+   domainsArray = res.data.domains;
+  });
+ }
 
  function clickMenu() {
   hideSidebarMobile.set(false);
@@ -35,11 +42,11 @@
 
  function onModalAddClose(reload = false) {
   isModalAddOpen = false;
-  if (reload) domainsList();
+  if (reload) showTable();
  }
 
  function clickReload() {
-  domainsList();
+  showTable();
  }
 
  function keyReload() {
@@ -51,7 +58,7 @@
 
  function onModalDelClose(reload = false) {
   isModalDelOpen = false;
-  if (reload) domainsList();
+  if (reload) showTable();
  }
 
  function clickEdit(id) {
@@ -97,7 +104,7 @@
    <div>Reload</div>
   </div>
  </div>
- <table>
+ <table class="list-table">
   <thead>
    <tr>
     <th class="center">ID</th>
@@ -108,7 +115,7 @@
    </tr>
   </thead>
   <tbody>
-   {#each $domainsArray as d}
+   {#each domainsArray as d}
     <tr>
      <td class="center">{d.id}</td>
      <td>{d.name}</td>

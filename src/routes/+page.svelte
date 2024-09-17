@@ -91,7 +91,8 @@
   flex-direction: column;
   min-width: var(--sidebar-width);
   box-shadow: var(--shadow);
-  background-color: #fff;
+  background-color: #222;
+  overflow-y: auto;
  }
 
  .main .resizer {
@@ -109,6 +110,7 @@
   background-size: 400px;
   flex-grow: 1;
   padding: 10px;
+  overflow-y: auto;
  }
 
  .status {

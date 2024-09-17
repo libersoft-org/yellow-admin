@@ -143,53 +143,53 @@ input:checked + .slider:before {
  height: 20px;
 }
 
-.page table {
+.list-table {
  border-spacing: 0;
  border: 1px solid #000;
  border-radius: 10px;
  overflow: hidden;
 }
 
-.page table thead tr {
+.list-table thead tr {
  background-color: #222;
  color: #fff;
  text-align: left;
 }
 
-.page table thead tr th, .page table tbody tr td {
+.list-table thead tr th, .list-table tbody tr td {
  padding: 10px;
 }
 
-.page table thead tr th.center, .page table tbody tr td.center {
+.list-table thead tr th.center, .list-table tbody tr td.center {
  text-align: center;
 }
 
-.page table tbody tr td .icons {
+.list-table tbody tr td .icons {
  display: flex;
  flex-direction: row;
  justify-content: center;
 }
 
-.page table tbody tr td .icons .icon {
+.list-table tbody tr td .icons .icon {
  display: flex;
  padding: 5px;
  cursor: pointer;
 }
 
-.page table tbody tr td .icons .icon img {
+.list-table tbody tr td .icons .icon img {
  width: 20px;
  height: 20px;
 }
 
-.page table tbody tr:nth-child(even) {
+.list-table tbody tr:nth-child(even) {
  background-color: #ffdd1130;
 }
 
-.page table tbody tr:nth-child(odd) {
+.list-table tbody tr:nth-child(odd) {
  background-color: #ffdd1150;
 }
 
-.page table tbody tr:hover {
+.list-table tbody tr:hover {
  background-color: #fd1;
 }
 

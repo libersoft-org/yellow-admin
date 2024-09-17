@@ -34,7 +34,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #222;
   color: #fff;
   box-shadow: var(--shadow);
  }
