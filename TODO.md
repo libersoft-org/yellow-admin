@@ -1,6 +1,6 @@
 # Bugs
 
-
+- When session is expired, it doesn't show any error
 
 # Features
 

@@ -1,6 +1,11 @@
 <script>
  import { onMount } from 'svelte';
  import { hideSidebarMobile, domainsArray, domainsList } from '../../core.js';
+ import Modal from '../modal.svelte';
+ import ModalDomainsAdd from '../modal-domains-add.svelte';
+ let isModalOpen = false;
+ let isErrorModalOpen = false;
+ let error = null;
 
  onMount(() => domainsList());
 
@@ -18,6 +23,7 @@
  function clickAdd() {
   // TODO
   console.log('ADD');
+  isModalOpen = true;
  }
 
  function keyAdd() {
@@ -68,19 +74,21 @@
  <table>
   <thead>
    <tr>
-    <th>ID</th>
+    <th class="center">ID</th>
     <th>Name</th>
-    <th>Created</th>
-    <th>Action</th>
+    <th class="center">Number of users</th>
+    <th class="center">Created</th>
+    <th class="center">Action</th>
    </tr>
   </thead>
   <tbody>
    {#each $domainsArray as d}
     <tr>
-     <td>{d.id}</td>
+     <td class="center">{d.id}</td>
      <td>{d.name}</td>
-     <td>{new Date(d.created.replace(' ', 'T') + 'Z').toLocaleString()}</td>
-     <td>
+     <td class="center">{d.users_count}</td>
+     <td class="center">{new Date(d.created.replace(' ', 'T') + 'Z').toLocaleString()}</td>
+     <td class="center">
       <div class="icons">
        <div class="icon" role="button" tabindex="0" on:click={() => clickEdit(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
        <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/del.svg" alt="Delete" /></div>
@@ -91,3 +99,14 @@
   </tbody>
  </table>
 </div>
+{#if isModalOpen}
+ <Modal title="Add a new domain" onClose={() => isModalOpen = false}>
+  <ModalDomainsAdd onClose={() => isModalOpen = false} />
+ </Modal>
+{/if}
+{#if error !== null}
+ <Modal title="Error" onClose={() => (isErrorModalOpen = false)}>
+  <div>{error}</div>
+  <div class="button" role="button" tabindex="0" on:click={() => isErrorModalOpen = false} on:keydown={() => isErrorModalOpen = false}>OK</div>
+ </Modal>
+{/if}
