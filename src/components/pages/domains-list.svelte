@@ -15,6 +15,12 @@
  let domainName = null;
  let lazyLoader;
 
+ async function loadItems(cb, count, offset) {
+  domainsList(res => {
+   cb({error: res.error, items: res.data.domains});
+  }, count, offset);
+ }
+
  function clickMenu() {
   hideSidebarMobile.set(false);
  }
@@ -118,7 +124,7 @@
    {/each}
   </tbody>
  </table>
- <LazyLoader bind:this={lazyLoader} loadItems={domainsList} {contentHeight} bind:items={items} />
+ <LazyLoader bind:this={lazyLoader} loadItems={loadItems} {contentHeight} bind:items={items} />
 </div>
 {#if isModalAddEditOpen}
  <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} onClose={onModalAddEditClose}>

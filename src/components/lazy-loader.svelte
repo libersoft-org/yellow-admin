@@ -1,6 +1,5 @@
 <script>
  import { onMount, onDestroy } from 'svelte';
- import {domainsList} from "../core.js";
 
  export let loadItems; // Funkce pro načtení více dat
  export let items;
@@ -34,12 +33,13 @@
   loading = true;
   loadItems(
    res => {
+    console.log(res)
     if (res.error === 0) {
-     items = [...items, ...res.data.domains];
+     items = [...items, ...res.items];
      console.log('items.length:' + items.length);
      loading = false;
-     offset += res.data.domains.length;
-     if (res.data.domains.length < count) {
+     offset += res.items.length;
+     if (res.items.length < count) {
       hasMore = false;
       if (observer) observer.disconnect();
      } else {
@@ -97,6 +97,5 @@
 
 <style>
  .loader {
-  /* Stylování loaderu podle potřeby */
  }
 </style>
