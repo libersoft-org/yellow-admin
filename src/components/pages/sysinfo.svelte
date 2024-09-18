@@ -3,13 +3,14 @@
  import { hideSidebarMobile, sysInfoList, humanSize } from '../../core.js';
  import ProgressBar from '../progressbar.svelte';
  let sysInfo = null;
+ let cpuSummary;
 
  onMount(() => showTable());
 
  function showTable() {
   sysInfoList((res) => {
+   cpuSummary = groupCPUs(res.data.cpu.cpus);
    sysInfo = res.data;
-   console.log(sysInfo);
   });
  }
 
@@ -34,6 +35,14 @@
    clickReload();
   }
  }
+
+ function groupCPUs(cpus) {
+  const counts = {};
+  cpus.forEach(cpu => { counts[cpu] = (counts[cpu] || 0) + 1; });
+  const result = [];
+  for (const cpu in counts) result.push(`${counts[cpu]}x ${cpu}`);
+  return result;
+}
 </script>
 
 <style>
@@ -113,6 +122,14 @@
   <div class="title">System resources</div>
   <table class="sysinfo">
    <tr>
+    <th>CPU(s):</th>
+    <td>
+     {#each cpuSummary as c}
+      <div>{c}</div>
+     {/each}
+    </td>
+   </tr>
+   <tr>
     <th>CPU architecture:</th>
     <td>{sysInfo.cpu.arch}</td>
    </tr>
@@ -120,14 +137,6 @@
     <th>CPU load: </th>
     <td>
      <ProgressBar value={sysInfo.cpu.load} />
-    </td>
-   </tr>
-   <tr>
-    <th>CPUs:</th>
-    <td>
-     {#each sysInfo.cpu.cpus as c}
-      <div>{c}</div>
-     {/each}
     </td>
    </tr>
    <tr>

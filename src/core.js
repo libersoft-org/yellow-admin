@@ -72,4 +72,11 @@ export function humanSize(bytes, decimals = 2) {
  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-export default { hideSidebarMobile, isLoggedIn, loginError, username, sessionID };
+export default {
+ hideSidebarMobile,
+ isLoggedIn,
+ loginError,
+ username,
+ sessionID,
+ logout
+};
