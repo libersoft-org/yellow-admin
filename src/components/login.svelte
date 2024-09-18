@@ -12,7 +12,7 @@
   credentials.server = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/';
   //TODO: delete the following when not needed anymore:
   credentials = {
-   server: import.meta.env.AMTP_SERVER_WS_URL || credentials.server.replace(':4000', ''),
+   server: import.meta.env.VITE_AMTP_SERVER_WS_URL || 'wss://amtp.mediasun.cz/',//import.meta.env.AMTP_SERVER_WS_URL || credentials.server.replace(':4000', ''),
    username: 'admin',
    password: 'admin123'
   };
