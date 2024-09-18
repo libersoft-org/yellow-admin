@@ -156,11 +156,13 @@ input:checked + .slider:before {
  text-align: left;
 }
 
-.list-table thead tr th, .list-table tbody tr td {
+.list-table thead tr th,
+.list-table tbody tr td {
  padding: 10px;
 }
 
-.list-table thead tr th.center, .list-table tbody tr td.center {
+.list-table thead tr th.center,
+.list-table tbody tr td.center {
  text-align: center;
 }
 

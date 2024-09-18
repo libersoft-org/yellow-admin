@@ -5,7 +5,7 @@ export const socketStates = {
  OPEN: 1,
  CLOSING: 2,
  CLOSED: 3
-}
+};
 export let url;
 const requests = {};
 let socket;
