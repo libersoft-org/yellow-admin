@@ -4,6 +4,9 @@
  import Modal from '../modal.svelte';
  import ModalDomainsAdd from '../modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modal-domains-del.svelte';
+
+ export let contentHeight;
+
  let domainsArray = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;
@@ -11,12 +14,12 @@
  let domainName = null;
 
  let loading = false;
- let count = 2;
+ let count = 20;
  let offset = 0;
  let hasMore = true;
  let observer;
  let loaderElement;
-
+ 
  onMount(() => { observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 }); });
  onDestroy(() => { if (observer) observer.disconnect(); });
 
@@ -32,12 +35,17 @@
  
  function isLoaderVisible()
  {
+     let result = false;
      if (loaderElement)
      {
          const rect = loaderElement.getBoundingClientRect();
-         return rect.top < window.innerHeight && rect.bottom > 0;
+         result = (rect.top < contentHeight);
+         console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
      }
-     return false;
+     else
+      result = false;
+     console.log('isLoaderVisible:' + result);
+     return result;
  }
  
  function showTable() {
@@ -55,13 +63,12 @@
     }
     else
     {
-        if (isLoaderVisible()) {
-            console.log('load more..');
-            setTimeout(() => {
-                showTable();
-            }, 1000);
-            
-        }
+          setTimeout(() => {
+              if (isLoaderVisible()) {
+                  console.log('load more..');
+                  showTable();
+              }
+          }, 500);
     }
    } else {
     console.error('Error: ' + res.message);
