@@ -30,9 +30,9 @@ else
 fi
 if ! [ -x "$(command -v prettier)" ]; then
  echo "Prettier not found, installing..."
- bun i -g prettier
+ bun i -g prettier prettier-plugin-svelte
 fi
-prettier --config prettier-libersoft.json --write "src/**/*.{js,ts,css,html}"
+prettier --config prettier-libersoft.json --write "src/**/*.{js,ts,css,html,svelte}"
 git config user.name "$NAME"
 git config user.email "$EMAIL"
 git status

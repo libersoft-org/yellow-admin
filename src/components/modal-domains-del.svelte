@@ -4,9 +4,9 @@
  export let id;
  export let name;
  let error = null;
- 
+
  function clickDel() {
-  domainsDel(id, (res) => {
+  domainsDel(id, res => {
    if (res?.error === 0) onClose(true);
    else if (res?.message) error = res.message;
   });

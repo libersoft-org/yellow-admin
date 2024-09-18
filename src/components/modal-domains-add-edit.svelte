@@ -9,7 +9,7 @@
 
  onMount(() => {
   if (id) {
-   domainInfo(id, (res) => {
+   domainInfo(id, res => {
     domainData = res?.data;
    });
   }
@@ -19,12 +19,12 @@
  function clickAddEdit() {
   if (domainElement.value) {
    if (id) {
-    domainsEdit(id, domainElement.value, (res) => {
+    domainsEdit(id, domainElement.value, res => {
      if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message; 
+     else if (res?.message) error = res.message;
     });
    } else {
-    domainsAdd(domainElement.value, (res) => {
+    domainsAdd(domainElement.value, res => {
      if (res?.error === 0) onClose(true);
      else if (res?.message) error = res.message;
     });
@@ -59,7 +59,7 @@
   padding-left: 5px;
   font-weight: bold;
  }
- 
+
  .error {
   display: flex;
   gap: 5px;

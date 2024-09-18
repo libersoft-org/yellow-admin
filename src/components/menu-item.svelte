@@ -32,6 +32,6 @@
 </style>
 
 <div class="item {active ? 'active' : ''}" role="button" tabindex="0" on:click={clickFunction} on:keydown={keyFunction}>
- <img src="img/{icon}" alt="{title}" />
+ <img src="img/{icon}" alt={title} />
  <div>{title}</div>
 </div>

@@ -53,7 +53,7 @@
 
 <div class="welcome">
  <div class="logo" role="button" tabindex="0" on:click={clickLogo} on:keydown={keyLogo}>
-  <img src="img/logo.svg" alt="{product}" />
+  <img src="img/logo.svg" alt={product} />
   <div class="product">{product}</div>
  </div>
  <div class="version">

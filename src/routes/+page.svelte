@@ -1,5 +1,5 @@
 <script>
- import "../app.css";
+ import '../app.css';
  import { socketState, socketStates, connect } from '../socket.js';
  import { hideSidebarMobile, isLoggedIn } from '../core.js';
  import Login from '../components/login.svelte';
@@ -19,7 +19,7 @@
   domains: DomainsList,
   users: UsersList,
   sessions: SessionsList
- }
+ };
  let selectedPage = null;
  let status;
  let sideBar;
@@ -55,7 +55,7 @@
   window.removeEventListener('mousemove', resizeSideBar);
   window.removeEventListener('mouseup', stopResizeSideBar);
  }
- 
+
  function resizeSideBar(e) {
   const min = 200;
   const max = 500;
@@ -77,7 +77,7 @@
   --status-height: 30px;
   --sidebar-width: 250px;
  }
- 
+
  .app {
   display: flex;
   flex-direction: column;
@@ -134,11 +134,11 @@
  }
 
  .status .indicator.info {
-  background-color: #0C0;
+  background-color: #0c0;
  }
 
  .status .indicator.error {
-  background-color: #C00;
+  background-color: #c00;
  }
 
  @media (max-width: 768px) {
@@ -173,7 +173,7 @@
    <div class="resizer" role="none" bind:this={resizer} on:mousedown={startResizeSideBar}></div>
    <div class="content" bind:this={contentElement}>
     {#if selectedPage}
-     <svelte:component this={selectedPage} contentHeight={contentHeight} />
+     <svelte:component this={selectedPage} {contentHeight} />
     {:else}
      <WelcomeContent {product} {version} {link} />
     {/if}
