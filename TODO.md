@@ -7,6 +7,7 @@
 
 - Domains - extract lazy loading component to new component
 - Domains - add filter - ID + name
+- Domains, Admins, Sessions, Users - change offset to last ID > ...
 - Admins - list, add, edit, delete
 - Sessions - list, add, delete
 - Users - list, add, edit, delete
