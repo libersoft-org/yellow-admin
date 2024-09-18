@@ -6,7 +6,6 @@
 # Features
 
 - Domains - extract lazy loading component to new component
-- Admins, Sessions, Users - on backend delete "No more records" error - switch to: [] (the same as Domains)
 - Domains - add filter - ID + name
 - Admins - list, add, edit, delete
 - Sessions - list, add, delete
