@@ -4,6 +4,9 @@
  import Modal from '../modal.svelte';
  import ModalDomainsAdd from '../modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modal-domains-del.svelte';
+
+ export let contentHeight;
+
  let domainsArray = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;
@@ -11,34 +14,61 @@
  let domainName = null;
 
  let loading = false;
- let count = 10;
+ let count = 20;
  let offset = 0;
  let hasMore = true;
  let observer;
  let loaderElement;
-
+ 
  onMount(() => { observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 }); });
  onDestroy(() => { if (observer) observer.disconnect(); });
 
  $: if (observer && loaderElement) {
   observer.observe(loaderElement);
-  const rect = loaderElement.getBoundingClientRect();
-  if (rect.top < window.innerHeight && rect.bottom > 0) {
+  
+  if (isLoaderVisible())
+      console.log('initial handleIntersect');
+
    handleIntersect([{ isIntersecting: true }]);
-  }
  }
 
+ 
+ function isLoaderVisible()
+ {
+     let result = false;
+     if (loaderElement)
+     {
+         const rect = loaderElement.getBoundingClientRect();
+         result = (rect.top < contentHeight);
+         console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
+     }
+     else
+      result = false;
+     console.log('isLoaderVisible:' + result);
+     return result;
+ }
+ 
  function showTable() {
   if (loading || !hasMore) return;
   loading = true;
   domainsList((res) => {
    if (res.error === 0) {
     domainsArray = [...domainsArray, ...res.data.domains];
+    console.log('domainsArray.length:' + domainsArray.length);
     loading = false;
     offset += res.data.domains.length;
     if (res.data.domains.length < count) {
      hasMore = false;
      if (observer) observer.disconnect();
+    }
+    else
+    {
+          setTimeout(() => {
+              if (isLoaderVisible()) {
+                  console.log('load more..');
+                  showTable();
+              }
+          }, 500);
     }
    } else {
     console.error('Error: ' + res.message);
@@ -48,6 +78,7 @@
  }
 
  function handleIntersect(entries) {
+     console.log('handleIntersect');
   if (entries[0].isIntersecting && !loading && hasMore) showTable();
  }
 

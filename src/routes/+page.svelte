@@ -25,6 +25,10 @@
  let sideBar;
  let resizer;
  let isResizingSideBar = false;
+ let contentElement;
+ let contentHeight;
+ $: contentHeight = contentElement ? contentElement.clientHeight : 666;
+ 
 
  $: if ($isLoggedIn && $socketState === socketStates.OPEN) {
   console.log('Connected to server');
@@ -168,9 +172,9 @@
     <Menu {onSelectPage} />
    </div>
    <div class="resizer" role="none" bind:this={resizer} on:mousedown={startResizeSideBar}></div>
-   <div class="content">
+   <div class="content" bind:this={contentElement}>
     {#if selectedPage}
-     <svelte:component this={selectedPage} />
+     <svelte:component this={selectedPage} contentHeight={contentHeight} />
     {:else}
      <WelcomeContent {product} {version} {link} />
     {/if}
