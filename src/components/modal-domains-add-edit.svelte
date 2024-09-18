@@ -1,14 +1,25 @@
 <script>
  import { onMount } from 'svelte';
- import { domainsAdd } from '../core.js';
+ import { domainsAdd, domainInfo } from '../core.js';
  export let onClose;
- let domain;
+ export let id = null;
+ let domainElement;
+ let domainData = null;
  let error = null;
- onMount(() => domain.focus());
+
+ onMount(() => {
+  if (id) {
+   domainInfo(id, (res) => {
+    console.log(res);
+    domainData = res?.data;
+   });
+  }
+  domainElement.focus();
+ });
 
  function clickAdd() {
-  if (domain.value) {
-   domainsAdd(domain.value, (res) => {
+  if (domainElement.value) {
+   domainsAdd(domainElement.value, (res) => {
     if (res?.error === 0) onClose(true);
     else if (res?.message) error = res.message;
    });
@@ -54,7 +65,7 @@
 
 <div class="group">
  <div class="label">Domain name:</div>
- <div><input type="text" placeholder="domain.tld" on:keydown={keyEnter} bind:this={domain} /></div>
+ <div><input type="text" value={domainData ? domainData.name : ''} placeholder="domain.tld" on:keydown={keyEnter} bind:this={domainElement} /></div>
  <div class="button" role="button" tabindex="0" on:click={clickAdd} on:keydown={keyAdd}>Add</div>
 </div>
 {#if error}

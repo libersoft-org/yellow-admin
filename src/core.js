@@ -51,6 +51,12 @@ export function domainsDel(id, callback = null) {
  });
 }
 
+export function domainInfo(id, callback = null) {
+ Socket.send('admin_info_domain', { domainID: id }, sessionID, (req, res) => {
+  if (callback) callback(res);
+ });
+}
+
 export function humanSize(bytes, decimals = 2) {
  if (bytes === 0) return '0 B';
  const k = 1024;
@@ -60,4 +66,4 @@ export function humanSize(bytes, decimals = 2) {
  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-export default { hideSidebarMobile, isLoggedIn, loginError, username, sessionID, login, logout, sysInfoList, domainsList, humanSize };
+export default { hideSidebarMobile, isLoggedIn, loginError, username, sessionID };

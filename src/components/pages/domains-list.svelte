@@ -2,7 +2,7 @@
  import { onMount, onDestroy } from 'svelte';
  import { hideSidebarMobile, domainsList } from '../../core.js';
  import Modal from '../modal.svelte';
- import ModalDomainsAdd from '../modal-domains-add.svelte';
+ import ModalDomainsAdd from '../modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modal-domains-del.svelte';
  let domainsArray = [];
  let isModalAddOpen = false;
@@ -17,13 +17,8 @@
  let observer;
  let loaderElement;
 
- onMount(() => {
-  observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 });
- });
-
- onDestroy(() => {
-  if (observer) observer.disconnect();
- });
+ onMount(() => { observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 }); });
+ onDestroy(() => { if (observer) observer.disconnect(); });
 
  $: if (observer && loaderElement) {
   observer.observe(loaderElement);
@@ -67,14 +62,15 @@
   }
  }
 
- function clickAdd() {
+ function clickAddEdit(id = null) {
+  if (id) domainID = id;
   isModalAddOpen = true;
  }
 
- function keyAdd() {
+ function keyAddEdit(id = null) {
   if (event.key === 'Enter' || event.key === ' ') {
    event.preventDefault();
-   clickAdd();
+   clickAddEdit(id);
   }
  }
 
@@ -99,18 +95,6 @@
   if (reload) showTable();
  }
 
- function clickEdit(id) {
-  // TODO
-  console.log('EDIT', id);
- }
-
- function keyEdit(id) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickEdit(id);
-  }
- }
-
  function clickDel(id, name) {
   domainID = id;
   domainName = name;
@@ -133,7 +117,7 @@
   <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
    <img src="img/menu.svg" alt="☰" />
   </div>
-  <div class="button" role="button" tabindex="0" on:click={clickAdd} on:keydown={keyAdd}>
+  <div class="button" role="button" tabindex="0" on:click={clickAddEdit} on:keydown={keyAddEdit}>
    <img src="img/add.svg" alt="Add a new domain" />
    <div>Add a new domain</div>
   </div>
@@ -161,8 +145,8 @@
      <td class="center">{new Date(d.created.replace(' ', 'T') + 'Z').toLocaleString()}</td>
      <td class="center">
       <div class="icons">
-       <div class="icon" role="button" tabindex="0" on:click={() => clickEdit(d.id)} on:keydown={() => keyEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
-       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id, d.name)} on:keydown={() => keyEdit(d.id)}><img src="img/del.svg" alt="Delete" /></div>
+       <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(d.id)} on:keydown={() => keyAddEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
+       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id, d.name)} on:keydown={() => keyDel(d.id)}><img src="img/del.svg" alt="Delete" /></div>
       </div>
      </td>
     </tr>
@@ -174,8 +158,8 @@
  {/if}
 </div>
 {#if isModalAddOpen}
- <Modal title="Add a new domain" onClose={onModalAddClose}>
-  <ModalDomainsAdd onClose={onModalAddClose} />
+ <Modal title={domainID ? "Edit the domain" : "Add a new domain"} onClose={onModalAddClose}>
+  <ModalDomainsAdd id={domainID} onClose={onModalAddClose} />
  </Modal>
 {/if}
 {#if isModalDelOpen}
