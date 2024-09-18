@@ -27,8 +27,7 @@
  let isResizingSideBar = false;
  let contentElement;
  let contentHeight;
- $: contentHeight = contentElement ? contentElement.clientHeight : 666;
- 
+ $: contentHeight = contentElement ? contentElement.clientHeight : null;
 
  $: if ($isLoggedIn && $socketState === socketStates.OPEN) {
   console.log('Connected to server');

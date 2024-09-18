@@ -14,7 +14,7 @@
  let domainName = null;
 
  let loading = false;
- let count = 20;
+ let count = 1;
  let offset = 0;
  let hasMore = true;
  let observer;
@@ -25,27 +25,20 @@
 
  $: if (observer && loaderElement) {
   observer.observe(loaderElement);
-  
-  if (isLoaderVisible())
-      console.log('initial handleIntersect');
-
-   handleIntersect([{ isIntersecting: true }]);
+  //if (isLoaderVisible()) console.log('initial handleIntersect');
+  handleIntersect([{ isIntersecting: true }]);
  }
-
  
- function isLoaderVisible()
- {
-     let result = false;
-     if (loaderElement)
-     {
-         const rect = loaderElement.getBoundingClientRect();
-         result = (rect.top < contentHeight);
-         console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
-     }
-     else
-      result = false;
-     console.log('isLoaderVisible:' + result);
-     return result;
+ function isLoaderVisible() {
+  let result = false;
+  if (loaderElement) {
+   const rect = loaderElement.getBoundingClientRect();
+   result = (rect.top < contentHeight);
+   //console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
+  }
+  else result = false;
+  //console.log('isLoaderVisible:' + result);
+  return result;
  }
  
  function showTable() {
@@ -60,15 +53,10 @@
     if (res.data.domains.length < count) {
      hasMore = false;
      if (observer) observer.disconnect();
-    }
-    else
-    {
-          setTimeout(() => {
-              if (isLoaderVisible()) {
-                  console.log('load more..');
-                  showTable();
-              }
-          }, 500);
+    } else {
+     setTimeout(() => {
+      if (isLoaderVisible()) showTable();
+     }, 500);
     }
    } else {
     console.error('Error: ' + res.message);
@@ -78,7 +66,7 @@
  }
 
  function handleIntersect(entries) {
-     console.log('handleIntersect');
+  //console.log('handleIntersect');
   if (entries[0].isIntersecting && !loading && hasMore) showTable();
  }
 
@@ -123,7 +111,6 @@
   offset = 0;
   loading = false;
   hasMore = true;
-  // TODO: add loader element again (if not exist)
  }
 
  function keyReload() {
