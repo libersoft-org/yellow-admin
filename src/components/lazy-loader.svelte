@@ -3,18 +3,21 @@
 
  export let loadItems; // Funkce pro načtení více dat
  export let items;
- export let contentHeight;
+ export let contentElement;
 
  const threshold = 0.1; // Prahová hodnota pro IntersectionObserver
 
  let hasMore = true; // Indikátor, zda je více dat k načtení
  let loading = false;
- let count = 1;
+ let count = 10;
  let offset = 0;
  let observer;
  let loaderElement;
  let timer;
+ let _loaderIsVisible = true;
 
+ /*let contentHeight;
+ $: contentHeight = contentElement ? contentElement.clientHeight : null;*/
 
  export function reload() {
   reset();
@@ -33,7 +36,6 @@
   loading = true;
   loadItems(
    res => {
-    console.log(res)
     if (res.error === 0) {
      items = [...items, ...res.items];
      console.log('items.length:' + items.length);
@@ -59,23 +61,31 @@
 
  function isLoaderVisible() {
   let result = false;
+  /*
   if (loaderElement) {
    const rect = loaderElement.getBoundingClientRect();
    result = rect.top < contentHeight;
-   //console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
-  } else result = false;
-  //console.log('isLoaderVisible:' + result);
+   console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
+  } else result = false;*/
+  result = _loaderIsVisible;
+  console.log('isLoaderVisible:' + result);
   return result;
  }
 
  function handleIntersect(entries) {
-  if (entries[0].isIntersecting && !loading && hasMore) {
+  console.log('handleIntersect:')
+  console.log(entries)
+
+  _loaderIsVisible = entries[0].isIntersecting;
+  if (_loaderIsVisible && !loading && hasMore) {
    loadMore();
   }
  }
 
  onMount(() => {
-  observer = new IntersectionObserver(handleIntersect, { threshold });
+  console.log('contentElement is ' + contentElement);
+  console.log('loaderElement is ' + loaderElement);
+  observer = new IntersectionObserver(handleIntersect, { threshold, root: contentElement });
   if (loaderElement) observer.observe(loaderElement);
  });
 

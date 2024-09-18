@@ -6,7 +6,7 @@
  import ModalDomainsDel from '../modal-domains-del.svelte';
  import LazyLoader from '../lazy-loader.svelte';
 
- export let contentHeight;
+ export let contentElement;
 
  let items = [];
  let isModalAddEditOpen = false;
@@ -124,7 +124,7 @@
    {/each}
   </tbody>
  </table>
- <LazyLoader bind:this={lazyLoader} loadItems={loadItems} {contentHeight} bind:items={items} />
+ <LazyLoader bind:this={lazyLoader} loadItems={loadItems} {contentElement} bind:items={items} />
 </div>
 {#if isModalAddEditOpen}
  <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} onClose={onModalAddEditClose}>
