@@ -11,7 +11,7 @@
  let domainName = null;
 
  let loading = false;
- let count = 10;
+ let count = 2;
  let offset = 0;
  let hasMore = true;
  let observer;
@@ -22,23 +22,46 @@
 
  $: if (observer && loaderElement) {
   observer.observe(loaderElement);
-  const rect = loaderElement.getBoundingClientRect();
-  if (rect.top < window.innerHeight && rect.bottom > 0) {
+  
+  if (isLoaderVisible())
+      console.log('initial handleIntersect');
+
    handleIntersect([{ isIntersecting: true }]);
-  }
  }
 
+ 
+ function isLoaderVisible()
+ {
+     if (loaderElement)
+     {
+         const rect = loaderElement.getBoundingClientRect();
+         return rect.top < window.innerHeight && rect.bottom > 0;
+     }
+     return false;
+ }
+ 
  function showTable() {
   if (loading || !hasMore) return;
   loading = true;
   domainsList((res) => {
    if (res.error === 0) {
     domainsArray = [...domainsArray, ...res.data.domains];
+    console.log('domainsArray.length:' + domainsArray.length);
     loading = false;
     offset += res.data.domains.length;
     if (res.data.domains.length < count) {
      hasMore = false;
      if (observer) observer.disconnect();
+    }
+    else
+    {
+        if (isLoaderVisible()) {
+            console.log('load more..');
+            setTimeout(() => {
+                showTable();
+            }, 1000);
+            
+        }
     }
    } else {
     console.error('Error: ' + res.message);
@@ -48,6 +71,7 @@
  }
 
  function handleIntersect(entries) {
+     console.log('handleIntersect');
   if (entries[0].isIntersecting && !loading && hasMore) showTable();
  }
 
