@@ -45,6 +45,12 @@ export function domainsAdd(name, callback = null) {
  });
 }
 
+export function domainsEdit(id, name, callback = null) {
+ Socket.send('admin_edit_domain', { domainID: id, name }, sessionID, (req, res) => {
+  if (callback) callback(res);
+ });
+}
+
 export function domainsDel(id, callback = null) {
  Socket.send('admin_del_domain', { domainID: id }, sessionID, (req, res) => {
   if (callback) callback(res);

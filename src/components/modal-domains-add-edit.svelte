@@ -1,6 +1,6 @@
 <script>
  import { onMount } from 'svelte';
- import { domainsAdd, domainInfo } from '../core.js';
+ import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
  export let onClose;
  export let id = null;
  let domainElement;
@@ -10,33 +10,39 @@
  onMount(() => {
   if (id) {
    domainInfo(id, (res) => {
-    console.log(res);
     domainData = res?.data;
    });
   }
   domainElement.focus();
  });
 
- function clickAdd() {
+ function clickAddEdit() {
   if (domainElement.value) {
-   domainsAdd(domainElement.value, (res) => {
-    if (res?.error === 0) onClose(true);
-    else if (res?.message) error = res.message;
-   });
+   if (id) {
+    domainsEdit(id, domainElement.value, (res) => {
+     if (res?.error === 0) onClose(true);
+     else if (res?.message) error = res.message; 
+    });
+   } else {
+    domainsAdd(domainElement.value, (res) => {
+     if (res?.error === 0) onClose(true);
+     else if (res?.message) error = res.message;
+    });
+   }
   }
  }
 
- function keyAdd() {
+ function keyAddEdit() {
   if (event.key === 'Enter' || event.key === ' ') {
    event.preventDefault();
-   clickAdd();
+   clickAddEdit();
   }
  }
 
  function keyEnter() {
   if (event.key === 'Enter') {
    event.preventDefault();
-   clickAdd();
+   clickAddEdit();
   }
  }
 </script>
@@ -66,7 +72,7 @@
 <div class="group">
  <div class="label">Domain name:</div>
  <div><input type="text" value={domainData ? domainData.name : ''} placeholder="domain.tld" on:keydown={keyEnter} bind:this={domainElement} /></div>
- <div class="button" role="button" tabindex="0" on:click={clickAdd} on:keydown={keyAdd}>Add</div>
+ <div class="button" role="button" tabindex="0" on:click={clickAddEdit} on:keydown={keyAddEdit}>{id ? 'Edit' : 'Add'}</div>
 </div>
 {#if error}
  <div class="error">

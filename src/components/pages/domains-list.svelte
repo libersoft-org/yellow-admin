@@ -5,7 +5,7 @@
  import ModalDomainsAdd from '../modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modal-domains-del.svelte';
  let domainsArray = [];
- let isModalAddOpen = false;
+ let isModalAddEditOpen = false;
  let isModalDelOpen = false;
  let domainID = null;
  let domainName = null;
@@ -63,8 +63,8 @@
  }
 
  function clickAddEdit(id = null) {
-  if (id) domainID = id;
-  isModalAddOpen = true;
+  domainID = id;
+  isModalAddEditOpen = true;
  }
 
  function keyAddEdit(id = null) {
@@ -74,13 +74,25 @@
   }
  }
 
- function onModalAddClose(reload = false) {
-  isModalAddOpen = false;
-  if (reload) showTable();
+ function onModalAddEditClose(reload = false) {
+  isModalAddEditOpen = false;
+  if (reload) {
+   resetTable();
+   showTable();
+  }
  }
 
  function clickReload() {
+  resetTable();
   showTable();
+ }
+
+ function resetTable() {
+  domainsArray = [];
+  offset = 0;
+  loading = false;
+  hasMore = true;
+  // TODO: add loader element again (if not exist)
  }
 
  function keyReload() {
@@ -92,7 +104,10 @@
 
  function onModalDelClose(reload = false) {
   isModalDelOpen = false;
-  if (reload) showTable();
+  if (reload) {
+   resetTable();
+   showTable();
+  }
  }
 
  function clickDel(id, name) {
@@ -117,7 +132,7 @@
   <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
    <img src="img/menu.svg" alt="☰" />
   </div>
-  <div class="button" role="button" tabindex="0" on:click={clickAddEdit} on:keydown={keyAddEdit}>
+  <div class="button" role="button" tabindex="0" on:click={() => clickAddEdit()} on:keydown={() => keyAddEdit()}>
    <img src="img/add.svg" alt="Add a new domain" />
    <div>Add a new domain</div>
   </div>
@@ -157,9 +172,9 @@
   <div class="loader" bind:this={loaderElement}></div>
  {/if}
 </div>
-{#if isModalAddOpen}
- <Modal title={domainID ? "Edit the domain" : "Add a new domain"} onClose={onModalAddClose}>
-  <ModalDomainsAdd id={domainID} onClose={onModalAddClose} />
+{#if isModalAddEditOpen}
+ <Modal title={domainID ? "Edit the domain" : "Add a new domain"} onClose={onModalAddEditClose}>
+  <ModalDomainsAdd id={domainID} onClose={onModalAddEditClose} />
  </Modal>
 {/if}
 {#if isModalDelOpen}
