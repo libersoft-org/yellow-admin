@@ -8,7 +8,7 @@
  onMount(() => showTable());
 
  function showTable() {
-  sysInfoList((res) => {
+  sysInfoList(res => {
    cpuSummary = groupCPUs(res.data.cpu.cpus);
    sysInfo = res.data;
   });
@@ -38,11 +38,13 @@
 
  function groupCPUs(cpus) {
   const counts = {};
-  cpus.forEach(cpu => { counts[cpu] = (counts[cpu] || 0) + 1; });
+  cpus.forEach(cpu => {
+   counts[cpu] = (counts[cpu] || 0) + 1;
+  });
   const result = [];
   for (const cpu in counts) result.push(`${counts[cpu]}x ${cpu}`);
   return result;
-}
+ }
 </script>
 
 <style>
@@ -53,7 +55,8 @@
   overflow: hidden;
  }
 
- .sysinfo th, .sysinfo td {
+ .sysinfo th,
+ .sysinfo td {
   padding: 10px;
   vertical-align: top;
  }

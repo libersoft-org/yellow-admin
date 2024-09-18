@@ -19,50 +19,57 @@
  let hasMore = true;
  let observer;
  let loaderElement;
- 
- onMount(() => { observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 }); });
- onDestroy(() => { if (observer) observer.disconnect(); });
+
+ onMount(() => {
+  observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 });
+ });
+ onDestroy(() => {
+  if (observer) observer.disconnect();
+ });
 
  $: if (observer && loaderElement) {
   observer.observe(loaderElement);
   //if (isLoaderVisible()) console.log('initial handleIntersect');
   handleIntersect([{ isIntersecting: true }]);
  }
- 
+
  function isLoaderVisible() {
   let result = false;
   if (loaderElement) {
    const rect = loaderElement.getBoundingClientRect();
-   result = (rect.top < contentHeight);
+   result = rect.top < contentHeight;
    //console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
-  }
-  else result = false;
+  } else result = false;
   //console.log('isLoaderVisible:' + result);
   return result;
  }
- 
+
  function showTable() {
   if (loading || !hasMore) return;
   loading = true;
-  domainsList((res) => {
-   if (res.error === 0) {
-    domainsArray = [...domainsArray, ...res.data.domains];
-    console.log('domainsArray.length:' + domainsArray.length);
-    loading = false;
-    offset += res.data.domains.length;
-    if (res.data.domains.length < count) {
-     hasMore = false;
-     if (observer) observer.disconnect();
+  domainsList(
+   res => {
+    if (res.error === 0) {
+     domainsArray = [...domainsArray, ...res.data.domains];
+     console.log('domainsArray.length:' + domainsArray.length);
+     loading = false;
+     offset += res.data.domains.length;
+     if (res.data.domains.length < count) {
+      hasMore = false;
+      if (observer) observer.disconnect();
+     } else {
+      setTimeout(() => {
+       if (isLoaderVisible()) showTable();
+      }, 500);
+     }
     } else {
-     setTimeout(() => {
-      if (isLoaderVisible()) showTable();
-     }, 500);
+     console.error('Error: ' + res.message);
+     loading = false;
     }
-   } else {
-    console.error('Error: ' + res.message);
-    loading = false;
-   }
-  }, count, offset);
+   },
+   count,
+   offset
+  );
  }
 
  function handleIntersect(entries) {
@@ -191,7 +198,7 @@
  {/if}
 </div>
 {#if isModalAddEditOpen}
- <Modal title={domainID ? "Edit the domain" : "Add a new domain"} onClose={onModalAddEditClose}>
+ <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} onClose={onModalAddEditClose}>
   <ModalDomainsAdd id={domainID} onClose={onModalAddEditClose} />
  </Modal>
 {/if}

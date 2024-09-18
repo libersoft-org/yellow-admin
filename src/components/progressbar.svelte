@@ -4,7 +4,7 @@
 
 <style>
  .progress-bar {
-  position: relative; 
+  position: relative;
   width: 100%;
   background-color: #e0e0e0;
   border-radius: 5px;
@@ -14,16 +14,7 @@
  .progress {
   height: 20px;
   background-color: #4caf50;
-  background-image: linear-gradient(
-   -45deg,
-   rgba(255, 255, 255, 0.15) 25%,
-   transparent 25%,
-   transparent 50%,
-   rgba(255, 255, 255, 0.15) 50%,
-   rgba(255, 255, 255, 0.15) 75%,
-   transparent 75%,
-   transparent
-  );
+  background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-size: 40px 40px;
  }
 

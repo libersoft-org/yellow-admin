@@ -2,7 +2,7 @@
  import Core from '../core.js';
  import MenuItem from './menu-item.svelte';
  export let onSelectPage;
- let selectedMenuItem = ''
+ let selectedMenuItem = '';
 
  function clickLogout() {
   Core.logout();

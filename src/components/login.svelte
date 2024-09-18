@@ -12,13 +12,13 @@
   credentials.server = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/';
   //TODO: delete the following when not needed anymore:
   credentials = {
-   server: credentials.server.replace(':4000', ''),
+   server: 'wss://amtp.mediasun.cz/', // credentials.server.replace(':4000', ''),
    username: 'admin',
    password: 'admin123'
   };
   clickLogin();
  });
- 
+
  $: if ($socketState === socketStates.OPEN && loggingIn) login(credentials);
  $: if ($socketState === socketStates.CLOSED && loggingIn) {
   loginError.set('Cannot connect to server');
@@ -138,7 +138,7 @@
 <div class="background">
  <div class="login">
   <div class="logo" role="button" tabindex="0" on:click={clickLogo} on:keydown={keyLogo}>
-   <img src="img/logo.svg" alt="{product}" />
+   <img src="img/logo.svg" alt={product} />
    <div class="product">{product}</div>
   </div>
   <div class="version">

@@ -1,4 +1,9 @@
 {
+
+ "plugins": ["prettier-plugin-svelte"],
+ "pluginSearchDirs": ["src"],
+ "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte", "svelteSortOrder": "options-scripts-styles-markup" } }],
+
  "tabWidth": 1,
  "useTabs": false,
  "semi": true,

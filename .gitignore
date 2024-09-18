@@ -10,3 +10,4 @@ package-lock.json
 .secret_git
 .output
 .vercel
+.idea
