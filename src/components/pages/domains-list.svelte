@@ -4,78 +4,16 @@
  import Modal from '../modal.svelte';
  import ModalDomainsAdd from '../modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modal-domains-del.svelte';
+ import LazyLoader from '../lazy-loader.svelte';
 
  export let contentHeight;
 
- let domainsArray = [];
+ let items = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;
  let domainID = null;
  let domainName = null;
-
- let loading = false;
- let count = 1;
- let offset = 0;
- let hasMore = true;
- let observer;
- let loaderElement;
-
- onMount(() => {
-  observer = new IntersectionObserver(handleIntersect, { threshold: 0.1 });
- });
- onDestroy(() => {
-  if (observer) observer.disconnect();
- });
-
- $: if (observer && loaderElement) {
-  observer.observe(loaderElement);
-  //if (isLoaderVisible()) console.log('initial handleIntersect');
-  handleIntersect([{ isIntersecting: true }]);
- }
-
- function isLoaderVisible() {
-  let result = false;
-  if (loaderElement) {
-   const rect = loaderElement.getBoundingClientRect();
-   result = rect.top < contentHeight;
-   //console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
-  } else result = false;
-  //console.log('isLoaderVisible:' + result);
-  return result;
- }
-
- function showTable() {
-  if (loading || !hasMore) return;
-  loading = true;
-  domainsList(
-   res => {
-    if (res.error === 0) {
-     domainsArray = [...domainsArray, ...res.data.domains];
-     console.log('domainsArray.length:' + domainsArray.length);
-     loading = false;
-     offset += res.data.domains.length;
-     if (res.data.domains.length < count) {
-      hasMore = false;
-      if (observer) observer.disconnect();
-     } else {
-      setTimeout(() => {
-       if (isLoaderVisible()) showTable();
-      }, 500);
-     }
-    } else {
-     console.error('Error: ' + res.message);
-     loading = false;
-    }
-   },
-   count,
-   offset
-  );
- }
-
- function handleIntersect(entries) {
-  //console.log('handleIntersect');
-  if (entries[0].isIntersecting && !loading && hasMore) showTable();
- }
+ let lazyLoader;
 
  function clickMenu() {
   hideSidebarMobile.set(false);
@@ -108,30 +46,17 @@
   }
  }
 
- function clickReload() {
-  resetTable();
-  showTable();
- }
-
- function resetTable() {
-  domainsArray = [];
-  offset = 0;
-  loading = false;
-  hasMore = true;
- }
-
  function keyReload() {
   if (event.key === 'Enter' || event.key === ' ') {
    event.preventDefault();
-   clickReload();
+   lazyLoader.reload();
   }
  }
 
  function onModalDelClose(reload = false) {
   isModalDelOpen = false;
   if (reload) {
-   resetTable();
-   showTable();
+   lazyLoader.reset();
   }
  }
 
@@ -161,7 +86,7 @@
    <img src="img/add.svg" alt="Add a new domain" />
    <div>Add a new domain</div>
   </div>
-  <div class="button" role="button" tabindex="0" on:click={clickReload} on:keydown={keyReload}>
+  <div class="button" role="button" tabindex="0" on:click={lazyLoader.reload()} on:keydown={keyReload}>
    <img src="img/reload.svg" alt="Reload" />
    <div>Reload</div>
   </div>
@@ -177,7 +102,7 @@
    </tr>
   </thead>
   <tbody>
-   {#each domainsArray as d}
+   {#each items as d}
     <tr>
      <td class="center">{d.id}</td>
      <td>{d.name}</td>
@@ -193,9 +118,7 @@
    {/each}
   </tbody>
  </table>
- {#if hasMore}
-  <div class="loader" bind:this={loaderElement}></div>
- {/if}
+ <LazyLoader bind:this={lazyLoader} loadItems={domainsList} {contentHeight} bind:items={items} />
 </div>
 {#if isModalAddEditOpen}
  <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} onClose={onModalAddEditClose}>
