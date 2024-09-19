@@ -5,9 +5,7 @@
  import ModalDomainsAdd from '../modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modal-domains-del.svelte';
  import LazyLoader from '../lazy-loader.svelte';
-
  export let contentElement;
-
  let items = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;
