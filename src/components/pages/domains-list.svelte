@@ -10,12 +10,12 @@
  let isModalDelOpen = false;
  let domainID = null;
  let domainName = null;
- let recordFilter = null;
- let recordID = null;
+ let filterName = null;
+ let filterIDFrom = null;
  let lazyLoader;
 
- async function loadItems(cb, count, lastID) {
-  domainsList(res => cb({error: res.error, items: res.data.domains}), count, lastID);
+ async function loadItems(cb, count, lastID, filterName = null) {
+  domainsList(res => cb({error: res.error, items: res.data.domains}), count, lastID, filterName);
  }
 
  function clickMenu() {
@@ -58,15 +58,21 @@
 
  function clickSearch() {
   console.log('search');
-  lazyLoader.reset();
-  //loadItems()
-  console.log(recordFilter, recordID);
+  console.log(filterName, filterIDFrom);
+  lazyLoader.reload(filterName, filterIDFrom - 1);
  }
 
  function keySearch() {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   clickSearch();
+  }
+ }
+
+ function keySearchForm() {
   if (event.key === 'Enter') {
    event.preventDefault();
-   clickSearch(id);
+   clickSearch();
   }
  }
 
@@ -106,7 +112,7 @@
    <img src="img/add.svg" alt="Add a new domain" />
    <div>Add a new domain</div>
   </div>
-  <div class="button" role="button" tabindex="0" on:click={lazyLoader.reload()} on:keydown={keyReload}>
+  <div class="button" role="button" tabindex="0" on:click={() => lazyLoader.reload()} on:keydown={keyReload}>
    <img src="img/reload.svg" alt="Reload" />
    <div>Reload</div>
   </div>
@@ -114,11 +120,11 @@
  <div class="buttons">
   <div class="search">
    <div>Domain name:</div>
-   <input type="text" placeholder="domain.tld" bind:value={recordFilter}>
+   <input type="text" placeholder="domain.tld" bind:value={filterName} on:keydown={keySearchForm}>
   </div>
   <div class="search">
    <div>Record ID from:</div>
-   <input type="text" placeholder="0" bind:value={recordID}>
+   <input type="text" placeholder="0" bind:value={filterIDFrom} on:keydown={keySearchForm}>
   </div>
   <div class="button" role="button" tabindex="0" on:click={clickSearch} on:keydown={keySearch}>
    <img src="img/search.svg" alt="Search" />
