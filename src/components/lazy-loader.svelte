@@ -33,29 +33,28 @@
  function loadMore() {
   if (loading || !hasMore) return;
   loading = true;
-  loadItems(
-   res => {
-    if (res.error === 0) {
-     items = [...items, ...res.items];
-     //console.log('items.length:' + items.length);
-     loading = false;
-     offset += res.items.length;
-     if (res.items.length < count) {
-      hasMore = false;
-      if (observer) observer.disconnect();
-     } else {
-      setTimeout(() => {
-       if (isLoaderVisible()) loadMore();
-      }, 500);
-     }
+  loadItems(res => {
+   if (res.error === 0) {
+    items = [...items, ...res.items];
+    //console.log('items.length:' + items.length);
+    loading = false;
+    offset += res.items.length;
+    if (res.items.length < count) {
+     hasMore = false;
+     if (observer) observer.disconnect();
     } else {
-     console.error('Error: ' + res.message);
-     loading = false;
+     setTimeout(() => {
+      if (isLoaderVisible()) loadMore();
+     }, 500);
     }
-   },
-   count,
-   offset
-  );
+   } else {
+    console.error('Error: ' + res.message);
+    loading = false;
+   }
+  },
+  count,
+  offset
+ );
  }
 
  function isLoaderVisible() {
@@ -75,7 +74,6 @@
  function handleIntersect(entries) {
   //console.log('handleIntersect:')
   //console.log(entries);
-
   _loaderIsVisible = entries[0].isIntersecting;
   if (_loaderIsVisible && !loading && hasMore) {
    loadMore();

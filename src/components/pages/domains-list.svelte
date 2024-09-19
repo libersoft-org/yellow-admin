@@ -1,5 +1,4 @@
 <script>
- import { onMount, onDestroy } from 'svelte';
  import { hideSidebarMobile, domainsList } from '../../core.js';
  import Modal from '../modal.svelte';
  import ModalDomainsAdd from '../modal-domains-add-edit.svelte';
@@ -122,7 +121,7 @@
    {/each}
   </tbody>
  </table>
- <LazyLoader bind:this={lazyLoader} loadItems={loadItems} {contentElement} bind:items={items} />
+ <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items={items} />
 </div>
 {#if isModalAddEditOpen}
  <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} onClose={onModalAddEditClose}>
