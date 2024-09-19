@@ -10,12 +10,12 @@
  let isModalDelOpen = false;
  let domainID = null;
  let domainName = null;
+ let recordFilter = null;
+ let recordID = null;
  let lazyLoader;
 
- async function loadItems(cb, count, offset) {
-  domainsList(res => {
-   cb({error: res.error, items: res.data.domains});
-  }, count, offset);
+ async function loadItems(cb, count, lastID) {
+  domainsList(res => cb({error: res.error, items: res.data.domains}), count, lastID);
  }
 
  function clickMenu() {
@@ -56,11 +56,21 @@
   }
  }
 
+ function clickSearch() {
+  console.log('search');
+  console.log(recordFilter, recordID);
+ }
+
+ function keySearch() {
+  if (event.key === 'Enter') {
+   event.preventDefault();
+   clickSearch(id);
+  }
+ }
+
  function onModalDelClose(reload = false) {
   isModalDelOpen = false;
-  if (reload) {
-   lazyLoader.reset();
-  }
+  if (reload) lazyLoader.reset();
  }
 
  function clickDel(id, name) {
@@ -78,6 +88,11 @@
 </script>
 
 <style>
+ .search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+ }
 </style>
 
 <div class="page">
@@ -92,6 +107,20 @@
   <div class="button" role="button" tabindex="0" on:click={lazyLoader.reload()} on:keydown={keyReload}>
    <img src="img/reload.svg" alt="Reload" />
    <div>Reload</div>
+  </div>
+ </div>
+ <div class="buttons">
+  <div class="search">
+   <div>Domain name:</div>
+   <input type="text" placeholder="domain.tld" bind:value={recordFilter}>
+  </div>
+  <div class="search">
+   <div>Record ID from:</div>
+   <input type="text" placeholder="0" bind:value={recordID}>
+  </div>
+  <div class="button" role="button" tabindex="0" on:click={clickSearch} on:keydown={keySearch}>
+   <img src="img/search.svg" alt="Search" />
+   <div>Search</div>
   </div>
  </div>
  <table class="list-table">

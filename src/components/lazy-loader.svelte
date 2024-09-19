@@ -7,7 +7,7 @@
  let hasMore = true;
  let loading = false;
  let count = 10;
- let offset = 0;
+ let lastID = 0;
  let observer;
  let loaderElement;
  let timer;
@@ -18,6 +18,23 @@
  $: contentHeight = contentElement ? contentElement.clientHeight : null;
  */
 
+ onMount(() => {
+  //console.log('contentElement is ' + contentElement);
+  //console.log('loaderElement is ' + loaderElement);
+  observer = new IntersectionObserver(handleIntersect, { threshold, root: contentElement });
+  if (loaderElement) observer.observe(loaderElement);
+ });
+
+ onDestroy(() => {
+  if (observer) observer.disconnect();
+  if (timer) clearTimeout(timer);
+ });
+
+ $: if (observer && loaderElement) {
+  observer.observe(loaderElement);
+  handleIntersect([{ isIntersecting: true }]);
+ }
+
  export function reload() {
   reset();
   loadMore();
@@ -25,7 +42,7 @@
 
  export function reset() {
   items = [];
-  offset = 0;
+  lastID = 0;
   loading = false;
   hasMore = true;
  }
@@ -36,9 +53,12 @@
   loadItems(res => {
    if (res.error === 0) {
     items = [...items, ...res.items];
+    if (res.items.length > 0) {
+     lastID = res.items[res.items.length - 1].id;
+    }
     //console.log('items.length:' + items.length);
     loading = false;
-    offset += res.items.length;
+    //offset += res.items.length;
     if (res.items.length < count) {
      hasMore = false;
      if (observer) observer.disconnect();
@@ -51,10 +71,7 @@
     console.error('Error: ' + res.message);
     loading = false;
    }
-  },
-  count,
-  offset
- );
+  }, count, lastID);
  }
 
  function isLoaderVisible() {
@@ -75,26 +92,7 @@
   //console.log('handleIntersect:')
   //console.log(entries);
   _loaderIsVisible = entries[0].isIntersecting;
-  if (_loaderIsVisible && !loading && hasMore) {
-   loadMore();
-  }
- }
-
- onMount(() => {
-  //console.log('contentElement is ' + contentElement);
-  //console.log('loaderElement is ' + loaderElement);
-  observer = new IntersectionObserver(handleIntersect, { threshold, root: contentElement });
-  if (loaderElement) observer.observe(loaderElement);
- });
-
- onDestroy(() => {
-  if (observer) observer.disconnect();
-  if (timer) clearTimeout(timer);
- });
-
- $: if (observer && loaderElement) {
-  observer.observe(loaderElement);
-  handleIntersect([{ isIntersecting: true }]);
+  if (_loaderIsVisible && !loading && hasMore) loadMore();
  }
 </script>
 

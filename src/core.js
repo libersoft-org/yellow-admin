@@ -33,8 +33,8 @@ export function sysInfoList(callback = null) {
  });
 }
 
-export function domainsList(callback = null, count = 10, offset = 0) {
- Socket.send('admin_list_domains', { count, offset }, sessionID, (req, res) => {
+export function domainsList(callback = null, count = 10, lastID = 0) {
+ Socket.send('admin_list_domains', { count, lastID }, sessionID, (req, res) => {
   if (callback) callback(res);
  });
 }
