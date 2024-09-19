@@ -8,10 +8,10 @@
  let loading = false;
  let count = 10;
  let lastID = 0;
- let observer;
  let loaderElement;
- let timer;
  let _loaderIsVisible = true;
+ let observer;
+ let timer;
 
  /*
  let contentHeight;
@@ -53,9 +53,7 @@
   loadItems(res => {
    if (res.error === 0) {
     items = [...items, ...res.items];
-    if (res.items.length > 0) {
-     lastID = res.items[res.items.length - 1].id;
-    }
+    if (res.items.length > 0) lastID = res.items[res.items.length - 1].id;
     //console.log('items.length:' + items.length);
     loading = false;
     //offset += res.items.length;

@@ -58,6 +58,8 @@
 
  function clickSearch() {
   console.log('search');
+  lazyLoader.reset();
+  //loadItems()
   console.log(recordFilter, recordID);
  }
 

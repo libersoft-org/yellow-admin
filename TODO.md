@@ -6,6 +6,7 @@
 # Features
 
 - Domains - add filter - ID + name
+- Domains - add sorting table by column and ASC / DESC
 - Admins - list, add, edit, delete
 - Sessions - list, add, delete
 - Users - list, add, edit, delete
