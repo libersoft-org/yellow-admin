@@ -1,5 +1,6 @@
 <script>
  import { hideSidebarMobile, domainsList } from '../core.js';
+ import SortableColumnHeader from '../components/sortable-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
  import Modal from '../components/modal.svelte';
@@ -12,15 +13,21 @@
  let domainID = null;
  let domainName = null;
  let filterName = null;
- let filterIDFrom = null;
+
+ let filterOffset = 0;
+
  let lazyLoader;
  let sortBy = 'id';
  let sortDir = 'asc';
 
 
- async function loadItems(cb, count, lastID, filterName = null) {
-  console.log('loadItems');
-  domainsList(res => cb({error: res.error, items: res.data.domains}), count, lastID, filterName);
+ function reloadItems() {
+  lazyLoader.reload(filterName, filterOffset - 1);
+ }
+
+ async function loadItems(show_items_callback, count, offset, filterName = null) {
+  console.log('loadItems count:', count, 'offset:', offset, 'filterName:', filterName, 'sortBy:', sortBy, 'sortDir:', sortDir);
+  domainsList(res => show_items_callback({error: res.error, items: res.data.domains}), count, offset, filterName, sortBy, sortDir);
  }
 
  function clickMenu() {
@@ -43,29 +50,19 @@
  function onModalAddEditClose(reload = false) {
   isModalAddEditOpen = false;
   if (reload) {
-   resetTable();
-   showTable();
-  }
- }
-
- function keyReload() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   lazyLoader.reload();
+   reloadItems();
   }
  }
 
  function clickSearch() {
   console.log('search');
-  console.log(filterName, filterIDFrom);
-  lazyLoader.reload(filterName, filterIDFrom - 1);
+  reloadItems();
  }
 
- function keySearch() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickSearch();
-  }
+ function clickReload() {
+  filterName = null;
+  filterOffset = 0;
+  reloadItems();
  }
 
  function keySearchForm() {
@@ -73,10 +70,6 @@
    event.preventDefault();
    clickSearch();
   }
- }
-
- function clickSortBy(columnName) {
-  console.log(columnName);
  }
 
  function keySortBy(columnName) {
@@ -88,7 +81,7 @@
 
  function onModalDelClose(reload = false) {
   isModalDelOpen = false;
-  if (reload) lazyLoader.reset();
+  reloadItems();
  }
 
  function clickDel(id, name) {
@@ -121,7 +114,7 @@
   </div>
 
   <Button on:click={() => clickAddEdit()} img="img/add.svg" text="Add a new domain" />
-  <Button on:click={() => lazyLoader.reload()} img="img/reload.svg" text="Reload" />
+  <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
 
  </div>
  <div class="buttons">
@@ -130,33 +123,18 @@
    <input type="text" placeholder="domain.tld" bind:value={filterName} on:keydown={keySearchForm}>
   </div>
   <div class="search">
-   <div>Record ID from:</div>
-   <input type="text" placeholder="0" bind:value={filterIDFrom} on:keydown={keySearchForm}>
+   <div>Offset:</div>
+   <input type="number" min="0" placeholder="0" bind:value={filterOffset} on:keydown={keySearchForm}>
   </div>
   <Button on:click={clickSearch} img="img/search.svg" text="Search" />
  </div>
  <table class="list-table">
   <thead>
    <tr>
-    <th class="center">
-     <div class="row column" role="button" tabindex="0" on:click={() => clickSortBy('id')} on:keydown={() => keySortBy('id')}>
-      <div>ID</div>
-      <div class="icon"><img src="img/down.svg" alt="▼" /><!-- ▲ --></div>
-     </div>
-    </th>
-    <th>
-     <div class="row column" role="button" tabindex="0" on:click={() => clickSortBy('name')} on:keydown={() => keySortBy('name')}>
-      <div>Name</div>
-      <div class="icon"><img src="img/down.svg" alt="▼" /></div>
-     </div>
-    </th>
-    <th class="center">Number of users</th>
-    <th class="center">
-     <div class="row column" role="button" tabindex="0" on:click={() => clickSortBy('created')} on:keydown={() => keySortBy('created')}>
-      <div>Created</div>
-      <div class="icon"><img src="img/down.svg" alt="▼" /></div>
-     </div>
-    </th>
+    <SortableColumnHeader column="id" name="ID" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
+    <SortableColumnHeader column="name" name="Name" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
+    <SortableColumnHeader column="users_count" name="Number of users" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
+    <SortableColumnHeader column="created" name="Created" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
     <th class="center">Action</th>
    </tr>
   </thead>

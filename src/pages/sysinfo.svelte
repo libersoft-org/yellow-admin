@@ -2,6 +2,7 @@
  import { onMount } from 'svelte';
  import { hideSidebarMobile, sysInfoList, humanSize } from '../core.js';
  import ProgressBar from '../components/progressbar.svelte';
+ import Button from '../components/button.svelte';
  let sysInfo = null;
  let cpuSummary;
 
@@ -27,13 +28,6 @@
 
  function clickReload() {
   showTable();
- }
-
- function keyReload() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickReload();
-  }
  }
 
  function groupCPUs(cpus) {
@@ -90,10 +84,7 @@
   <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
    <img src="img/menu.svg" alt="☰" />
   </div>
-  <div class="button" role="button" tabindex="0" on:click={clickReload} on:keydown={keyReload}>
-   <img src="img/reload.svg" alt="Reload" />
-   <div>Reload</div>
-  </div>
+  <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
  </div>
  {#if sysInfo}
   <div class="title">Application</div>

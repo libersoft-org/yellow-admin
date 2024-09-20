@@ -11,21 +11,6 @@ Socket.socketError.subscribe((value) => {
  if (value) loginError.set(value);
 });
 
-export function login(credentials) {
- Socket.send('admin_login', { username: credentials.username, password: credentials.password }, null, (req, res) => {
-  if (res.error !== 0) {
-   Socket.disconnect();
-   loginError.set(res.message);
-   return;
-  }
-  loginError.set(null);
-  username = credentials.username;
-  sessionID = res.data.sessionID;
-  //console.log('Session ID:', sessionID);
-  isLoggedIn.set(true);
- });
-}
-
 export function logout() {
  sessionsDel(sessionID, (res) => {
   //console.log('logout Response:', res);
@@ -50,11 +35,24 @@ function frontend_logout() {
  Socket.disconnect();
 }
 
+export function login(credentials) {
+ send('admin_login', { username: credentials.username, password: credentials.password }, (res) => {
+  if (res.error !== 0) {
+   Socket.disconnect();
+   loginError.set(res.message);
+   return;
+  }
+  loginError.set(null);
+  username = credentials.username;
+  sessionID = res.data.sessionID;
+  //console.log('Session ID:', sessionID);
+  isLoggedIn.set(true);
+ });
+}
+
 function send(command, params, callback)
 {
  let res = Socket.send(command, params, sessionID, (req, res) => {
-  //console.log('Response:', res);
-
   if (res.error >= 900 && res.error <= 999) {
    console.error('Error:', res.error);
   }
@@ -65,17 +63,16 @@ function send(command, params, callback)
   if (res.error >= 900 && res.error <= 999) {
    return;
   }
-
   callback(res);
  });
 }
 
 export function sysInfoList(callback = null) {
- send('admin_sysinfo', null, sessionID, callback);
+ send('admin_sysinfo', null, callback);
 }
 
-export function domainsList(callback = null, count = 10, lastID = 0, filterName = null) {
- const params = { count, lastID };
+export function domainsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
+ const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filterName) params.filterName = filterName;
  send('admin_list_domains', params, callback);
 }

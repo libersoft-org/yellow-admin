@@ -7,7 +7,7 @@
  let hasMore = true;
  let loading = false;
  let count = 10;
- let lastID = 0;
+ let offset = 0;
  let filterName = null;
  let loaderElement;
  let _loaderIsVisible = true;
@@ -36,17 +36,13 @@
   handleIntersect([{ isIntersecting: true }]);
  }
 
- export function reload(filterDomainName = null, filterIDFrom = null) {
-  reset(filterDomainName, filterIDFrom ? filterIDFrom : 0);
-  loadMore();
- }
-
- export function reset(filterDomainName = null, filterIDFrom = null) {
-  items = [];
-  lastID = filterIDFrom ? filterIDFrom : 0;
+ export function reload(filterDomainName, offset_) {
   filterName = filterDomainName;
+  offset = offset_;
+  items = [];
   loading = false;
   hasMore = true;
+  loadMore();
  }
 
  function loadMore() {
@@ -55,10 +51,10 @@
   loadItems(res => {
    if (res.error === 0) {
     items = [...items, ...res.items];
-    if (res.items.length > 0) lastID = res.items[res.items.length - 1].id;
+    //if (res.items.length > 0) lastID = res.items[res.items.length - 1].id;
     //console.log('items.length:' + items.length);
     loading = false;
-    //offset += res.items.length;
+    offset += res.items.length;
     if (res.items.length < count) {
      hasMore = false;
      if (observer) observer.disconnect();
@@ -71,7 +67,7 @@
     console.error('Error: ' + res.message);
     loading = false;
    }
-  }, count, lastID, filterName);
+  }, count, offset, filterName);
  }
 
  function isLoaderVisible() {
