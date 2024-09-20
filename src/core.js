@@ -6,9 +6,15 @@ export const loginError = writable(null);
 export let username = null;
 export let sessionID = null;
 
+Socket.socketError.subscribe((value) => {
+ console.log('Socket Error:', value);
+ if (value) loginError.set(value);
+});
+
 export function login(credentials) {
  Socket.send('admin_login', { username: credentials.username, password: credentials.password }, null, (req, res) => {
   if (res.error !== 0) {
+   Socket.disconnect();
    loginError.set(res.message);
    return;
   }
@@ -38,7 +44,6 @@ function frontend_logout() {
   //console.log('in SocketCloseCallback: Socket state:', get(Socket.socketState));
   hideSidebarMobile.set(false);
   isLoggedIn.set(false);
-  loginError.set(null);
   username = null;
   sessionID = null;
  });

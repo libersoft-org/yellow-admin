@@ -1,5 +1,7 @@
 import { get, writable } from 'svelte/store';
+
 export const socketState = writable(null);
+export const socketError = writable(null);
 export const socketStates = {
  CONNECTING: 0,
  OPEN: 1,
@@ -17,15 +19,22 @@ export function setSocketCloseCallback(callback) {
 
 
 export function connect(server = null) {
+ socketError.set(null);
  if (socket && get(socketState) !== socketStates.CLOSED) {
   console.error('Socket is already connected');
   return;
  }
  if (server) url = server;
- socket = new WebSocket(url);
+ try {
+  socket = new WebSocket(url);
+ } catch (e) {
+  console.log('Error while creating WebSocket:', e);
+  socketError.set('Error while creating WebSocket: ' + e.message);
+  return;
+ }
  socketState.set(socket.readyState);
  socket.onopen = () => socketState.set(socket.readyState);
- socket.onerror = () => socketState.set(socket.readyState);
+ socket.onerror = (event) => {console.log('sockerr',event); socketState.set(socket.readyState); socketError.set('Error while connecting to server.')};
  socket.onclose = () => { socketState.set(socket.readyState); if (socketCloseCallback) socketCloseCallback()};
  socket.onmessage = event => handleResponse(JSON.parse(event.data));
 }
@@ -85,6 +94,7 @@ function getRandomString(length = 40) {
 export default {
  socketState,
  socketStates,
+ socketError,
  setSocketCloseCallback,
  connect,
  disconnect,

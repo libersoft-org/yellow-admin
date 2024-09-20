@@ -1,6 +1,7 @@
 <script>
  import { hideSidebarMobile, domainsList } from '../core.js';
  import LazyLoader from '../components/lazy-loader.svelte';
+ import Button from '../components/button.svelte';
  import Modal from '../components/modal.svelte';
  import ModalDomainsAdd from '../modals/modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modals/modal-domains-del.svelte';
@@ -13,8 +14,12 @@
  let filterName = null;
  let filterIDFrom = null;
  let lazyLoader;
+ let sortBy = 'id';
+ let sortDir = 'asc';
+
 
  async function loadItems(cb, count, lastID, filterName = null) {
+  console.log('loadItems');
   domainsList(res => cb({error: res.error, items: res.data.domains}), count, lastID, filterName);
  }
 
@@ -34,12 +39,6 @@
   isModalAddEditOpen = true;
  }
 
- function keyAddEdit(id = null) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickAddEdit(id);
-  }
- }
 
  function onModalAddEditClose(reload = false) {
   isModalAddEditOpen = false;
@@ -116,17 +115,14 @@
 
 <div class="page">
  <div class="buttons">
-  <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
+
+  <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu} >
    <img src="img/menu.svg" alt="☰" />
   </div>
-  <div class="button" role="button" tabindex="0" on:click={() => clickAddEdit()} on:keydown={() => keyAddEdit()}>
-   <img src="img/add.svg" alt="Add a new domain" />
-   <div>Add a new domain</div>
-  </div>
-  <div class="button" role="button" tabindex="0" on:click={() => lazyLoader.reload()} on:keydown={keyReload}>
-   <img src="img/reload.svg" alt="Reload" />
-   <div>Reload</div>
-  </div>
+
+  <Button on:click={() => clickAddEdit()} img="img/add.svg" text="Add a new domain" />
+  <Button on:click={() => lazyLoader.reload()} img="img/reload.svg" text="Reload" />
+
  </div>
  <div class="buttons">
   <div class="search">
@@ -137,10 +133,7 @@
    <div>Record ID from:</div>
    <input type="text" placeholder="0" bind:value={filterIDFrom} on:keydown={keySearchForm}>
   </div>
-  <div class="button" role="button" tabindex="0" on:click={clickSearch} on:keydown={keySearch}>
-   <img src="img/search.svg" alt="Search" />
-   <div>Search</div>
-  </div>
+  <Button on:click={clickSearch} img="img/search.svg" text="Search" />
  </div>
  <table class="list-table">
   <thead>

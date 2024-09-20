@@ -2,6 +2,7 @@
  import { onMount } from 'svelte';
  import { socketState, socketStates, connect } from '../socket.js';
  import { isLoggedIn, loginError, login } from '../core.js';
+ import Button from '../components/button.svelte';
  export let product;
  export let version;
  export let link;
@@ -20,12 +21,11 @@
  });
 
  $: if ($socketState === socketStates.OPEN && loggingIn) login(credentials);
- $: if ($socketState === socketStates.CLOSED && loggingIn) {
-  loginError.set('Cannot connect to server');
-  loggingIn = false;
- }
+
  $: if ($loginError) loggingIn = false;
  $: if ($isLoggedIn) loggingIn = false;
+ $: console.log('loginError:', $loginError);
+
 
  function clickLogo() {
   window.open(link, '_blank');
@@ -39,10 +39,14 @@
  }
 
  function clickLogin() {
+  console.log('clickLogin loggingIn:', loggingIn);
   if (loggingIn) return;
   loggingIn = true;
   loginError.set(null);
-  connect(credentials.server);
+  setTimeout(() => {
+   console.log('clickLogin credentials:', credentials);
+   connect(credentials.server);
+  }, 0);
  }
 
  function keyLogin() {
@@ -164,13 +168,15 @@
      <div>{$loginError}</div>
     </div>
    {/if}
-   <div class="button{loggingIn ? ' disabled' : ''}" role="button" tabindex="0" on:click={clickLogin} on:keydown={keyLogin}>
+
+   <Button disabled={loggingIn} on:click={clickLogin}>
     {#if loggingIn}
      <div class="loader"></div>
     {:else}
      Login
     {/if}
-   </div>
+   </Button>
+
   </div>
  </div>
 </div>
