@@ -9,6 +9,12 @@ export const socketStates = {
 export let url;
 const requests = {};
 let socket;
+let socketCloseCallback = null;
+
+export function setSocketCloseCallback(callback) {
+ socketCloseCallback = callback;
+}
+
 
 export function connect(server = null) {
  if (socket && get(socketState) !== socketStates.CLOSED) {
@@ -20,7 +26,7 @@ export function connect(server = null) {
  socketState.set(socket.readyState);
  socket.onopen = () => socketState.set(socket.readyState);
  socket.onerror = () => socketState.set(socket.readyState);
- socket.onclose = () => socketState.set(socket.readyState);
+ socket.onclose = () => { socketState.set(socket.readyState); if (socketCloseCallback) socketCloseCallback()};
  socket.onmessage = event => handleResponse(JSON.parse(event.data));
 }
 
@@ -29,8 +35,9 @@ export function disconnect() {
   console.error('Socket is not yet created');
   return;
  }
- if (socketState !== socketStates.OPEN) {
-  console.error('Socket is opened');
+ console.log('Socket state:', get(socketState));
+ if (get(socketState) !== socketStates.OPEN) {
+  console.error('Socket is not opened');
   return;
  }
  socket.close();
@@ -78,6 +85,7 @@ function getRandomString(length = 40) {
 export default {
  socketState,
  socketStates,
+ setSocketCloseCallback,
  connect,
  disconnect,
  send,
