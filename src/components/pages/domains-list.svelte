@@ -76,6 +76,17 @@
   }
  }
 
+ function clickSortBy(columnName) {
+  console.log(columnName);
+ }
+
+ function keySortBy(columnName) {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   clickSortBy(columnName);
+  }
+ }
+
  function onModalDelClose(reload = false) {
   isModalDelOpen = false;
   if (reload) lazyLoader.reset();
@@ -134,10 +145,25 @@
  <table class="list-table">
   <thead>
    <tr>
-    <th class="center">ID</th>
-    <th>Name</th>
+    <th class="center">
+     <div class="row column" role="button" tabindex="0" on:click={() => clickSortBy('id')} on:keydown={() => keySortBy('id')}>
+      <div>ID</div>
+      <div class="icon"><img src="img/down.svg" alt="▼" /><!-- ▲ --></div>
+     </div>
+    </th>
+    <th>
+     <div class="row column" role="button" tabindex="0" on:click={() => clickSortBy('name')} on:keydown={() => keySortBy('name')}>
+      <div>Name</div>
+      <div class="icon"><img src="img/down.svg" alt="▼" /></div>
+     </div>
+    </th>
     <th class="center">Number of users</th>
-    <th class="center">Created</th>
+    <th class="center">
+     <div class="row column" role="button" tabindex="0" on:click={() => clickSortBy('created')} on:keydown={() => keySortBy('created')}>
+      <div>Created</div>
+      <div class="icon"><img src="img/down.svg" alt="▼" /></div>
+     </div>
+    </th>
     <th class="center">Action</th>
    </tr>
   </thead>
@@ -149,7 +175,7 @@
      <td class="center">{d.users_count}</td>
      <td class="center">{new Date(d.created.replace(' ', 'T') + 'Z').toLocaleString()}</td>
      <td class="center">
-      <div class="icons">
+      <div class="row">
        <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(d.id)} on:keydown={() => keyAddEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
        <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id, d.name)} on:keydown={() => keyDel(d.id)}><img src="img/del.svg" alt="Delete" /></div>
       </div>
