@@ -5,9 +5,6 @@
   export let text = '';
   export let disabled = false;
 
-  export let role = 'button';
-  export let tabindex = 0;
-
   const dispatch = createEventDispatcher();
 
   function handleKeydown(event) {
@@ -18,7 +15,7 @@
   }
 </script>
 
-<div class="button {disabled ? 'disabled' : ''}" role={role} tabindex={tabindex} on:click on:keydown={handleKeydown}>
+<div class="button {disabled ? 'disabled' : ''}" role="button" tabindex="0" on:click on:keydown={handleKeydown}>
  <slot>
   {#if img}
    <img src={img} alt={text} />
