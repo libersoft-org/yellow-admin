@@ -1,9 +1,9 @@
 <script>
- import { hideSidebarMobile, domainsList } from '../../core.js';
- import Modal from '../modal.svelte';
- import ModalDomainsAdd from '../modal-domains-add-edit.svelte';
- import ModalDomainsDel from '../modal-domains-del.svelte';
- import LazyLoader from '../lazy-loader.svelte';
+ import { hideSidebarMobile, domainsList } from '../core.js';
+ import LazyLoader from '../components/lazy-loader.svelte';
+ import Modal from '../components/modal.svelte';
+ import ModalDomainsAdd from '../modals/modal-domains-add-edit.svelte';
+ import ModalDomainsDel from '../modals/modal-domains-del.svelte';
  export let contentElement;
  let items = [];
  let isModalAddEditOpen = false;

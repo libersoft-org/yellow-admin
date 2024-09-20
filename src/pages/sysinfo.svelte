@@ -1,7 +1,7 @@
 <script>
  import { onMount } from 'svelte';
- import { hideSidebarMobile, sysInfoList, humanSize } from '../../core.js';
- import ProgressBar from '../progressbar.svelte';
+ import { hideSidebarMobile, sysInfoList, humanSize } from '../core.js';
+ import ProgressBar from '../components/progressbar.svelte';
  let sysInfo = null;
  let cpuSummary;
 
