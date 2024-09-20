@@ -1,9 +1,22 @@
 <script>
+ import Core from "../core.js";
+
  export let title;
  export let icon;
- export let clickFunction;
- export let keyFunction;
+ export let callback;
  export let active = false;
+
+ function clickFunction() {
+  callback();
+ }
+
+ function keyFunction(name) {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   callback();
+  }
+ }
+
 </script>
 
 <style>
