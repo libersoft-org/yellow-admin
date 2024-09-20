@@ -1,4 +1,4 @@
-import {get, writable} from 'svelte/store';
+import {writable} from 'svelte/store';
 import Socket from './socket.js';
 export const hideSidebarMobile = writable(false);
 export const isLoggedIn = writable(false);
