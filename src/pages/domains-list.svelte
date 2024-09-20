@@ -46,6 +46,12 @@
   isModalAddEditOpen = true;
  }
 
+ function keyAddEdit(id) {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   clickAddEdit(id);
+  }
+ }
 
  function onModalAddEditClose(reload = false) {
   isModalAddEditOpen = false;
