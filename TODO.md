@@ -1,7 +1,6 @@
 # Bugs
 
 - Domains - lazy loader has ugly setTimeout - find another solution if possible
-- When session is expired, it doesn't show any error
 
 # Features
 
