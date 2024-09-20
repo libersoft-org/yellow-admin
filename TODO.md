@@ -1,10 +1,13 @@
 # Bugs
 
+- Menu icon (hamburger) on big zoom is eliptic, not circle
 - Domains - lazy loader has ugly setTimeout - find another solution if possible
 
 # Features
 
-- Domains - add sorting table by column and ASC / DESC
+- Modal windows don't have <Button /> component yet
+- Cleanup code
+
 - Admins - list, add, edit, delete
 - Sessions - list, add, delete
 - Users - list, add, edit, delete
