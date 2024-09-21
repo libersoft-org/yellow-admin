@@ -4,6 +4,7 @@
 
 # Features
 
+- Move columns and cells to separate components
 - Cleanup code related to domains-list.svelte before copying to other pages
 - Admins - list, add, edit, delete
 - Sessions - list, add, delete

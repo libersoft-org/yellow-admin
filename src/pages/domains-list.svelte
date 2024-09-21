@@ -1,7 +1,7 @@
 <script>
  import { domainsList } from '../core.js';
  import MenuButton from '../components/menu-button.svelte';
- import SortableColumnHeader from '../components/sortable-column-header.svelte';
+ import TableColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
  import Modal from '../components/modal.svelte';
@@ -42,9 +42,7 @@
 
  function onModalAddEditClose(reload = false) {
   isModalAddEditOpen = false;
-  if (reload) {
-   reloadItems();
-  }
+  if (reload) reloadItems();
  }
 
  function clickSearch() {
@@ -62,13 +60,6 @@
   if (event.key === 'Enter') {
    event.preventDefault();
    clickSearch();
-  }
- }
-
- function keySortBy(columnName) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickSortBy(columnName);
   }
  }
 
@@ -119,11 +110,11 @@
  <table class="list-table">
   <thead>
    <tr>
-    <SortableColumnHeader column="id" name="ID" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
-    <SortableColumnHeader column="name" name="Name" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
-    <SortableColumnHeader column="users_count" name="Number of users" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
-    <SortableColumnHeader column="created" name="Created" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
-    <th class="center">Action</th>
+    <TableColumnHeader column="id" name="ID" align="center" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
+    <TableColumnHeader column="name" name="Name" align="left" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
+    <TableColumnHeader column="users_count" align="center" name="Number of users" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
+    <TableColumnHeader column="created" align="center" name="Created" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
+    <TableColumnHeader align="center" name="Action" />
    </tr>
   </thead>
   <tbody>

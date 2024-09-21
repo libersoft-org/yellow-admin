@@ -121,38 +121,6 @@ input {
  text-align: left;
 }
 
-.list-table thead tr th,
-.list-table tbody tr td {
- padding: 10px;
-}
-
-.list-table thead tr th.center,
-.list-table tbody tr td.center {
- text-align: center;
-}
-
-.list-table tbody tr td .row, .list-table thead tr th .row {
- display: flex;
- flex-direction: row;
- justify-content: center;
- align-items: center;
-}
-
-.list-table tbody tr td .row .icon, .list-table thead tr th .row .icon {
- display: flex;
- padding: 5px;
- cursor: pointer;
-}
-
-.list-table tbody tr td .row .icon img, .list-table thead tr th .row .icon img {
- width: 20px;
- height: 20px;
-}
-
-.list-table thead tr th .column {
- cursor: pointer;
-}
-
 .list-table tbody tr:nth-child(even) {
  background-color: #ffdd1130;
 }
