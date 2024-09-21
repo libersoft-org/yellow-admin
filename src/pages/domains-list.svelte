@@ -7,6 +7,8 @@
  import Modal from '../components/modal.svelte';
  import ModalDomainsAdd from '../modals/modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modals/modal-domains-del.svelte';
+ import Cell from '../components/table-cell.svelte';
+
  export let contentElement;
  let items = [];
  let isModalAddEditOpen = false;
@@ -88,6 +90,25 @@
   align-items: center;
   gap: 10px;
  }
+
+.row .icon {
+ display: flex;
+ padding: 5px;
+ cursor: pointer;
+}
+
+ .row {
+ display: flex;
+ flex-direction: row;
+ justify-content: center;
+ align-items: center;
+}
+
+ .row .icon img {
+  width: 20px;
+  height: 20px;
+ }
+
 </style>
 
 <div class="page">
@@ -97,16 +118,20 @@
   <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
  </div>
  <div class="buttons">
+
   <div class="search">
    <div>Domain name:</div>
    <input type="text" placeholder="domain.tld" bind:value={filterName} on:keydown={keySearchForm}>
   </div>
+
   <div class="search">
    <div>Offset:</div>
    <input type="number" min="0" placeholder="0" bind:value={filterOffset} on:keydown={keySearchForm}>
   </div>
+
   <Button on:click={clickSearch} img="img/search.svg" text="Search" />
  </div>
+
  <table class="list-table">
   <thead>
    <tr>
@@ -120,22 +145,24 @@
   <tbody>
    {#each items as d}
     <tr>
-     <td class="center">{d.id}</td>
-     <td>{d.name}</td>
-     <td class="center">{d.users_count}</td>
-     <td class="center">{new Date(d.created.replace(' ', 'T') + 'Z').toLocaleString()}</td>
-     <td class="center">
+     <Cell align="center">{d.id}</Cell>
+     <Cell>{d.name}</Cell>
+     <Cell align="center">{d.users_count}</Cell>
+     <Cell align="center">{new Date(d.created.replace(' ', 'T') + 'Z').toLocaleString()}</Cell>
+     <Cell align="center">
       <div class="row">
        <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(d.id)} on:keydown={() => keyAddEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
        <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id, d.name)} on:keydown={() => keyDel(d.id)}><img src="img/del.svg" alt="Delete" /></div>
       </div>
-     </td>
+     </Cell>
     </tr>
    {/each}
   </tbody>
  </table>
+
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items={items} />
 </div>
+
 {#if isModalAddEditOpen}
  <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} onClose={onModalAddEditClose}>
   <ModalDomainsAdd id={domainID} onClose={onModalAddEditClose} />

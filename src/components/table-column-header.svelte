@@ -1,10 +1,16 @@
 <script>
  export let align = 'left';
  export let name;
- export let column;
- export let sortBy;
- export let sortDir;
- export let sortingChanged;
+ export let column = undefined;
+ export let sortBy = undefined;
+ export let sortDir = undefined;
+ export let sortingChanged = () => {};
+
+
+ let sortable = column !== undefined;
+ let role = sortable ? "button" : undefined;
+ let tabindex = sortable ? 0 : undefined;
+
 
  function clickSortBy(columnName) {
   if (sortBy === columnName) sortDir = sortDir === 'ASC' ? 'DESC' : 'ASC';
@@ -23,6 +29,21 @@
  }
 </script>
 
+
+<th>
+ <div class="row {sortable?'sortable':''}" style="justify-content: {align}" role={role} tabindex={tabindex} on:click={() => clickSortBy(column)} on:keydown={() => keySortBy(column)}>
+  <div>{name}</div>
+  {#if sortable && (sortBy === column)}
+   {#if sortDir === 'DESC'}
+    <div class="icon"><img src="img/down.svg" alt="▼" /></div>
+   {:else}
+    <div class="icon"><img src="img/up.svg" alt="▲" /></div>
+   {/if}
+  {/if}
+ </div>
+</th>
+
+
 <style>
  th {
   padding: 10px;
@@ -31,7 +52,6 @@
  th .row {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
  }
 
@@ -46,20 +66,8 @@
   height: 20px;
  }
 
- th .column {
+ .sortable {
   cursor: pointer;
  }
 </style>
 
-<th>
- <div class="row column" style="text-align: {align}" role="button" tabindex="0" on:click={() => clickSortBy(column)} on:keydown={() => keySortBy(column)}>
-  <div>{name}</div>
-  {#if sortBy === column}
-   {#if sortDir === 'DESC'}
-    <div class="icon"><img src="img/down.svg" alt="▼" /></div>
-   {:else}
-    <div class="icon"><img src="img/up.svg" alt="▲" /></div>
-   {/if}
-  {/if}
- </div>
-</th>
