@@ -1,5 +1,6 @@
 <script>
  import { onMount } from 'svelte';
+ import Button from '../components/button.svelte';
  //import { openNewConversation } from '../messages.js';
  //export let onClose;
  let username;
@@ -11,13 +12,6 @@
   if (username.value) {
    //openNewConversation(address.value);
    //onClose();
-  }
- }
-
- function keyAdd() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickAdd();
   }
  }
 
@@ -51,4 +45,4 @@
  <div class="label">Password:</div>
  <div><input type="password" placeholder="v3ry_$3cr3t_p455w0rd_123" on:keydown={keyEnter} bind:this={password} /></div>
 </div>
-<div class="button" role="button" tabindex="0" on:click={clickAdd} on:keydown={keyAdd}>Add</div>
+<Button on:click={clickAdd} text="Add" />

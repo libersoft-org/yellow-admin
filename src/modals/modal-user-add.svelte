@@ -1,5 +1,6 @@
 <script>
  import { onMount } from 'svelte';
+ import Button from '../components/button.svelte';
  //export let onClose;
  let username;
  let domain;
@@ -10,13 +11,6 @@
   if (username.value) {
    //openNewConversation(address.value);
    //onClose();
-  }
- }
-
- function keyAdd() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickAdd();
   }
  }
 
@@ -50,4 +44,4 @@
  <div class="label">Domain:</div>
  <div><select name="domain" on:keydown={keyEnter} bind:this={domain}></select></div>
 </div>
-<div class="button" role="button" tabindex="0" on:click={clickAdd} on:keydown={keyAdd}>Add</div>
+<Button on:click={clickAdd} text="Add" />

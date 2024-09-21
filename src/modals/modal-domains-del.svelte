@@ -1,5 +1,6 @@
 <script>
  import { domainsDel } from '../core.js';
+ import Button from '../components/button.svelte';
  export let onClose;
  export let id;
  export let name;
@@ -10,13 +11,6 @@
    if (res?.error === 0) onClose(true);
    else if (res?.message) error = res.message;
   });
- }
-
- function keyDel() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickDel();
-  }
  }
 </script>
 
@@ -31,7 +25,7 @@
 </style>
 
 <div>Would you like to delete the domain "<span class="bold">{name}</span>" (id: {id})?</div>
-<div class="button" role="button" tabindex="0" on:click={clickDel} on:keydown={keyDel}>Delete</div>
+<Button on:click={clickDel} text="Delete" />
 {#if error}
  <div class="error">
   <div class="bold">Error:</div>

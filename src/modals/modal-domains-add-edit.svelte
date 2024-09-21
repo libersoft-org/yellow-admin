@@ -1,6 +1,7 @@
 <script>
  import { onMount } from 'svelte';
  import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
+ import Button from '../components/button.svelte';
  export let onClose;
  export let id = null;
  let domainElement;
@@ -29,13 +30,6 @@
      else if (res?.message) error = res.message;
     });
    }
-  }
- }
-
- function keyAddEdit() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickAddEdit();
   }
  }
 
@@ -72,7 +66,7 @@
 <div class="group">
  <div class="label">Domain name:</div>
  <div><input type="text" value={domainData ? domainData.name : ''} placeholder="domain.tld" on:keydown={keyEnter} bind:this={domainElement} /></div>
- <div class="button" role="button" tabindex="0" on:click={clickAddEdit} on:keydown={keyAddEdit}>{id ? 'Edit' : 'Add'}</div>
+ <Button on:click={clickAddEdit} text="{id ? 'Edit' : 'Add'}" />
 </div>
 {#if error}
  <div class="error">
