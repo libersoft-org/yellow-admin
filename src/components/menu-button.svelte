@@ -1,5 +1,5 @@
 <script>
- import { hideSidebarMobile, } from '../core.js';
+ import { hideSidebarMobile } from '../core.js';
 
  function clickMenu() {
   hideSidebarMobile.set(false);

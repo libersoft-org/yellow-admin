@@ -1,18 +1,16 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+ import { createEventDispatcher } from 'svelte';
+ export let img = '';
+ export let text = '';
+ export let disabled = false;
+ const dispatch = createEventDispatcher();
 
-  export let img = '';
-  export let text = '';
-  export let disabled = false;
-
-  const dispatch = createEventDispatcher();
-
-  function handleKeydown(event) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      dispatch('click');
-    }
+ function handleKeydown(event) {
+  if (event.key === 'Enter' || event.key === ' ') {
+   event.preventDefault();
+   dispatch('click');
   }
+ }
 </script>
 
 <div class="button {disabled ? 'disabled' : ''}" role="button" tabindex="0" on:click on:keydown={handleKeydown}>

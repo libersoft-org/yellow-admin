@@ -14,13 +14,10 @@
  let domainID = null;
  let domainName = null;
  let filterName = null;
-
  let filterOffset = 0;
-
  let lazyLoader;
  let sortBy = 'id';
  let sortDir = 'asc';
-
 
  function reloadItems() {
   lazyLoader.reload(filterName, filterOffset - 1);

@@ -1,11 +1,9 @@
 <script>
-
  export let name;
  export let column;
  export let sortBy;
  export let sortDir;
  export let sortingChanged;
-
 
  function clickSortBy(columnName) {
   if (sortBy === columnName) {
@@ -17,15 +15,13 @@
   sortingChanged({sortBy, sortDir});
  }
 
-function keySortBy(columnName) {
+ function keySortBy(columnName) {
   if (event.key === 'Enter' || event.key === ' ') {
    event.preventDefault();
    clickSortBy(columnName);
   }
-}
-
+ }
 </script>
-
 
 <th class="center">
  <div class="row column" role="button" tabindex="0" on:click={() => clickSortBy(column)} on:keydown={() => keySortBy(column)}>
@@ -39,5 +35,3 @@ function keySortBy(columnName) {
   {/if}
  </div>
 </th>
-
-

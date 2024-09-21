@@ -1,6 +1,4 @@
 <script>
- import Core from "../core.js";
-
  export let title;
  export let icon;
  export let callback;

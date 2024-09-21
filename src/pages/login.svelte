@@ -21,11 +21,9 @@
  });
 
  $: if ($socketState === socketStates.OPEN && loggingIn) login(credentials);
-
  $: if ($loginError) loggingIn = false;
  $: if ($isLoggedIn) loggingIn = false;
  $: console.log('loginError:', $loginError);
-
 
  function clickLogo() {
   window.open(link, '_blank');
@@ -168,7 +166,6 @@
      <div>{$loginError}</div>
     </div>
    {/if}
-
    <Button disabled={loggingIn} on:click={clickLogin}>
     {#if loggingIn}
      <div class="loader"></div>
@@ -176,7 +173,6 @@
      Login
     {/if}
    </Button>
-
   </div>
  </div>
 </div>
