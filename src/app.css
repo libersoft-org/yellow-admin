@@ -104,20 +104,8 @@ input {
 
 .page .buttons {
  display: flex;
+ align-items: center;
  gap: 10px;
-}
-
-.page .buttons .menu-button {
- display: none;
- background-color: #222;
- border-radius: 50%;
- padding: 15px;
- cursor: pointer;
-}
-
-.page .menu-button img {
- width: 20px;
- height: 20px;
 }
 
 .list-table {
@@ -175,10 +163,4 @@ input {
 
 .list-table tbody tr:hover {
  background-color: #fd1;
-}
-
-@media (max-width: 768px) {
- .page .buttons .menu-button {
-  display: flex;
- }
 }

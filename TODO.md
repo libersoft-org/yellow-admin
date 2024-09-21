@@ -1,6 +1,5 @@
 # Bugs
 
-- Menu icon (hamburger) on big zoom is eliptic, not circle
 - Domains - lazy loader has ugly setTimeout - find another solution if possible
 
 # Features

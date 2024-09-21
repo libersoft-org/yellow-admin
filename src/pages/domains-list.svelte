@@ -1,5 +1,6 @@
 <script>
- import { hideSidebarMobile, domainsList } from '../core.js';
+ import { domainsList } from '../core.js';
+ import MenuButton from '../components/menu-button.svelte';
  import SortableColumnHeader from '../components/sortable-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
@@ -28,17 +29,6 @@
  async function loadItems(show_items_callback, count, offset, filterName = null) {
   console.log('loadItems count:', count, 'offset:', offset, 'filterName:', filterName, 'sortBy:', sortBy, 'sortDir:', sortDir);
   domainsList(res => show_items_callback({error: res.error, items: res.data.domains}), count, offset, filterName, sortBy, sortDir);
- }
-
- function clickMenu() {
-  hideSidebarMobile.set(false);
- }
-
- function keyMenu() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickMenu();
-  }
  }
 
  function clickAddEdit(id = null) {
@@ -114,14 +104,9 @@
 
 <div class="page">
  <div class="buttons">
-
-  <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu} >
-   <img src="img/menu.svg" alt="☰" />
-  </div>
-
+  <MenuButton />
   <Button on:click={() => clickAddEdit()} img="img/add.svg" text="Add a new domain" />
   <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
-
  </div>
  <div class="buttons">
   <div class="search">
