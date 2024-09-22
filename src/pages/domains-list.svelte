@@ -143,7 +143,7 @@
    </tr>
   </thead>
   <tbody>
-   {#each items as d}
+   {#each items as d (d.id)}
     <tr>
      <Cell align="center">{d.id}</Cell>
      <Cell>{d.name}</Cell>
