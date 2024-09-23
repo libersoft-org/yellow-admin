@@ -13,15 +13,6 @@
  }
 </script>
 
-<div class="button {disabled ? 'disabled' : ''}" role="button" tabindex="0" on:click on:keydown={handleKeydown}>
- <slot>
-  {#if img}
-   <img src={img} alt={text} />
-  {/if}
-  <div>{text}</div>
- </slot>
-</div>
-
 <style>
  .button {
   display: flex;
@@ -35,17 +26,24 @@
   background-color: #fd1;
   font-weight: bold;
   cursor: pointer;
-}
+ }
 
-.button.disabled {
- border: 1px solid #888;
- background-color: #bbb;
-}
+ .button.disabled {
+  border: 1px solid #888;
+  background-color: #bbb;
+ }
 
-.button img {
- width: 20px;
- height: 20px;
-}
-
-
+ .button img {
+  width: 20px;
+  height: 20px;
+ }
 </style>
+
+<div class="button {disabled ? 'disabled' : ''}" role="button" tabindex="0" on:click on:keydown={handleKeydown}>
+ <slot>
+  {#if img}
+   <img src={img} alt={text} />
+  {/if}
+  <div>{text}</div>
+ </slot>
+</div>

@@ -48,26 +48,31 @@
  function loadMore() {
   if (loading || !hasMore) return;
   loading = true;
-  loadItems(res => {
-   if (res.error === 0) {
-    items = [...items, ...res.items];
-    //if (res.items.length > 0) lastID = res.items[res.items.length - 1].id;
-    //console.log('items.length:' + items.length);
-    loading = false;
-    offset += res.items.length;
-    if (res.items.length < count) {
-     hasMore = false;
-     if (observer) observer.disconnect();
+  loadItems(
+   res => {
+    if (res.error === 0) {
+     items = [...items, ...res.items];
+     //if (res.items.length > 0) lastID = res.items[res.items.length - 1].id;
+     //console.log('items.length:' + items.length);
+     loading = false;
+     offset += res.items.length;
+     if (res.items.length < count) {
+      hasMore = false;
+      if (observer) observer.disconnect();
+     } else {
+      setTimeout(() => {
+       if (isLoaderVisible()) loadMore();
+      }, 500);
+     }
     } else {
-     setTimeout(() => {
-      if (isLoaderVisible()) loadMore();
-     }, 500);
+     console.error('Error: ' + res.message);
+     loading = false;
     }
-   } else {
-    console.error('Error: ' + res.message);
-    loading = false;
-   }
-  }, count, offset, filterName);
+   },
+   count,
+   offset,
+   filterName
+  );
  }
 
  function isLoaderVisible() {

@@ -13,7 +13,6 @@
   selectedMenuItem = name;
   onSelectPage(name);
  }
-
 </script>
 
 <style>

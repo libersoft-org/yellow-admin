@@ -1,4 +1,4 @@
-import {writable} from 'svelte/store';
+import { writable } from 'svelte/store';
 import Socket from './socket.js';
 export const hideSidebarMobile = writable(false);
 export const isLoggedIn = writable(false);
@@ -6,26 +6,24 @@ export const loginError = writable(null);
 export let username = null;
 export let sessionID = null;
 
-Socket.socketError.subscribe((value) => {
+Socket.socketError.subscribe(value => {
  console.log('Socket Error:', value);
  if (value) loginError.set(value);
 });
 
 export function logout() {
- sessionsDel(sessionID, (res) => {
+ sessionsDel(sessionID, res => {
   //console.log('logout Response:', res);
   if (res.error !== 0) {
    alert(res.message);
   }
   frontend_logout();
- }
- );
+ });
  sessionID = null;
 }
 
 function frontend_logout() {
- Socket.setSocketCloseCallback(() =>
- {
+ Socket.setSocketCloseCallback(() => {
   //console.log('in SocketCloseCallback: Socket state:', get(Socket.socketState));
   hideSidebarMobile.set(false);
   isLoggedIn.set(false);
@@ -36,7 +34,7 @@ function frontend_logout() {
 }
 
 export function login(credentials) {
- send('admin_login', { username: credentials.username, password: credentials.password }, (res) => {
+ send('admin_login', { username: credentials.username, password: credentials.password }, res => {
   if (res.error !== 0) {
    Socket.disconnect();
    loginError.set(res.message);
@@ -50,8 +48,7 @@ export function login(credentials) {
  });
 }
 
-function send(command, params, callback)
-{
+function send(command, params, callback) {
  let res = Socket.send(command, params, sessionID, (req, res) => {
   if (res.error >= 900 && res.error <= 999) {
    console.error('Error:', res.error);

@@ -36,6 +36,6 @@
  }
 </style>
 
-<div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu} >
+<div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
  <img src="img/menu.svg" alt="☰" />
 </div>

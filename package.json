@@ -10,8 +10,8 @@
 		"@sveltejs/adapter-auto": "*",
 		"@sveltejs/kit": "*",
 		"@sveltejs/vite-plugin-svelte": "*",
-		"prettier": "^3.3.3",
-		"prettier-plugin-svelte": "^3.2.6",
+		"prettier": "*",
+		"prettier-plugin-svelte": "*",
 		"svelte": "*",
 		"vite": "*"
 	},

@@ -27,7 +27,7 @@
 
  async function loadItems(show_items_callback, count, offset, filterName = null) {
   console.log('loadItems count:', count, 'offset:', offset, 'filterName:', filterName, 'sortBy:', sortBy, 'sortDir:', sortDir);
-  domainsList(res => show_items_callback({error: res.error, items: res.data.domains}), count, offset, filterName, sortBy, sortDir);
+  domainsList(res => show_items_callback({ error: res.error, items: res.data.domains }), count, offset, filterName, sortBy, sortDir);
  }
 
  function clickAddEdit(id = null) {
@@ -91,24 +91,23 @@
   gap: 10px;
  }
 
-.row .icon {
- display: flex;
- padding: 5px;
- cursor: pointer;
-}
+ .row .icon {
+  display: flex;
+  padding: 5px;
+  cursor: pointer;
+ }
 
  .row {
- display: flex;
- flex-direction: row;
- justify-content: center;
- align-items: center;
-}
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+ }
 
  .row .icon img {
   width: 20px;
   height: 20px;
  }
-
 </style>
 
 <div class="page">
@@ -118,15 +117,14 @@
   <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
  </div>
  <div class="buttons">
-
   <div class="search">
    <div>Domain name:</div>
-   <input type="text" placeholder="domain.tld" bind:value={filterName} on:keydown={keySearchForm}>
+   <input type="text" placeholder="domain.tld" bind:value={filterName} on:keydown={keySearchForm} />
   </div>
 
   <div class="search">
    <div>Offset:</div>
-   <input type="number" min="0" placeholder="0" bind:value={filterOffset} on:keydown={keySearchForm}>
+   <input type="number" min="0" placeholder="0" bind:value={filterOffset} on:keydown={keySearchForm} />
   </div>
 
   <Button on:click={clickSearch} img="img/search.svg" text="Search" />
@@ -135,10 +133,10 @@
  <table class="list-table">
   <thead>
    <tr>
-    <TableColumnHeader column="id" name="ID" align="center" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
-    <TableColumnHeader column="name" name="Name" align="left" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
-    <TableColumnHeader column="users_count" align="center" name="Number of users" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
-    <TableColumnHeader column="created" align="center" name="Created" bind:sortBy={sortBy} bind:sortDir={sortDir} sortingChanged={() => reloadItems()} />
+    <TableColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <TableColumnHeader column="name" name="Name" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <TableColumnHeader column="users_count" align="center" name="Number of users" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <TableColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <TableColumnHeader align="center" name="Action" />
    </tr>
   </thead>
@@ -160,7 +158,7 @@
   </tbody>
  </table>
 
- <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items={items} />
+ <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
 
 {#if isModalAddEditOpen}

@@ -17,7 +17,6 @@ export function setSocketCloseCallback(callback) {
  socketCloseCallback = callback;
 }
 
-
 export function connect(server = null) {
  socketError.set(null);
  if (socket && get(socketState) !== socketStates.CLOSED) {
@@ -34,8 +33,15 @@ export function connect(server = null) {
  }
  socketState.set(socket.readyState);
  socket.onopen = () => socketState.set(socket.readyState);
- socket.onerror = (event) => {console.log('sockerr',event); socketState.set(socket.readyState); socketError.set('Error while connecting to server.')};
- socket.onclose = () => { socketState.set(socket.readyState); if (socketCloseCallback) socketCloseCallback()};
+ socket.onerror = event => {
+  console.log('sockerr', event);
+  socketState.set(socket.readyState);
+  socketError.set('Error while connecting to server.');
+ };
+ socket.onclose = () => {
+  socketState.set(socket.readyState);
+  if (socketCloseCallback) socketCloseCallback();
+ };
  socket.onmessage = event => handleResponse(JSON.parse(event.data));
 }
 
