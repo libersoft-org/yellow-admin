@@ -5,8 +5,6 @@
 
 # Features
 
-- Move columns and cells to separate components
-- Cleanup code related to domains-list.svelte before copying to other pages
-- Users - list, add, edit, delete
+- Users - add, edit, delete
 - Remove autologin in login.svelte -> onMount;
 - Fix files rights
