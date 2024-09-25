@@ -14,35 +14,37 @@
  let items = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;
- let domainID = null;
+ let filterDomainID = null;
  let userID = null;
- let userName = null;
+ let delAddress = null;
  let filterUsername = null;
  let filterOffset = 0;
  let lazyLoader;
  let sortBy = 'id';
- let sortDir = 'asc';
+ let sortDir = 'ASC';
+
+ $: console.log('filterUsername:', filterUsername, 'filterDomainID:', filterDomainID, 'filterOffset:', filterOffset);
 
  onMount(() => {
   domainsList(
    res => {
-    if (res.error === 0) domains = res.data.domains;
+    if (res.error === 0) domains = [{id: null, name:'ALL'}, ...res.data.domains];
    },
    5,
    0,
    null,
    'id',
-   'asc'
+   'ASC'
   );
  });
 
  function reloadItems() {
-  lazyLoader.reload(filterUsername, domainID, filterOffset - 1);
+  lazyLoader.reload({ username: filterUsername, domainID: filterDomainID }, filterOffset);
  }
 
- async function loadItems(show_items_callback, count, offset, filterName = null) {
-  console.log('loadItems domainID:', domainID, ', count:', count, 'offset:', offset, 'filterName:', filterName, 'sortBy:', sortBy, 'sortDir:', sortDir);
-  usersList(res => show_items_callback({ error: res.error, items: res.data.users }), domainID, count, offset, filterName, sortBy, sortDir);
+ async function loadItems(show_items_callback, count, offset, filters) {
+  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters:', filters);
+  usersList(res => show_items_callback({ error: res.error, items: res.data.users }), count, offset, filters, sortBy, sortDir);
  }
 
  function clickAddEdit(id = null) {
@@ -86,7 +88,7 @@
 
  function clickDel(id, username) {
   userID = id;
-  userName = username;
+  delAddress = username;
   isModalDelOpen = true;
  }
 
@@ -132,14 +134,14 @@
  </div>
  <div class="buttons">
   <div class="search">
-   <div>Address:</div>
+   <div>Username:</div>
    <input type="text" placeholder="Username" bind:value={filterUsername} on:keydown={keySearchForm} />
   </div>
   <div class="search">
    <div>@</div>
-   <select>
+   <select bind:value={filterDomainID}>
     {#each domains as d (d.id)}
-     <option value={d.id}>{d.name}</option>
+     <option value={d.id} on:keydown={keySearchForm} >{d.name}</option>
     {/each}
    </select>
   </div>
@@ -185,6 +187,6 @@
 {/if}
 {#if isModalDelOpen}
  <Modal title="Delete the user" onClose={onModalDelClose}>
-  <ModalUsersDel id={userID} name={userName} onClose={onModalDelClose} />
+  <ModalUsersDel id={userID} address={delAddress} onClose={onModalDelClose} />
  </Modal>
 {/if}

@@ -16,15 +16,15 @@
  let filterOffset = 0;
  let lazyLoader;
  let sortBy = 'id';
- let sortDir = 'asc';
+ let sortDir = 'ASC';
 
  function reloadItems() {
-  lazyLoader.reload(filterName, filterOffset - 1);
+  lazyLoader.reload(filterName, filterOffset);
  }
 
- async function loadItems(show_items_callback, count, offset, filterName = null) {
-  console.log('loadItems count:', count, 'offset:', offset, 'filterName:', filterName, 'sortBy:', sortBy, 'sortDir:', sortDir);
-  sessionsList(res => show_items_callback({ error: res.error, items: res.data.sessions }), count, offset, filterName, sortBy, sortDir);
+ async function loadItems(show_items_callback, count, offset, filters) {
+  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filter', filters);
+  sessionsList(res => show_items_callback({ error: res.error, items: res.data.sessions }), count, offset, filters?.name, sortBy, sortDir);
  }
 
  function clickSearch() {

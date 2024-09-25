@@ -3,7 +3,7 @@
  import Button from '../components/button.svelte';
  export let onClose;
  export let id;
- export let username;
+ export let address;
  let error = null;
 
  function clickDel() {
@@ -24,7 +24,7 @@
  }
 </style>
 
-<div>Would you like to delete the user "<span class="bold">{username}</span>" (id: {id})?</div>
+<div>Would you like to delete the user "<span class="bold">{address}</span>" (id: {id})?</div>
 <Button on:click={clickDel} text="Delete" />
 {#if error}
  <div class="error">

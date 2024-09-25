@@ -112,9 +112,10 @@ export function adminInfo(id, callback = null) {
  send('admin_info_admin', { adminID: id }, callback);
 }
 
-export function usersList(callback = null, domainID = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
- const params = { domainID, count, offset, orderBy: sortBy, direction: sortDir };
- if (filterName) params.filterName = filterName;
+export function usersList(callback = null, count = 10, offset = 0, filters, sortBy = null, sortDir = null) {
+ const params = { count, offset, orderBy: sortBy, direction: sortDir };
+ if (filters.username) params.filterUsername = filters.username;
+ if (filters.domainID) params.filterDomainID = filters.domainID;
  send('admin_list_users', params, callback);
 }
 

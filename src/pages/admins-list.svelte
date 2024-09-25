@@ -18,15 +18,15 @@
  let filterOffset = 0;
  let lazyLoader;
  let sortBy = 'id';
- let sortDir = 'asc';
+ let sortDir = 'ASC';
 
  function reloadItems() {
-  lazyLoader.reload(filterUsername, filterOffset - 1);
+  lazyLoader.reload(filterUsername, filterOffset);
  }
 
- async function loadItems(show_items_callback, count, offset, filterName = null) {
-  console.log('loadItems count:', count, 'offset:', offset, 'filterName:', filterName, 'sortBy:', sortBy, 'sortDir:', sortDir);
-  adminsList(res => show_items_callback({ error: res.error, items: res.data.admins }), count, offset, filterName, sortBy, sortDir);
+ async function loadItems(show_items_callback, count, offset, filters) {
+  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, "filters", filters);
+  adminsList(res => show_items_callback({ error: res.error, items: res.data.admins }), count, offset, filters?.name, sortBy, sortDir);
  }
 
  function clickAddEdit(id = null) {

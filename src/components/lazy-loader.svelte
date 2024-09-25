@@ -8,7 +8,7 @@
  let loading = false;
  let count = 10;
  let offset = 0;
- let filterName = null;
+ let filters = {};
  let loaderElement;
  let _loaderIsVisible = true;
  let observer;
@@ -36,8 +36,8 @@
   handleIntersect([{ isIntersecting: true }]);
  }
 
- export function reload(filterDomainName, offset_) {
-  filterName = filterDomainName;
+ export function reload(filters_, offset_) {
+  filters = filters_;
   offset = offset_;
   items = [];
   loading = false;
@@ -71,7 +71,7 @@
    },
    count,
    offset,
-   filterName
+   filters,
   );
  }
 
