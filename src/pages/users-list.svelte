@@ -75,6 +75,7 @@
  }
 
  function keySearchForm() {
+  console.log('keySearchForm');
   if (event.key === 'Enter') {
    event.preventDefault();
    clickSearch();
@@ -141,7 +142,7 @@
    <div>@</div>
    <select bind:value={filterDomainID}>
     {#each domains as d (d.id)}
-     <option value={d.id} on:keydown={keySearchForm} >{d.name}</option>
+     <option value={d.id}>{d.name}</option>
     {/each}
    </select>
   </div>
@@ -162,6 +163,7 @@
    </tr>
   </thead>
   <tbody>
+
    {#each items as u (u.id)}
     <tr>
      <Cell align="center">{u.id}</Cell>
@@ -171,7 +173,7 @@
      <Cell align="center">
       <div class="row">
        <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(u.id)} on:keydown={() => keyAddEdit(u.id)}><img src="img/edit.svg" alt="Edit" /></div>
-       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(u.id, u.name)} on:keydown={() => keyDel(u.id)}><img src="img/del.svg" alt="Delete" /></div>
+       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(u.id, u.address)} on:keydown={() => keyDel(u.id, u.address)}><img src="img/del.svg" alt="Delete" /></div>
       </div>
      </Cell>
     </tr>

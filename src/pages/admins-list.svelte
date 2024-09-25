@@ -21,7 +21,7 @@
  let sortDir = 'ASC';
 
  function reloadItems() {
-  lazyLoader.reload(filterUsername, filterOffset);
+  lazyLoader.reload({name: filterUsername}, filterOffset);
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
