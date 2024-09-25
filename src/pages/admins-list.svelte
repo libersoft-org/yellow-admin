@@ -143,8 +143,8 @@
      <Cell align="center">{new Date(a.created.replace(' ', 'T') + 'Z').toLocaleString()}</Cell>
      <Cell align="center">
       <div class="row">
-       <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(a.id)} on:keydown={() => keyAddEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
-       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(a.id, a.username)} on:keydown={() => keyDel(d.id)}><img src="img/del.svg" alt="Delete" /></div>
+       <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(a.id)} on:keydown={() => keyAddEdit(a.id)}><img src="img/edit.svg" alt="Edit" /></div>
+       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(a.id, a.username)} on:keydown={() => keyDel(a.id)}><img src="img/del.svg" alt="Delete" /></div>
       </div>
      </Cell>
     </tr>
