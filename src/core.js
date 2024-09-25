@@ -49,7 +49,7 @@ export function login(credentials) {
 }
 
 function send(command, params, callback) {
- let res = Socket.send(command, params, sessionID, (req, res) => {
+ Socket.send(command, params, sessionID, (req, res) => {
   if (res.error >= 900 && res.error <= 999) {
    console.error('Error:', res.error);
   }
