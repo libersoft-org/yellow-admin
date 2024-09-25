@@ -1,14 +1,13 @@
 <script>
  import { domainsList } from '../core.js';
  import MenuButton from '../components/menu-button.svelte';
- import TableColumnHeader from '../components/table-column-header.svelte';
+ import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
  import Modal from '../components/modal.svelte';
  import ModalDomainsAdd from '../modals/modal-domains-add-edit.svelte';
  import ModalDomainsDel from '../modals/modal-domains-del.svelte';
  import Cell from '../components/table-cell.svelte';
-
  export let contentElement;
  let items = [];
  let isModalAddEditOpen = false;
@@ -121,23 +120,20 @@
    <div>Domain name:</div>
    <input type="text" placeholder="domain.tld" bind:value={filterName} on:keydown={keySearchForm} />
   </div>
-
   <div class="search">
    <div>Offset:</div>
    <input type="number" min="0" placeholder="0" bind:value={filterOffset} on:keydown={keySearchForm} />
   </div>
-
   <Button on:click={clickSearch} img="img/search.svg" text="Search" />
  </div>
-
  <table class="list-table">
   <thead>
    <tr>
-    <TableColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
-    <TableColumnHeader column="name" name="Name" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
-    <TableColumnHeader column="users_count" align="center" name="Number of users" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
-    <TableColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
-    <TableColumnHeader align="center" name="Action" />
+    <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <ColumnHeader column="name" name="Name" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <ColumnHeader column="users_count" align="center" name="Number of users" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <ColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <ColumnHeader align="center" name="Action" />
    </tr>
   </thead>
   <tbody>
@@ -157,10 +153,8 @@
    {/each}
   </tbody>
  </table>
-
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
-
 {#if isModalAddEditOpen}
  <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} onClose={onModalAddEditClose}>
   <ModalDomainsAdd id={domainID} onClose={onModalAddEditClose} />

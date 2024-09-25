@@ -90,6 +90,28 @@ export function domainInfo(id, callback = null) {
  send('admin_info_domain', { domainID: id }, callback);
 }
 
+export function adminsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
+ const params = { count, offset, orderBy: sortBy, direction: sortDir };
+ if (filterName) params.filterName = filterName;
+ send('admin_list_admins', params, callback);
+}
+
+export function adminsAdd(username, password, callback = null) {
+ send('admin_add_admin', { username, password }, callback);
+}
+
+export function adminsEdit(id, username, password, callback = null) {
+ send('admin_edit_admin', { adminID: id, username, password }, callback);
+}
+
+export function adminsDel(id, callback = null) {
+ send('admin_del_admin', { adminID: id }, callback);
+}
+
+export function adminInfo(id, callback = null) {
+ send('admin_info_admin', { adminID: id }, callback);
+}
+
 export function sessionsDel(id, callback = null) {
  send('admin_del_session', { sessionID: id }, callback);
 }
