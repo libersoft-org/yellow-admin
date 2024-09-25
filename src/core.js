@@ -119,16 +119,16 @@ export function usersList(callback = null, count = 10, offset = 0, filters, sort
  send('admin_list_users', params, callback);
 }
 
-export function usersAdd(username, id_domain, visible_name, password, callback = null) {
- send('admin_add_users', { username, id_domain, visible_name, password }, callback);
+export function usersAdd(username, domainID, visible_name, password, callback = null) {
+ send('admin_add_user', { username, domainID, visible_name, password }, callback);
 }
 
-export function usersEdit(id, name, callback = null) {
- send('admin_edit_users', { userID: id, name }, callback);
+export function usersEdit(id, domain, visible_name, password, callback = null) {
+ send('admin_edit_user', { userID: id, domain, visible_name, password }, callback);
 }
 
 export function usersDel(id, callback = null) {
- send('admin_del_users', { userID: id }, callback);
+ send('admin_del_user', { userID: id }, callback);
 }
 
 export function userInfo(id, callback = null) {

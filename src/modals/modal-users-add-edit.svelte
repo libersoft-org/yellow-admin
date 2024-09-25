@@ -1,17 +1,28 @@
 <script>
  import { onMount } from 'svelte';
- import { usersAdd, usersEdit, userInfo } from '../core.js';
+ import { usersAdd, usersEdit, userInfo, domainsList } from '../core.js';
  import Button from '../components/button.svelte';
  export let onClose;
  export let id = null;
  let usernameElement;
- let domain;
- let visibleName;
- let password;
+ let domains = [];
+ let domainElement;
+ let visibleNameElement;
+ let passwordElement;
  let userData = null;
  let error = null;
 
  onMount(() => {
+  domainsList(
+   res => {
+    if (res.error === 0) domains = [{ id: null, name: '--- domain ---' }, ...res.data.domains];
+   },
+   1000000,
+   0,
+   null,
+   'id',
+   'ASC'
+  );
   if (id) {
    userInfo(id, res => {
     userData = res?.data;
@@ -23,12 +34,12 @@
  function clickAddEdit() {
   if (usernameElement.value) {
    if (id) {
-    usersEdit(id, usernameElement.value, password, res => {
+    usersEdit(id, usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, res => {
      if (res?.error === 0) onClose(true);
      else if (res?.message) error = res.message;
     });
    } else {
-    usersAdd(usernameElement.value, password, res => {
+    usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, res => {
      if (res?.error === 0) onClose(true);
      else if (res?.message) error = res.message;
     });
@@ -72,18 +83,20 @@
 <div class="group">
  <div class="label">Domain:</div>
  <div>
-  <select bind:value={domain}>
-   <option value="aaa">bbb</option>
+  <select bind:this={domainElement} value={userData ? userData.id_domains : ''}>
+   {#each domains as d (d.id)}
+    <option value={d.id}>{d.name}</option>
+   {/each}
   </select>
  </div>
 </div>
 <div class="group">
  <div class="label">Visible name:</div>
- <div><input type="text" bind:value={visibleName} placeholder="Visible name" on:keydown={keyEnter} /></div>
+ <div><input type="text" bind:this={visibleNameElement} value={userData ? userData.visible_name : ''} placeholder="Visible name" on:keydown={keyEnter} /></div>
 </div>
 <div class="group">
  <div class="label">Password:</div>
- <div><input type="password" bind:value={password} placeholder="Password" on:keydown={keyEnter} /></div>
+ <div><input type="password" bind:this={passwordElement} placeholder="Password" on:keydown={keyEnter} /></div>
 </div>
 <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 {#if error}

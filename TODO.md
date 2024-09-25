@@ -5,6 +5,6 @@
 
 # Features
 
-- Users - add, edit, delete
+- Users - edit - handle errors from server in all these forms
 - Remove autologin in login.svelte -> onMount;
 - Fix files rights

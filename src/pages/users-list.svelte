@@ -23,14 +23,12 @@
  let sortBy = 'id';
  let sortDir = 'ASC';
 
- $: console.log('filterUsername:', filterUsername, 'filterDomainID:', filterDomainID, 'filterOffset:', filterOffset);
-
  onMount(() => {
   domainsList(
    res => {
-    if (res.error === 0) domains = [{ id: null, name: 'ALL' }, ...res.data.domains];
+    if (res.error === 0) domains = [{ id: null, name: '--- domain ---' }, ...res.data.domains];
    },
-   5,
+   1000000,
    0,
    null,
    'id',
