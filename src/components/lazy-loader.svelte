@@ -71,7 +71,7 @@
    },
    count,
    offset,
-   filters,
+   filters
   );
  }
 

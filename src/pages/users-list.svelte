@@ -28,7 +28,7 @@
  onMount(() => {
   domainsList(
    res => {
-    if (res.error === 0) domains = [{id: null, name:'ALL'}, ...res.data.domains];
+    if (res.error === 0) domains = [{ id: null, name: 'ALL' }, ...res.data.domains];
    },
    5,
    0,
@@ -163,7 +163,6 @@
    </tr>
   </thead>
   <tbody>
-
    {#each items as u (u.id)}
     <tr>
      <Cell align="center">{u.id}</Cell>

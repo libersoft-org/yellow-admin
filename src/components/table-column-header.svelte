@@ -11,7 +11,7 @@
  let tabindex = sortable ? 0 : undefined;
 
  function clickSortBy(columnName) {
-  console.log('clickSortBy', columnName, "sortBy", sortBy, "sortDir", sortDir);
+  console.log('clickSortBy', columnName, 'sortBy', sortBy, 'sortDir', sortDir);
   if (sortBy === columnName) sortDir = sortDir === 'ASC' ? 'DESC' : 'ASC';
   else {
    sortBy = columnName;

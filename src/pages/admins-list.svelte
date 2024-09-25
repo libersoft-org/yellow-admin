@@ -21,11 +21,11 @@
  let sortDir = 'ASC';
 
  function reloadItems() {
-  lazyLoader.reload({name: filterUsername}, filterOffset);
+  lazyLoader.reload({ name: filterUsername }, filterOffset);
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
-  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, "filters", filters);
+  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters', filters);
   adminsList(res => show_items_callback({ error: res.error, items: res.data.admins }), count, offset, filters?.name, sortBy, sortDir);
  }
 
