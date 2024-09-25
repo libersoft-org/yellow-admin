@@ -112,6 +112,28 @@ export function adminInfo(id, callback = null) {
  send('admin_info_admin', { adminID: id }, callback);
 }
 
+export function usersList(callback = null, domainID = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
+ const params = { domainID, count, offset, orderBy: sortBy, direction: sortDir };
+ if (filterName) params.filterName = filterName;
+ send('admin_list_users', params, callback);
+}
+
+export function usersAdd(username, id_domain, visible_name, password, callback = null) {
+ send('admin_add_users', { username, id_domain, visible_name, password }, callback);
+}
+
+export function usersEdit(id, name, callback = null) {
+ send('admin_edit_users', { userID: id, name }, callback);
+}
+
+export function usersDel(id, callback = null) {
+ send('admin_del_users', { userID: id }, callback);
+}
+
+export function userInfo(id, callback = null) {
+ send('admin_info_user', { userID: id }, callback);
+}
+
 export function sessionsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filterName) params.filterName = filterName;

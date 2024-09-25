@@ -88,11 +88,17 @@ input:checked + .slider:before {
  outline: auto;
 }
 
-input {
+input,
+select {
  padding: 10px;
  border: 1px solid #999;
  border-radius: 10px;
  font-family: inherit;
+ background-color: #fff;
+}
+
+option {
+ padding: 10px;
 }
 
 .page {
