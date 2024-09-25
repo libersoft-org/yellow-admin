@@ -112,9 +112,19 @@ export function adminInfo(id, callback = null) {
  send('admin_info_admin', { adminID: id }, callback);
 }
 
+export function sessionsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
+ const params = { count, offset, orderBy: sortBy, direction: sortDir };
+ if (filterName) params.filterName = filterName;
+ send('admin_list_sessions', params, callback);
+}
+
 export function sessionsDel(id, callback = null) {
  send('admin_del_session', { sessionID: id }, callback);
 }
+
+//export function sessionInfo(id, callback = null) {
+// send('admin_info_session', { sessionID: id }, callback);
+//}
 
 export function humanSize(bytes, decimals = 2) {
  if (bytes === 0) return '0 B';
