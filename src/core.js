@@ -53,7 +53,7 @@ function send(command, params, callback) {
   if (res.error >= 900 && res.error <= 999) {
    console.error('Error:', res.error);
   }
-  if (res.error === 997) {
+  if (res.error === 997 || res.error === 994) {
    frontend_logout();
    return;
   }
