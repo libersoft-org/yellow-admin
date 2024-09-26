@@ -11,13 +11,14 @@
 
  onMount(() => {
   credentials.server = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/';
-  //TODO: delete the following when not needed anymore:
-  credentials = {
-   server: import.meta.env.VITE_AMTP_SERVER_WS_URL || credentials.server.replace(':4000', ''),
-   username: 'admin',
-   password: 'admin123'
-  };
-  clickLogin();
+  if (import.meta.env.VITE_SERVER) {
+   credentials = {
+    server: import.meta.env.VITE_SERVER,
+    username: import.meta.env.VITE_USERNAME,
+    password: import.meta.env.VITE_PASSWORD
+   };
+   clickLogin();
+  }
  });
 
  $: if ($socketState === socketStates.OPEN && loggingIn) login(credentials);

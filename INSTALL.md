@@ -53,4 +53,10 @@ openssl req -x509 -newkey rsa:2048 -nodes -days $(expr '(' $(date -d 2999/01/01 
 ./run-dev.sh
 ```
 
+If you need auto login into server admin (for development and testing purposes, not recommended for production environment!!!) you can also edit the "**run-dev-autologin.sh**" file and set your **server**, **username** and **password** and then run:
+
+```sh
+./run-dev-autologin.sh
+```
+
 ... and then navigate to: https://YOUR_SERVER_ADDRESS:4000/ in your browser. Browser will show the certificate error, just skip it.
