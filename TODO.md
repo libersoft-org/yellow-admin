@@ -4,3 +4,5 @@
 - Domains - lazy loader has ugly setTimeout - find another solution if possible
 
 # Features
+
+- When auto logout because of expired session, show an error in login error element
