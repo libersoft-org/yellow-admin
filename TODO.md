@@ -4,5 +4,3 @@
 - Domains - lazy loader has ugly setTimeout - find another solution if possible
 
 # Features
-
-- Fix files rights
