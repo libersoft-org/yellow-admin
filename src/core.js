@@ -123,8 +123,8 @@ export function usersAdd(username, domainID, visible_name, password, callback = 
  send('admin_add_user', { username, domainID, visible_name, password }, callback);
 }
 
-export function usersEdit(id, domain, visible_name, password, callback = null) {
- send('admin_edit_user', { userID: id, domain, visible_name, password }, callback);
+export function usersEdit(id, username, domainID, visible_name, password, callback = null) {
+ send('admin_edit_user', { userID: id, username, domainID, visible_name, password }, callback);
 }
 
 export function usersDel(id, callback = null) {
@@ -144,10 +144,6 @@ export function sessionsList(callback = null, count = 10, offset = 0, filterName
 export function sessionsDel(id, callback = null) {
  send('admin_del_session', { sessionID: id }, callback);
 }
-
-//export function sessionInfo(id, callback = null) {
-// send('admin_info_session', { sessionID: id }, callback);
-//}
 
 export function humanSize(bytes, decimals = 2) {
  if (bytes === 0) return '0 B';
