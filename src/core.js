@@ -128,7 +128,7 @@ export function usersEdit(id, username, domainID, visible_name, password, callba
 }
 
 export function usersDel(id, callback = null) {
- send('admi_users_del', { userID: id }, callback);
+ send('admin_users_del', { userID: id }, callback);
 }
 
 export function userInfo(id, callback = null) {

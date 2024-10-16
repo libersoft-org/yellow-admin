@@ -8,7 +8,7 @@
   callback();
  }
 
- function keyFunction(name) {
+ function keyFunction() {
   if (event.key === 'Enter' || event.key === ' ') {
    event.preventDefault();
    callback();

@@ -91,10 +91,10 @@
   isModalDelOpen = true;
  }
 
- function keyDel(id) {
+ function keyDel(id, username) {
   if (event.key === 'Enter' || event.key === ' ') {
    event.preventDefault();
-   clickDel(id);
+   clickDel(id, username);
   }
  }
 </script>

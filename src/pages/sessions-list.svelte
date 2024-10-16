@@ -56,10 +56,10 @@
   isModalDelOpen = true;
  }
 
- function keyDel(id) {
+ function keyDel(id, session) {
   if (event.key === 'Enter' || event.key === ' ') {
    event.preventDefault();
-   clickDel(id);
+   clickDel(id, session);
   }
  }
 </script>
@@ -125,7 +125,7 @@
      <Cell align="center">{new Date(s.created).toLocaleString()}</Cell>
      <Cell align="center">
       <div class="row">
-       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(s.id, s.session)} on:keydown={() => keyDel(s.id)}><img src="img/del.svg" alt="Delete" /></div>
+       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(s.id, s.session)} on:keydown={() => keyDel(s.id, s.session)}><img src="img/del.svg" alt="Delete" /></div>
       </div>
      </Cell>
     </tr>
