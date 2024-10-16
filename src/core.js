@@ -71,78 +71,78 @@ export function sysInfoList(callback = null) {
 export function domainsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filterName) params.filterName = filterName;
- send('admin_list_domains', params, callback);
+ send('admin_domains_list', params, callback);
 }
 
 export function domainsAdd(name, callback = null) {
- send('admin_add_domain', { name }, callback);
+ send('admin_domains_add', { name }, callback);
 }
 
 export function domainsEdit(id, name, callback = null) {
- send('admin_edit_domain', { domainID: id, name }, callback);
+ send('admin_domains_edit', { domainID: id, name }, callback);
 }
 
 export function domainsDel(id, callback = null) {
- send('admin_del_domain', { domainID: id }, callback);
+ send('admin_domains_del', { domainID: id }, callback);
 }
 
 export function domainInfo(id, callback = null) {
- send('admin_info_domain', { domainID: id }, callback);
+ send('admin_domains_info', { domainID: id }, callback);
 }
 
 export function adminsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filterName) params.filterName = filterName;
- send('admin_list_admins', params, callback);
+ send('admin_admins_list', params, callback);
 }
 
 export function adminsAdd(username, password, callback = null) {
- send('admin_add_admin', { username, password }, callback);
+ send('admin_admins_add', { username, password }, callback);
 }
 
 export function adminsEdit(id, username, password, callback = null) {
- send('admin_edit_admin', { adminID: id, username, password }, callback);
+ send('admin_admins_edit', { adminID: id, username, password }, callback);
 }
 
 export function adminsDel(id, callback = null) {
- send('admin_del_admin', { adminID: id }, callback);
+ send('admin_admins_del', { adminID: id }, callback);
 }
 
 export function adminInfo(id, callback = null) {
- send('admin_info_admin', { adminID: id }, callback);
+ send('admin_admins_info', { adminID: id }, callback);
 }
 
 export function usersList(callback = null, count = 10, offset = 0, filters, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filters.username) params.filterUsername = filters.username;
  if (filters.domainID) params.filterDomainID = filters.domainID;
- send('admin_list_users', params, callback);
+ send('admin_users_list', params, callback);
 }
 
 export function usersAdd(username, domainID, visible_name, password, callback = null) {
- send('admin_add_user', { username, domainID, visible_name, password }, callback);
+ send('admin_users_add', { username, domainID, visible_name, password }, callback);
 }
 
 export function usersEdit(id, username, domainID, visible_name, password, callback = null) {
- send('admin_edit_user', { userID: id, username, domainID, visible_name, password }, callback);
+ send('admin_users_edit', { userID: id, username, domainID, visible_name, password }, callback);
 }
 
 export function usersDel(id, callback = null) {
- send('admin_del_user', { userID: id }, callback);
+ send('admi_users_del', { userID: id }, callback);
 }
 
 export function userInfo(id, callback = null) {
- send('admin_info_user', { userID: id }, callback);
+ send('admin_users_info', { userID: id }, callback);
 }
 
 export function sessionsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filterName) params.filterName = filterName;
- send('admin_list_sessions', params, callback);
+ send('admin_sessions_list', params, callback);
 }
 
 export function sessionsDel(id, callback = null) {
- send('admin_del_session', { sessionID: id }, callback);
+ send('admin_sessions_del', { sessionID: id }, callback);
 }
 
 export function humanSize(bytes, decimals = 2) {
