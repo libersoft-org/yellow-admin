@@ -142,7 +142,7 @@
      <Cell align="center">{d.id}</Cell>
      <Cell>{d.name}</Cell>
      <Cell align="center">{d.users_count}</Cell>
-     <Cell align="center">{new Date(d.created.replace(' ', 'T') + 'Z').toLocaleString()}</Cell>
+     <Cell align="center">{new Date(d.created).toLocaleString()}</Cell>
      <Cell align="center">
       <div class="row">
        <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(d.id)} on:keydown={() => keyAddEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>

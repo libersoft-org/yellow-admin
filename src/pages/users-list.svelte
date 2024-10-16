@@ -166,7 +166,7 @@
      <Cell align="center">{u.id}</Cell>
      <Cell>{u.address}</Cell>
      <Cell>{u.visible_name}</Cell>
-     <Cell align="center">{new Date(u.created.replace(' ', 'T') + 'Z').toLocaleString()}</Cell>
+     <Cell align="center">{new Date(u.created).toLocaleString()}</Cell>
      <Cell align="center">
       <div class="row">
        <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(u.id)} on:keydown={() => keyAddEdit(u.id)}><img src="img/edit.svg" alt="Edit" /></div>

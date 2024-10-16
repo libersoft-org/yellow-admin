@@ -121,8 +121,8 @@
     <tr>
      <Cell align="center">{s.id}</Cell>
      <Cell>{s.session}</Cell>
-     <Cell align="center">{new Date(s.last.replace(' ', 'T') + 'Z').toLocaleString()}</Cell>
-     <Cell align="center">{new Date(s.created.replace(' ', 'T') + 'Z').toLocaleString()}</Cell>
+     <Cell align="center">{new Date(s.last).toLocaleString()}</Cell>
+     <Cell align="center">{new Date(s.created).toLocaleString()}</Cell>
      <Cell align="center">
       <div class="row">
        <div class="icon" role="button" tabindex="0" on:click={() => clickDel(s.id, s.session)} on:keydown={() => keyDel(s.id)}><img src="img/del.svg" alt="Delete" /></div>
