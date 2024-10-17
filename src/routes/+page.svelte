@@ -9,6 +9,7 @@
  import AdminsList from '../pages/admins-list.svelte';
  import DomainsList from '../pages/domains-list.svelte';
  import UsersList from '../pages/users-list.svelte';
+ import ModulesList from '../pages/modules-list.svelte';
  import SessionsList from '../pages/sessions-list.svelte';
  const product = 'Yellow - Administration';
  const version = '0.01';
@@ -18,6 +19,7 @@
   admins: AdminsList,
   domains: DomainsList,
   users: UsersList,
+  modules: ModulesList,
   sessions: SessionsList
  };
  let selectedPage = null;

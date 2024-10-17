@@ -135,6 +135,28 @@ export function userInfo(id, callback = null) {
  send('admin_users_info', { userID: id }, callback);
 }
 
+export function modulesList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
+ const params = { count, offset, orderBy: sortBy, direction: sortDir };
+ if (filterName) params.filterName = filterName;
+ send('admin_modules_list', params, callback);
+}
+
+export function modulesAdd(name, callback = null) {
+ send('admin_modules_add', { name }, callback);
+}
+
+export function modulesEdit(id, name, callback = null) {
+ send('admin_modules_edit', { moduleID: id, name }, callback);
+}
+
+export function modulesDel(id, callback = null) {
+ send('admin_modules_del', { moduleID: id }, callback);
+}
+
+export function modulesInfo(id, callback = null) {
+ send('admin_modules_info', { moduleID: id }, callback);
+}
+
 export function sessionsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filterName) params.filterName = filterName;

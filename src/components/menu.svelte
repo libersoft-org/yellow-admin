@@ -30,6 +30,7 @@
  <MenuItem title="Administrators" active={selectedMenuItem === 'admins'} icon="admins.svg" callback={() => clickSelectPage('admins')} />
  <MenuItem title="Domains" active={selectedMenuItem === 'domains'} icon="domains.svg" callback={() => clickSelectPage('domains')} />
  <MenuItem title="Users" active={selectedMenuItem === 'users'} icon="users.svg" callback={() => clickSelectPage('users')} />
+ <MenuItem title="Modules" active={selectedMenuItem === 'modules'} icon="modules.svg" callback={() => clickSelectPage('modules')} />
  <MenuItem title="Sessions" active={selectedMenuItem === 'sessions'} icon="sessions.svg" callback={() => clickSelectPage('sessions')} />
  <MenuItem title="Logout" icon="logout.svg" callback={clickLogout} />
 </div>
