@@ -141,12 +141,12 @@ export function modulesList(callback = null, count = 10, offset = 0, filterName 
  send('admin_modules_list', params, callback);
 }
 
-export function modulesAdd(name, callback = null) {
- send('admin_modules_add', { name }, callback);
+export function modulesAdd(name, server, port, callback = null) {
+ send('admin_modules_add', { name, server, port }, callback);
 }
 
-export function modulesEdit(id, name, callback = null) {
- send('admin_modules_edit', { moduleID: id, name }, callback);
+export function modulesEdit(id, name, server, port, callback = null) {
+ send('admin_modules_edit', { moduleID: id, name, server, port }, callback);
 }
 
 export function modulesDel(id, callback = null) {

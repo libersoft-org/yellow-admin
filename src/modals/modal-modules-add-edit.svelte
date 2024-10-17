@@ -4,7 +4,9 @@
  import Button from '../components/button.svelte';
  export let onClose;
  export let id = null;
- let moduleElement;
+ let elModuleName;
+ let elModuleServer;
+ let elModulePort;
  let moduleData = null;
  let error = null;
 
@@ -14,23 +16,17 @@
     moduleData = res?.data;
    });
   }
-  moduleElement.focus();
+  elModuleName.focus();
  });
 
  function clickAddEdit() {
-  if (moduleElement.value) {
-   if (id) {
-    modulesEdit(id, moduleElement.value, res => {
-     if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message;
-    });
-   } else {
-    modulesAdd(moduleElement.value, res => {
-     if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message;
-    });
-   }
-  }
+  const callback = res => {
+   if (res?.error === 0) onClose(true);
+   else if (res?.message) error = res.message;
+  };
+  const params = [elModuleName.value, elModuleServer.value, elModulePort.value, callback];
+  if (id) modulesEdit(id, ...params);
+  else modulesAdd(...params);
  }
 
  function keyEnter() {
@@ -44,13 +40,12 @@
 <style>
  .group {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 5px;
  }
 
  .group .label {
   font-size: 15px;
-  padding-left: 5px;
   font-weight: bold;
  }
 
@@ -65,11 +60,17 @@
 
 <div class="group">
  <div class="label">Module name:</div>
- <div><input type="text" value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" on:keydown={keyEnter} bind:this={moduleElement} /></div>
- <div><input type="text" value={moduleData ? moduleData.server : ''} placeholder="127.0.0.1" on:keydown={keyEnter} bind:this={moduleElement} /></div>
- <div><input type="text" value={moduleData ? moduleData.port : ''} placeholder="25000" on:keydown={keyEnter} bind:this={moduleElement} /></div>
- <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
+ <div><input type="text" value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" on:keydown={keyEnter} bind:this={elModuleName} /></div>
 </div>
+<div class="group">
+ <div class="label">Server address:</div>
+ <div><input type="text" value={moduleData ? moduleData.server : ''} placeholder="127.0.0.1" on:keydown={keyEnter} bind:this={elModuleServer} /></div>
+</div>
+<div class="group">
+ <div class="label">Server port:</div>
+ <div><input type="text" value={moduleData ? moduleData.port : ''} placeholder="25000" on:keydown={keyEnter} bind:this={elModulePort} /></div>
+</div>
+<Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 {#if error}
  <div class="error">
   <div class="bold">Error:</div>
