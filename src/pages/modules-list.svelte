@@ -131,6 +131,7 @@
    <tr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="name" name="Name" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <ColumnHeader column="server" name="Server" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="port" name="Port" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader align="center" name="Action" />
@@ -141,6 +142,7 @@
     <tr>
      <Cell align="center">{m.id}</Cell>
      <Cell>{m.name}</Cell>
+     <Cell align="center">{m.server}</Cell>
      <Cell align="center">{m.port}</Cell>
      <Cell align="center">{new Date(m.created).toLocaleString()}</Cell>
      <Cell align="center">

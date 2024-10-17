@@ -66,6 +66,8 @@
 <div class="group">
  <div class="label">Module name:</div>
  <div><input type="text" value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" on:keydown={keyEnter} bind:this={moduleElement} /></div>
+ <div><input type="text" value={moduleData ? moduleData.server : ''} placeholder="127.0.0.1" on:keydown={keyEnter} bind:this={moduleElement} /></div>
+ <div><input type="text" value={moduleData ? moduleData.port : ''} placeholder="25000" on:keydown={keyEnter} bind:this={moduleElement} /></div>
  <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 </div>
 {#if error}
