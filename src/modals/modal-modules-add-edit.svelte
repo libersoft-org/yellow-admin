@@ -5,8 +5,7 @@
  export let onClose;
  export let id = null;
  let elModuleName;
- let elModuleServer;
- let elModulePort;
+ let elModuleConnectionString;
  let moduleData = null;
  let error = null;
 
@@ -24,7 +23,7 @@
    if (res?.error === 0) onClose(true);
    else if (res?.message) error = res.message;
   };
-  const params = [elModuleName.value, elModuleServer.value, elModulePort.value, callback];
+  const params = [elModuleName.value, elModuleConnectionString.value, callback];
   if (id) modulesEdit(id, ...params);
   else modulesAdd(...params);
  }
@@ -63,12 +62,8 @@
  <div><input type="text" value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" on:keydown={keyEnter} bind:this={elModuleName} /></div>
 </div>
 <div class="group">
- <div class="label">Server address:</div>
- <div><input type="text" value={moduleData ? moduleData.server : ''} placeholder="127.0.0.1" on:keydown={keyEnter} bind:this={elModuleServer} /></div>
-</div>
-<div class="group">
- <div class="label">Server port:</div>
- <div><input type="text" value={moduleData ? moduleData.port : ''} placeholder="25000" on:keydown={keyEnter} bind:this={elModulePort} /></div>
+ <div class="label">Connection string:</div>
+ <div><input type="text" value={moduleData ? moduleData.connectionString : ''} placeholder="ws://127.0.0.1:25000/" on:keydown={keyEnter} bind:this={elModuleConnectionString} /></div>
 </div>
 <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 {#if error}
