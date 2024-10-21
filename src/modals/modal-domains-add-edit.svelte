@@ -7,17 +7,23 @@
  let domainElement;
  let domainData = null;
  let error = null;
+ let name = '';
+ let button_disabled = false;
+
+ $: button_disabled = !name;
 
  onMount(() => {
   if (id) {
    domainInfo(id, res => {
     domainData = res?.data;
+    name = domainData ? domainData.name : ''
    });
   }
   domainElement.focus();
  });
 
  function clickAddEdit() {
+  console.log('clickAddEdit');
   if (domainElement.value) {
    if (id) {
     domainsEdit(id, domainElement.value, res => {
@@ -30,6 +36,9 @@
      else if (res?.message) error = res.message;
     });
    }
+  }
+  else {
+   console.log('domainElement.value is empty');
   }
  }
 
@@ -65,8 +74,8 @@
 
 <div class="group">
  <div class="label">Domain name:</div>
- <div><input type="text" value={domainData ? domainData.name : ''} placeholder="domain.tld" on:keydown={keyEnter} bind:this={domainElement} /></div>
- <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
+ <div><input type="text" placeholder="domain.tld" on:keydown={keyEnter} bind:this={domainElement} bind:value={name} /></div>
+ <Button disabled={button_disabled} on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 </div>
 {#if error}
  <div class="error">
