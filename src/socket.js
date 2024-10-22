@@ -87,12 +87,9 @@ function handleResponse(res) {
  //console.log('RESPONSE', res);
  if (res.requestID) {
   const reqData = requests[res.requestID];
-  if (reqData?.req?.command) {
-   //console.log('REQUEST', reqData.req);
    if (reqData.callback) reqData.callback(reqData.req, res);
    delete requests[res.requestID];
-  } else console.log('Request command not found');
- } else console.log('Unknown command from server');
+ } else console.log('Unknown requestID from server');
 }
 
 function getRandomString(length = 40) {
