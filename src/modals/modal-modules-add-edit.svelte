@@ -63,7 +63,7 @@
 </div>
 <div class="group">
  <div class="label">Connection string:</div>
- <div><input type="text" value={moduleData ? moduleData.connectionString : ''} placeholder="ws://127.0.0.1:25000/" on:keydown={keyEnter} bind:this={elModuleConnectionString} /></div>
+ <div><input type="text" value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" on:keydown={keyEnter} bind:this={elModuleConnectionString} /></div>
 </div>
 <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 {#if error}

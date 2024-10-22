@@ -71,10 +71,14 @@ export function send(command, params = {}, sessionID = null, callback = null) {
   return;
  }
  const requestID = getRandomString();
- const req = { requestID };
+ const req = {
+  target: 'core',
+  requestID
+ };
  if (sessionID) req.sessionID = sessionID;
- if (command) req.command = command;
- if (params) req.params = params;
+ if (command || params) req.data = {};
+ if (command) req.data.command = command;
+ if (params) req.data.params = params;
  requests[requestID] = { req, callback };
  socket.send(JSON.stringify(req));
 }

@@ -16,7 +16,7 @@
   if (id) {
    domainInfo(id, res => {
     domainData = res?.data;
-    name = domainData ? domainData.name : ''
+    name = domainData ? domainData.name : '';
    });
   }
   domainElement.focus();
@@ -36,8 +36,7 @@
      else if (res?.message) error = res.message;
     });
    }
-  }
-  else {
+  } else {
    console.log('domainElement.value is empty');
   }
  }
