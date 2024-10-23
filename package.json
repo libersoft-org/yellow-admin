@@ -9,13 +9,14 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "*",
 		"@sveltejs/kit": "^2.7.2",
-  "@sveltejs/vite-plugin-svelte": "*",
+		"@sveltejs/vite-plugin-svelte": "*",
 		"prettier": "*",
 		"prettier-plugin-svelte": "*",
 		"vite": "*"
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/adapter-static": "*"
+		"@sveltejs/adapter-static": "*",
+		"yellow-server-common": "https://github.com/libersoft-org/yellow-server-common"
 	}
 }
