@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 [ ! -d "./node_modules/" ] && ./docker-dev-init.sh
 
 

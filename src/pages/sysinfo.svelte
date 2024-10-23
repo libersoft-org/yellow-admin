@@ -89,6 +89,7 @@
  {#if sysInfo}
   <div class="title">Application</div>
   <table class="sysinfo">
+   <tbody>
    <tr>
     <th>Application name:</th>
     <td>{sysInfo.app.name}</td>
@@ -97,9 +98,12 @@
     <th>Version:</th>
     <td>{sysInfo.app.version}</td>
    </tr>
+   </tbody>
   </table>
   <div class="title">System</div>
   <table class="sysinfo">
+   <tbody>
+
    <tr>
     <th>OS:</th>
     <td>{sysInfo.os.name} {sysInfo.os.version}</td>
@@ -112,9 +116,11 @@
     <th>Uptime:</th>
     <td>{sysInfo.uptime}</td>
    </tr>
+   </tbody>
   </table>
   <div class="title">System resources</div>
   <table class="sysinfo">
+   <tbody>
    <tr>
     <th>CPU(s):</th>
     <td>
@@ -167,6 +173,7 @@
      {/if}
     </td>
    </tr>
+   </tbody>
   </table>
  {/if}
 </div>

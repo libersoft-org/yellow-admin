@@ -8,11 +8,10 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "*",
-		"@sveltejs/kit": "^4.0.0",
-		"@sveltejs/vite-plugin-svelte": "*",
+		"@sveltejs/kit": "^2.7.2",
+  "@sveltejs/vite-plugin-svelte": "*",
 		"prettier": "*",
 		"prettier-plugin-svelte": "*",
-		"svelte": "*",
 		"vite": "*"
 	},
 	"type": "module",
