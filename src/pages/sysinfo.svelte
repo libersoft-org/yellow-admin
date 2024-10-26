@@ -90,89 +90,88 @@
   <div class="title">Application</div>
   <table class="sysinfo">
    <tbody>
-   <tr>
-    <th>Application name:</th>
-    <td>{sysInfo.app.name}</td>
-   </tr>
-   <tr>
-    <th>Version:</th>
-    <td>{sysInfo.app.version}</td>
-   </tr>
+    <tr>
+     <th>Application name:</th>
+     <td>{sysInfo.app.name}</td>
+    </tr>
+    <tr>
+     <th>Version:</th>
+     <td>{sysInfo.app.version}</td>
+    </tr>
    </tbody>
   </table>
   <div class="title">System</div>
   <table class="sysinfo">
    <tbody>
-
-   <tr>
-    <th>OS:</th>
-    <td>{sysInfo.os.name} {sysInfo.os.version}</td>
-   </tr>
-   <tr>
-    <th>Host name:</th>
-    <td>{sysInfo.hostname}</td>
-   </tr>
-   <tr>
-    <th>Uptime:</th>
-    <td>{sysInfo.uptime}</td>
-   </tr>
+    <tr>
+     <th>OS:</th>
+     <td>{sysInfo.os.name} {sysInfo.os.version}</td>
+    </tr>
+    <tr>
+     <th>Host name:</th>
+     <td>{sysInfo.hostname}</td>
+    </tr>
+    <tr>
+     <th>Uptime:</th>
+     <td>{sysInfo.uptime}</td>
+    </tr>
    </tbody>
   </table>
   <div class="title">System resources</div>
   <table class="sysinfo">
    <tbody>
-   <tr>
-    <th>CPU(s):</th>
-    <td>
-     {#each cpuSummary as c}
-      <div>{c}</div>
-     {/each}
-    </td>
-   </tr>
-   <tr>
-    <th>CPU architecture:</th>
-    <td>{sysInfo.cpu.arch}</td>
-   </tr>
-   <tr>
-    <th>CPU load: </th>
-    <td>
-     <ProgressBar value={sysInfo.cpu.load} />
-    </td>
-   </tr>
-   <tr>
-    <th>RAM:</th>
-    <td>
-     <div>Used: {humanSize(sysInfo.ram.total - sysInfo.ram.free)}</div>
-     <div>Free: {humanSize(sysInfo.ram.free)}</div>
-     <div>Total: {humanSize(sysInfo.ram.total)}</div>
-     <div><ProgressBar value={(((sysInfo.ram.total - sysInfo.ram.free) / sysInfo.ram.total) * 100).toFixed(2)} /></div>
-    </td>
-   </tr>
-   <tr>
-    <th>Network:</th>
-    <td>
-     {#if sysInfo.networks}
-      {#each Object.keys(sysInfo.networks) as nis}
-       <div class="networks">
-        <div class="bold">{nis}:</div>
-        {#each sysInfo.networks[nis] as ni}
-         <div class="network">
-          <div>Address: {ni.address}</div>
-          <div>CIDR: {ni.cidr}</div>
-          <div>Netmask: {ni.netmask}</div>
-          <div>Family: {ni.family}</div>
-          <div>MAC: {ni.mac}</div>
-          <div>Internal: {ni.internal ? 'Yes' : 'No'}</div>
-          {#if ni.scope_id}
-           <div>Scope ID: {ni.scope_id}</div>
-          {/if}
-         </div>
-        {/each}
-       </div>
+    <tr>
+     <th>CPU(s):</th>
+     <td>
+      {#each cpuSummary as c}
+       <div>{c}</div>
       {/each}
-     {/if}
-    </td>
-   </tr>
+     </td>
+    </tr>
+    <tr>
+     <th>CPU architecture:</th>
+     <td>{sysInfo.cpu.arch}</td>
+    </tr>
+    <tr>
+     <th>CPU load: </th>
+     <td>
+      <ProgressBar value={sysInfo.cpu.load} />
+     </td>
+    </tr>
+    <tr>
+     <th>RAM:</th>
+     <td>
+      <div>Used: {humanSize(sysInfo.ram.total - sysInfo.ram.free)}</div>
+      <div>Free: {humanSize(sysInfo.ram.free)}</div>
+      <div>Total: {humanSize(sysInfo.ram.total)}</div>
+      <div><ProgressBar value={(((sysInfo.ram.total - sysInfo.ram.free) / sysInfo.ram.total) * 100).toFixed(2)} /></div>
+     </td>
+    </tr>
+    <tr>
+     <th>Network:</th>
+     <td>
+      {#if sysInfo.networks}
+       {#each Object.keys(sysInfo.networks) as nis}
+        <div class="networks">
+         <div class="bold">{nis}:</div>
+         {#each sysInfo.networks[nis] as ni}
+          <div class="network">
+           <div>Address: {ni.address}</div>
+           <div>CIDR: {ni.cidr}</div>
+           <div>Netmask: {ni.netmask}</div>
+           <div>Family: {ni.family}</div>
+           <div>MAC: {ni.mac}</div>
+           <div>Internal: {ni.internal ? 'Yes' : 'No'}</div>
+           {#if ni.scope_id}
+            <div>Scope ID: {ni.scope_id}</div>
+           {/if}
+          </div>
+         {/each}
+        </div>
+       {/each}
+      {/if}
+     </td>
+    </tr>
    </tbody>
   </table>
  {/if}

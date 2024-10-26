@@ -7,17 +7,17 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "*",
+		"@sveltejs/adapter-auto": "^3.2.4",
 		"@sveltejs/kit": "^2.7.0",
 		"@sveltejs/vite-plugin-svelte": "^3.1.2",
-		"prettier": "*",
-		"prettier-plugin-svelte": "*",
+		"prettier": "^3.0.0",
+		"prettier-plugin-svelte": "^3.2.6",
   "svelte": "^4.0.0",
-  "vite": "*"
+  "vite": "^5.0.0"
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/adapter-static": "*",
+		"@sveltejs/adapter-static": "^3.0.4",
 		"yellow-server-common": "https://github.com/libersoft-org/yellow-server-common"
 	}
 }
