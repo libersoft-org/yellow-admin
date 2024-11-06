@@ -13,28 +13,32 @@
  let _loaderIsVisible = true;
  let observer;
  let timer;
-
- /*
- let contentHeight;
- $: contentHeight = contentElement ? contentElement.clientHeight : null;
- */
+ let observing = false;
 
  onMount(() => {
   //console.log('contentElement is ' + contentElement);
   //console.log('loaderElement is ' + loaderElement);
   observer = new IntersectionObserver(handleIntersect, { threshold, root: contentElement });
-  if (loaderElement) observer.observe(loaderElement);
+  if (loaderElement) {
+   observer.observe(loaderElement);
+   observing = true;
+  }
  });
+
 
  onDestroy(() => {
   if (observer) observer.disconnect();
   if (timer) clearTimeout(timer);
  });
 
+
  $: if (observer && loaderElement) {
-  observer.observe(loaderElement);
+  if (!observing) {
+   observer.observe(loaderElement);
+  }
   handleIntersect([{ isIntersecting: true }]);
  }
+
 
  export function reload(filters_, offset_) {
   filters = filters_;
