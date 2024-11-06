@@ -8,7 +8,10 @@
  import ModalModulesAdd from '../modals/modal-modules-add-edit.svelte';
  import ModalModulesDel from '../modals/modal-modules-del.svelte';
  import Cell from '../components/table-cell.svelte';
- export let contentElement;
+ import { getContext } from "svelte";
+
+
+ let contentElement = getContext('contentElement');
  let items = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;
