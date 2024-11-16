@@ -1,16 +1,17 @@
 <script>
- import { adminsDel } from '../core.js';
+
  import Button from '../components/button.svelte';
 
  export let close;
  export let params;
 
- let id = params?.id;
  let name = params?.name;
+ let id = params?.id;
+ let fn = params?.fn;
  let error = null;
 
  function clickDel() {
-  adminsDel(id, cb);
+  fn(id, cb);
  }
 
  async function cb(res) {
@@ -33,7 +34,7 @@
  }
 </style>
 
-<div>Would you like to delete the admin "<span class="bold">{name}</span>" (id: {id})?</div>
+<div>Would you like to delete "<span class="bold">{name}</span>" (id: {id})?</div>
 <Button on:click={clickDel} text="Delete" />
 {#if error}
  <div class="error">

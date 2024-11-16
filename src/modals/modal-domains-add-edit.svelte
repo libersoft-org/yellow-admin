@@ -48,7 +48,7 @@
  async function cb(res) {
   if (res?.error === 0) {
    close();
-   await params.onSubmit();
+   await params.onSubmit.call();
   }
   else if (res?.message) error = res.message;
  }

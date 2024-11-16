@@ -1,12 +1,12 @@
 <script>
- import { usersList, domainsList } from '../core.js';
+ import { usersList, domainsList, usersDel } from '../core.js';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
  import Modal from '../components/modal.svelte';
  import ModalUsersAdd from '../modals/modal-users-add-edit.svelte';
- import ModalUsersDel from '../modals/modal-users-del.svelte';
+ import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
  import { onMount } from 'svelte';
  export let contentElement;
@@ -176,4 +176,8 @@
 </div>
 
 <Modal title={userID ? 'Edit the user' : 'Add a new user'} body={ModalUsersAdd} params={{ onSubmit: reloadItems, id: userID }} bind:show={isModalAddEditOpen} />
-<Modal title="Delete the user" body={ModalUsersDel} params={{ onSubmit: reloadItems, id: userID, address: delAddress }} bind:show={isModalDelOpen} />
+<Modal
+ title="Delete the user"
+ body={ModalItemDel}
+ params={{ onSubmit: reloadItems, fn: usersDel, id: userID, name: delAddress}}
+ bind:show={isModalDelOpen} />

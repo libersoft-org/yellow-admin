@@ -1,12 +1,12 @@
 <script>
- import { modulesList } from '../core.js';
+ import { modulesList, modulesDel } from '../core.js';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
  import Modal from '../components/modal.svelte';
  import ModalModulesAdd from '../modals/modal-modules-add-edit.svelte';
- import ModalModulesDel from '../modals/modal-modules-del.svelte';
+ import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
  import { getContext } from "svelte";
 
@@ -154,5 +154,8 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
 
-<Modal title={moduleID ? 'Edit the module' : 'Add a new module'} body={ModalModulesAdd} params={{ onSubmit: reloadItems, id: moduleID }}, bind:show={isModalAddEditOpen}/>
-<Modal title="Delete the module" body={ModalModulesDel} params={{ onSubmit: reloadItems, id: moduleID, name: moduleName }}, bind:show={isModalDelOpen}/>
+<Modal title={moduleID ? 'Edit the module' : 'Add a new module'} body={ModalModulesAdd} params={{ onSubmit: reloadItems, id: moduleID }} bind:show={isModalAddEditOpen}/>
+<Modal title="Delete the module"
+ body={ModalItemDel}
+ params={{ onSubmit: reloadItems, fn: modulesDel, id: moduleID, name: moduleName }}
+ bind:show={isModalDelOpen} />

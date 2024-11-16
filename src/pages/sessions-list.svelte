@@ -1,11 +1,11 @@
 <script>
- import { sessionsList } from '../core.js';
+ import { sessionsList, sessionsDel } from '../core.js';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
  import Modal from '../components/modal.svelte';
- import ModalSessionsDel from '../modals/modal-sessions-del.svelte';
+ import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
  export let contentElement;
  let items = [];
@@ -130,4 +130,7 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
 
-<Modal title="Delete the session" body={ModalSessionsDel} params={{ onSubmit: reloadItems, id: sessionID, session: sessionName }} bind:show={isModalDelOpen} />
+<Modal title="Delete the session"
+      body={ModalItemDel}
+      params={{ onSubmit: reloadItems, fn: (_id) => sessionsDel(sessionName), id: sessionID, name: sessionName }}
+      bind:show={isModalDelOpen} />

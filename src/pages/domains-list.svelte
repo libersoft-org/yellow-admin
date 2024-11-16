@@ -1,12 +1,12 @@
 <script>
- import { domainsList } from '../core.js';
+ import { domainsList, domainsDel } from '../core.js';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
  import Modal from '../components/modal.svelte';
  import ModalDomainsAdd from '../modals/modal-domains-add-edit.svelte';
- import ModalDomainsDel from '../modals/modal-domains-del.svelte';
+ import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
  export let contentElement;
  let items = [];
@@ -147,4 +147,7 @@
 </div>
 
 <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} body={ModalDomainsAdd} params={{ onSubmit: reloadItems, id:domainID }} bind:show={isModalAddEditOpen} />
-<Modal title="Delete the domain" body={ModalDomainsDel} params={{ onSubmit: reloadItems, id: domainID, name: domainName }} bind:show={isModalDelOpen} />
+<Modal title="Delete the domain"
+ body={ModalItemDel}
+ params={{ onSubmit: reloadItems, fn: domainsDel, id: domainID, name: domainName }}
+ bind:show={isModalDelOpen} />

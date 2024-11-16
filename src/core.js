@@ -49,7 +49,7 @@ export function login(credentials) {
 }
 
 function send(command, params, callback) {
- Socket.send(command, params, sessionID, (req, res) => {
+ Socket.send(command, params, sessionID, async (req, res) => {
   if (res.error >= 900 && res.error <= 999) {
    console.error('Error:', res.error);
   }
@@ -60,7 +60,7 @@ function send(command, params, callback) {
   if (res.error >= 900 && res.error <= 999) {
    return;
   }
-  callback(res);
+  await callback(res);
  });
 }
 
