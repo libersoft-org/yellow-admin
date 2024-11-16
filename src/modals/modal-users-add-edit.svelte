@@ -2,8 +2,11 @@
  import { onMount } from 'svelte';
  import { usersAdd, usersEdit, userInfo, domainsList } from '../core.js';
  import Button from '../components/button.svelte';
- export let onClose;
- export let id = null;
+
+ export let close;
+ export let params;
+
+ let id = params?.id;
  let usernameElement;
  let domains = [];
  let domainElement;
@@ -34,17 +37,19 @@
  function clickAddEdit() {
   if (usernameElement.value) {
    if (id) {
-    usersEdit(id, usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, res => {
-     if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message;
-    });
+    usersEdit(id, usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
    } else {
-    usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, res => {
-     if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message;
-    });
+    usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
    }
   }
+ }
+
+ async function cb(res) {
+  if (res?.error === 0) {
+   close();
+   await params.onSubmit();
+  }
+  else if (res?.message) error = res.message;
  }
 
  function keyEnter() {

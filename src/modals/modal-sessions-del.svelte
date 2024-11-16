@@ -1,17 +1,26 @@
 <script>
  import { sessionsDel } from '../core.js';
  import Button from '../components/button.svelte';
- export let onClose;
- export let id;
- export let session;
+
+ export let close;
+ export let params;
+
+ let id = params?.id;
+ let session = params?.session;
  let error = null;
 
  function clickDel() {
-  sessionsDel(session, res => {
-   if (res?.error === 0) onClose(true);
-   else if (res?.message) error = res.message;
-  });
+  sessionsDel(session, cb);
  }
+
+ async function cb(res) {
+  if (res?.error === 0) {
+   close();
+   await params.onSubmit();
+  }
+  else if (res?.message) error = res.message;
+ }
+
 </script>
 
 <style>

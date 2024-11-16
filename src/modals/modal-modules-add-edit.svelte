@@ -2,8 +2,11 @@
  import { onMount } from 'svelte';
  import { modulesAdd, modulesEdit, modulesInfo } from '../core.js';
  import Button from '../components/button.svelte';
- export let onClose;
- export let id = null;
+
+ export let close;
+ export let params;
+
+ let id = params?.id;
  let elModuleName;
  let elModuleConnectionString;
  let moduleData = null;
@@ -19,13 +22,17 @@
  });
 
  function clickAddEdit() {
-  const callback = res => {
-   if (res?.error === 0) onClose(true);
-   else if (res?.message) error = res.message;
-  };
-  const params = [elModuleName.value, elModuleConnectionString.value, callback];
+  const params = [elModuleName.value, elModuleConnectionString.value, cb];
   if (id) modulesEdit(id, ...params);
   else modulesAdd(...params);
+ }
+
+ async function cb(res) {
+  if (res?.error === 0) {
+   close();
+   await params.onSubmit();
+  }
+  else if (res?.message) error = res.message;
  }
 
  function keyEnter() {

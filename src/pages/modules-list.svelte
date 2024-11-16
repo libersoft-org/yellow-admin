@@ -44,11 +44,6 @@
   }
  }
 
- function onModalAddEditClose(reload = false) {
-  isModalAddEditOpen = false;
-  if (reload) reloadItems();
- }
-
  function clickSearch() {
   console.log('search');
   reloadItems();
@@ -158,13 +153,6 @@
  </table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
-{#if isModalAddEditOpen}
- <Modal title={moduleID ? 'Edit the module' : 'Add a new module'} onClose={onModalAddEditClose}>
-  <ModalModulesAdd id={moduleID} onClose={onModalAddEditClose} />
- </Modal>
-{/if}
-{#if isModalDelOpen}
- <Modal title="Delete the module" onClose={onModalDelClose}>
-  <ModalModulesDel id={moduleID} name={moduleName} onClose={onModalDelClose} />
- </Modal>
-{/if}
+
+<Modal title={moduleID ? 'Edit the module' : 'Add a new module'} body={ModalModulesAdd} params={{ onSubmit: reloadItems, id: moduleID }}, bind:show={isModalAddEditOpen}/>
+<Modal title="Delete the module" body={ModalModulesDel} params={{ onSubmit: reloadItems, id: moduleID, name: moduleName }}, bind:show={isModalDelOpen}/>

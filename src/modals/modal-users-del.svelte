@@ -1,17 +1,26 @@
 <script>
  import { usersDel } from '../core.js';
  import Button from '../components/button.svelte';
- export let onClose;
- export let id;
- export let address;
+
+ export let close;
+ export let params;
+
+ let id = params?.id;
+ let address = params?.address;
  let error = null;
 
  function clickDel() {
-  usersDel(id, res => {
-   if (res?.error === 0) onClose(true);
-   else if (res?.message) error = res.message;
-  });
+  usersDel(id, cb);
  }
+
+ async function cb(res) {
+  if (res?.error === 0) {
+   close();
+   await params.onSubmit();
+  }
+  else if (res?.message) error = res.message;
+ }
+
 </script>
 
 <style>

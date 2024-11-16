@@ -2,8 +2,11 @@
  import { onMount } from 'svelte';
  import { adminsAdd, adminsEdit, adminInfo } from '../core.js';
  import Button from '../components/button.svelte';
- export let onClose;
- export let id = null;
+
+ export let close;
+ export let params;
+
+ let id = params?.id;
  let usernameElement;
  let password;
  let adminData = null;
@@ -21,17 +24,19 @@
  function clickAddEdit() {
   if (usernameElement.value) {
    if (id) {
-    adminsEdit(id, usernameElement.value, password, res => {
-     if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message;
-    });
+    adminsEdit(id, usernameElement.value, password, cb);
    } else {
-    adminsAdd(usernameElement.value, password, res => {
-     if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message;
-    });
+    adminsAdd(usernameElement.value, password, cb);
    }
   }
+ }
+
+ async function cb(res) {
+  if (res?.error === 0) {
+   close();
+   await params.onSubmit();
+  }
+  else if (res?.message) error = res.message;
  }
 
  function keyEnter() {

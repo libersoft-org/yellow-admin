@@ -45,11 +45,6 @@
   }
  }
 
- function onModalDelClose(reload = false) {
-  isModalDelOpen = false;
-  reloadItems();
- }
-
  function clickDel(id, session) {
   sessionID = id;
   sessionName = session;
@@ -134,8 +129,5 @@
  </table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
-{#if isModalDelOpen}
- <Modal title="Delete the session" onClose={onModalDelClose}>
-  <ModalSessionsDel id={sessionID} session={sessionName} onClose={onModalDelClose} />
- </Modal>
-{/if}
+
+<Modal title="Delete the session" body={ModalSessionsDel} params={{ onSubmit: reloadItems, id: sessionID, session: sessionName }} bind:show={isModalDelOpen} />

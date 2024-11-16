@@ -2,8 +2,11 @@
  import { onMount } from 'svelte';
  import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
  import Button from '../components/button.svelte';
- export let onClose;
- export let id = null;
+
+ export let close;
+ export let params;
+
+ let id = params?.id;
  let domainElement;
  let domainData = null;
  let error = null;
@@ -26,15 +29,9 @@
   console.log('clickAddEdit');
   if (domainElement.value) {
    if (id) {
-    domainsEdit(id, domainElement.value, res => {
-     if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message;
-    });
+    domainsEdit(id, domainElement.value, cb);
    } else {
-    domainsAdd(domainElement.value, res => {
-     if (res?.error === 0) onClose(true);
-     else if (res?.message) error = res.message;
-    });
+    domainsAdd(domainElement.value, cb);
    }
   } else {
    console.log('domainElement.value is empty');
@@ -47,6 +44,15 @@
    clickAddEdit();
   }
  }
+
+ async function cb(res) {
+  if (res?.error === 0) {
+   close();
+   await params.onSubmit();
+  }
+  else if (res?.message) error = res.message;
+ }
+
 </script>
 
 <style>

@@ -41,11 +41,6 @@
   }
  }
 
- function onModalAddEditClose(reload = false) {
-  isModalAddEditOpen = false;
-  if (reload) reloadItems();
- }
-
  function clickSearch() {
   console.log('search');
   reloadItems();
@@ -62,11 +57,6 @@
    event.preventDefault();
    clickSearch();
   }
- }
-
- function onModalDelClose(reload = false) {
-  isModalDelOpen = false;
-  reloadItems();
  }
 
  function clickDel(id, name) {
@@ -155,13 +145,6 @@
  </table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
-{#if isModalAddEditOpen}
- <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} onClose={onModalAddEditClose}>
-  <ModalDomainsAdd id={domainID} onClose={onModalAddEditClose} />
- </Modal>
-{/if}
-{#if isModalDelOpen}
- <Modal title="Delete the domain" onClose={onModalDelClose}>
-  <ModalDomainsDel id={domainID} name={domainName} onClose={onModalDelClose} />
- </Modal>
-{/if}
+
+<Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} body={ModalDomainsAdd} params={{ onSubmit: reloadItems, id:domainID }} bind:show={isModalAddEditOpen} />
+<Modal title="Delete the domain" body={ModalDomainsDel} params={{ onSubmit: reloadItems, id: domainID, name: domainName }} bind:show={isModalDelOpen} />
