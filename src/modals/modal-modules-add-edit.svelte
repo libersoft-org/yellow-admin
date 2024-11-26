@@ -31,8 +31,7 @@
   if (res?.error === 0) {
    close();
    await params.onSubmit.call();
-  }
-  else if (res?.message) error = res.message;
+  } else if (res?.message) error = res.message;
  }
 
  function keyEnter() {

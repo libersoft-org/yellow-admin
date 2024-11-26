@@ -146,8 +146,5 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
 
-<Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} body={ModalDomainsAdd} params={{ onSubmit: reloadItems, id:domainID }} bind:show={isModalAddEditOpen} />
-<Modal title="Delete the domain"
- body={ModalItemDel}
- params={{ onSubmit: reloadItems, fn: domainsDel, id: domainID, name: domainName }}
- bind:show={isModalDelOpen} />
+<Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} body={ModalDomainsAdd} params={{ onSubmit: reloadItems, id: domainID }} bind:show={isModalAddEditOpen} />
+<Modal title="Delete the domain" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: domainsDel, id: domainID, name: domainName }} bind:show={isModalDelOpen} />

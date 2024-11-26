@@ -11,6 +11,8 @@
  import UsersList from '../pages/users-list.svelte';
  import ModulesList from '../pages/modules-list.svelte';
  import SessionsList from '../pages/sessions-list.svelte';
+ import ClientsList from '../pages/clients-list.svelte';
+ import LogsList from '../pages/logs-list.svelte';
  const product = 'Yellow - Administration';
  const version = '0.01';
  const link = 'https://yellow.libersoft.org';
@@ -20,7 +22,9 @@
   domains: DomainsList,
   users: UsersList,
   modules: ModulesList,
-  sessions: SessionsList
+  sessions: SessionsList,
+  clients: ClientsList,
+  logs: LogsList
  };
  let selectedPage = null;
  let status;

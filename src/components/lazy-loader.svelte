@@ -25,12 +25,10 @@
   }
  });
 
-
  onDestroy(() => {
   if (observer) observer.disconnect();
   if (timer) clearTimeout(timer);
  });
-
 
  $: if (observer && loaderElement) {
   if (!observing) {
@@ -38,7 +36,6 @@
   }
   handleIntersect([{ isIntersecting: true }]);
  }
-
 
  export function reload(filters_, offset_) {
   filters = filters_;

@@ -32,5 +32,7 @@
  <MenuItem title="Users" active={selectedMenuItem === 'users'} icon="users.svg" callback={() => clickSelectPage('users')} />
  <MenuItem title="Modules" active={selectedMenuItem === 'modules'} icon="modules.svg" callback={() => clickSelectPage('modules')} />
  <MenuItem title="Sessions" active={selectedMenuItem === 'sessions'} icon="sessions.svg" callback={() => clickSelectPage('sessions')} />
+ <MenuItem title="Connected clients" active={selectedMenuItem === 'clients'} icon="clients.svg" callback={() => clickSelectPage('clients')} />
+ <MenuItem title="Logs" active={selectedMenuItem === 'logs'} icon="logs.svg" callback={() => clickSelectPage('logs')} />
  <MenuItem title="Logout" icon="logout.svg" callback={clickLogout} />
 </div>

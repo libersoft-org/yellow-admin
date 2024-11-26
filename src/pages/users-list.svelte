@@ -176,8 +176,4 @@
 </div>
 
 <Modal title={userID ? 'Edit the user' : 'Add a new user'} body={ModalUsersAdd} params={{ onSubmit: reloadItems, id: userID }} bind:show={isModalAddEditOpen} />
-<Modal
- title="Delete the user"
- body={ModalItemDel}
- params={{ onSubmit: reloadItems, fn: usersDel, id: userID, name: delAddress}}
- bind:show={isModalDelOpen} />
+<Modal title="Delete the user" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: usersDel, id: userID, name: delAddress }} bind:show={isModalDelOpen} />

@@ -8,8 +8,7 @@
  import ModalModulesAdd from '../modals/modal-modules-add-edit.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
- import { getContext } from "svelte";
-
+ import { getContext } from 'svelte';
 
  let contentElement = getContext('contentElement');
  let items = [];
@@ -154,8 +153,5 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </div>
 
-<Modal title={moduleID ? 'Edit the module' : 'Add a new module'} body={ModalModulesAdd} params={{ onSubmit: reloadItems, id: moduleID }} bind:show={isModalAddEditOpen}/>
-<Modal title="Delete the module"
- body={ModalItemDel}
- params={{ onSubmit: reloadItems, fn: modulesDel, id: moduleID, name: moduleName }}
- bind:show={isModalDelOpen} />
+<Modal title={moduleID ? 'Edit the module' : 'Add a new module'} body={ModalModulesAdd} params={{ onSubmit: reloadItems, id: moduleID }} bind:show={isModalAddEditOpen} />
+<Modal title="Delete the module" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: modulesDel, id: moduleID, name: moduleName }} bind:show={isModalDelOpen} />
