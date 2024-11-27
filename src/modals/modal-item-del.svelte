@@ -1,5 +1,4 @@
 <script>
-
  import Button from '../components/button.svelte';
 
  export let close;
@@ -18,10 +17,8 @@
   if (res?.error === 0) {
    close();
    await params.onSubmit.call();
-  }
-  else if (res?.message) error = res.message;
+  } else if (res?.message) error = res.message;
  }
-
 </script>
 
 <style>

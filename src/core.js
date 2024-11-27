@@ -167,6 +167,12 @@ export function sessionsDel(id, callback = null) {
  send('admin_sessions_del', { sessionID: id }, callback);
 }
 
+export function clientsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
+ const params = { count, offset, orderBy: sortBy, direction: sortDir };
+ if (filterName) params.filterIP = filterIP;
+ send('admin_clients_list', params, callback);
+}
+
 export function humanSize(bytes, decimals = 2) {
  if (bytes === 0) return '0 B';
  const k = 1024;
