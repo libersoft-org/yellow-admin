@@ -21,7 +21,7 @@
 
  async function loadItems(show_items_callback, count, offset, filters) {
   console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters', filters);
-  clientsList(res => show_items_callback({ error: res.error, items: res.data.admins }), count, offset, filters?.name, sortBy, sortDir);
+  clientsList(res => show_items_callback({ error: res.error, items: res.data.items }), count, offset, filters?.name, sortBy, sortDir);
  }
 
  function clickSearch() {
