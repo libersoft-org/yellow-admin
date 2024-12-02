@@ -12,7 +12,7 @@
  let filterIP = null;
  let filterOffset = 0;
  let lazyLoader;
- let sortBy = 'id';
+ let sortBy = 'guid';
  let sortDir = 'ASC';
 
  function reloadItems() {
@@ -70,14 +70,14 @@
  <table class="list-table">
   <thead>
    <tr>
-    <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <ColumnHeader column="guid" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="ip" name="IP address" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
    </tr>
   </thead>
   <tbody>
    {#each items as c (c.id)}
     <tr>
-     <Cell align="center">{c.id}</Cell>
+     <Cell align="center">{c.guid}</Cell>
      <Cell>{c.ip}</Cell>
     </tr>
    {/each}
