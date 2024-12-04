@@ -1,5 +1,5 @@
 <script>
- import { clientsList } from '../core.js';
+ import { clientsList, clientsKick } from '../core.js';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
@@ -41,6 +41,7 @@
    clickSearch();
   }
  }
+
 </script>
 
 <style>
@@ -58,6 +59,10 @@
  </div>
  <div class="buttons">
   <div class="search">
+   <div>Client's GUID:</div>
+   <input type="text" placeholder="GUID" bind:value={filterGuid} on:keydown={keySearchForm} />
+  </div>
+  <div class="search">
    <div>Client's IP address:</div>
    <input type="text" placeholder="IP address" bind:value={filterIp} on:keydown={keySearchForm} />
   </div>
@@ -72,6 +77,7 @@
    <tr>
     <ColumnHeader column="guid" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="ip" name="IP address" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <td>Action</td>
    </tr>
   </thead>
   <tbody>
@@ -79,6 +85,7 @@
     <tr>
      <Cell align="center">{c.guid}</Cell>
      <Cell>{c.ip}</Cell>
+     <td><Button text="Kick" on:click={()=>clientsKick(c.guid)} /></td>
     </tr>
    {/each}
   </tbody>

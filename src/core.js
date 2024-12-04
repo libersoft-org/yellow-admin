@@ -174,6 +174,10 @@ export function clientsList(callback = null, count = 10, offset = 0, filterIp = 
  send('admin_clients_list', params, callback);
 }
 
+export function clientsKick(guid, callback = null) {
+ send('admin_clients_kick', { guid }, callback);
+}
+
 export function humanSize(bytes, decimals = 2) {
  if (bytes === 0) return '0 B';
  const k = 1024;
