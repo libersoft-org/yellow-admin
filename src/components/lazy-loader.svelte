@@ -96,6 +96,7 @@
   _loaderIsVisible = entries[0].isIntersecting;
   if (_loaderIsVisible && !loading && hasMore) loadMore();
  }
+
 </script>
 
 <style>

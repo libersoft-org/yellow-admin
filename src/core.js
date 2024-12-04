@@ -167,9 +167,10 @@ export function sessionsDel(id, callback = null) {
  send('admin_sessions_del', { sessionID: id }, callback);
 }
 
-export function clientsList(callback = null, count = 10, offset = 0, filterName = null, sortBy = null, sortDir = null) {
+export function clientsList(callback = null, count = 10, offset = 0, filterIp = null, filterGuid = null, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
- if (filterName) params.filterIP = filterIP;
+ if (filterIp) params.filterIp = filterIp;
+ if (filterGuid) params.filterGuid = filterGuid;
  send('admin_clients_list', params, callback);
 }
 

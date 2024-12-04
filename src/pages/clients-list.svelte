@@ -7,21 +7,20 @@
  import Cell from '../components/table-cell.svelte';
  export let contentElement;
  let items = [];
- let clientID = null;
- let clientIP = null;
- let filterIP = null;
+ let filterIp = null;
+ let filterGuid = null;
  let filterOffset = 0;
  let lazyLoader;
  let sortBy = 'guid';
  let sortDir = 'ASC';
 
  function reloadItems() {
-  lazyLoader.reload({ name: filterIP }, filterOffset);
+  lazyLoader.reload({ filterIp, filterGuid }, filterOffset);
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
   console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters', filters);
-  clientsList(res => show_items_callback({ error: res.error, items: res.data.items }), count, offset, filters?.name, sortBy, sortDir);
+  clientsList(res => {console.log(res);show_items_callback({ error: res.error, items: res.data.items })}, count, offset, filters?.filterIp, filters?.filterGuid, sortBy, sortDir);
  }
 
  function clickSearch() {
@@ -30,7 +29,8 @@
  }
 
  function clickReload() {
-  filterIP = null;
+  filterIp = null;
+  filterGuid = null;
   filterOffset = 0;
   reloadItems();
  }
@@ -59,7 +59,7 @@
  <div class="buttons">
   <div class="search">
    <div>Client's IP address:</div>
-   <input type="text" placeholder="IP address" bind:value={filterIP} on:keydown={keySearchForm} />
+   <input type="text" placeholder="IP address" bind:value={filterIp} on:keydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
@@ -75,7 +75,7 @@
    </tr>
   </thead>
   <tbody>
-   {#each items as c (c.id)}
+   {#each items as c (c.guid)}
     <tr>
      <Cell align="center">{c.guid}</Cell>
      <Cell>{c.ip}</Cell>
