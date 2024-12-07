@@ -5,10 +5,7 @@
  export let sortBy = undefined;
  export let sortDir = undefined;
  export let sortingChanged = () => {};
-
  let sortable = column !== undefined;
- let role = sortable ? 'button' : undefined;
- let tabindex = sortable ? 0 : undefined;
 
  function clickSortBy(columnName) {
   console.log('clickSortBy', columnName, 'sortBy', sortBy, 'sortDir', sortDir);
@@ -56,14 +53,20 @@
 </style>
 
 <th>
- <div class="row {sortable ? 'sortable' : ''}" style="justify-content: {align}" {role} {tabindex} on:click={() => clickSortBy(column)} on:keydown={() => keySortBy(column)}>
-  <div>{name}</div>
-  {#if sortable && sortBy === column}
-   {#if sortDir === 'DESC'}
-    <div class="icon"><img src="img/down.svg" alt="▼" /></div>
-   {:else}
-    <div class="icon"><img src="img/up.svg" alt="▲" /></div>
+ {#if sortable}
+  <div class="row sortable" style="justify-content: {align}" role="button" tabindex="0" on:click={() => clickSortBy(column)} on:keydown={() => keySortBy(column)}>
+   <div>{name}</div>
+   {#if sortable && sortBy === column}
+    {#if sortDir === 'DESC'}
+     <div class="icon"><img src="img/down.svg" alt="▼" /></div>
+    {:else}
+     <div class="icon"><img src="img/up.svg" alt="▲" /></div>
+    {/if}
    {/if}
-  {/if}
- </div>
+  </div>
+ {:else}
+  <div class="row" style="justify-content: {align}">
+   <div>{name}</div>
+  </div>
+ {/if}
 </th>
