@@ -8,15 +8,15 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.3.1",
-		"@sveltejs/adapter-static": "^3.0.6",
-		"@sveltejs/kit": "^2.9.0",
+  "@sveltejs/adapter-static": "^3.0.6",
+  "@sveltejs/kit": "^2.9.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.2",
-		"git-format-staged": "^3.1.1",
+  "git-format-staged": "^3.1.1",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.2",
 		"svelte": "^5.8.1",
 		"vite": "^5.4.11",
-		"esm-env": "^1.2.1"
+  "esm-env": "^1.2.1"
 	},
 	"type": "module",
 	"dependencies": {
