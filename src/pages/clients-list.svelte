@@ -20,7 +20,18 @@
 
  async function loadItems(show_items_callback, count, offset, filters) {
   console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters', filters);
-  clientsList(res => {console.log(res);show_items_callback({ error: res.error, items: res.data.items })}, count, offset, filters?.filterIp, filters?.filterGuid, sortBy, sortDir);
+  clientsList(
+   res => {
+    console.log(res);
+    show_items_callback({ error: res.error, items: res.data.items });
+   },
+   count,
+   offset,
+   filters?.filterIp,
+   filters?.filterGuid,
+   sortBy,
+   sortDir
+  );
  }
 
  function clickSearch() {
@@ -41,7 +52,6 @@
    clickSearch();
   }
  }
-
 </script>
 
 <style>
@@ -85,7 +95,7 @@
     <tr>
      <Cell align="center">{c.guid}</Cell>
      <Cell>{c.ip}</Cell>
-     <td><Button text="Kick" on:click={()=>clientsKick(c.guid)} /></td>
+     <td><Button text="Kick" on:click={() => clientsKick(c.guid)} /></td>
     </tr>
    {/each}
   </tbody>
