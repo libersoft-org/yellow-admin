@@ -1,3 +1,3 @@
 #!/bin/sh
 
-screen -dmS yellow-admin bash -c "trap bash SIGINT; (./start-dev.sh ; bash);"
+screen -dmS yellow-admin bash -c ". ./colors.sh; trap bash SIGINT; (./start-dev.sh ; bash);"
