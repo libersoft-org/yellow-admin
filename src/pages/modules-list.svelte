@@ -9,7 +9,6 @@
  import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
  import { getContext } from 'svelte';
-
  let contentElement = getContext('contentElement');
  let items = [];
  let isModalAddEditOpen = false;

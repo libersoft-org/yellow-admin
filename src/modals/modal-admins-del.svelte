@@ -1,10 +1,8 @@
 <script>
  import { adminsDel } from '../core.js';
  import Button from '../components/button.svelte';
-
  export let close;
  export let params;
-
  let id = params?.id;
  let name = params?.name;
  let error = null;

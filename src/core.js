@@ -14,9 +14,7 @@ Socket.socketError.subscribe(value => {
 export function logout() {
  sessionsDel(sessionID, res => {
   //console.log('logout Response:', res);
-  if (res.error !== 0) {
-   alert(res.message);
-  }
+  if (res.error !== 0) alert(res.message);
   frontend_logout();
  });
  sessionID = null;
@@ -50,16 +48,12 @@ export function login(credentials) {
 
 function send(command, params, callback) {
  Socket.send(command, params, sessionID, async (req, res) => {
-  if (res.error >= 900 && res.error <= 999) {
-   console.error('Error:', res.error);
-  }
+  if (res.error >= 900 && res.error <= 999) console.error('Error:', res.error);
   if (res.error === 997 || res.error === 994) {
    frontend_logout();
    return;
   }
-  if (res.error >= 900 && res.error <= 999) {
-   return;
-  }
+  if (res.error >= 900 && res.error <= 999) return;
   await callback(res);
  });
 }

@@ -14,7 +14,7 @@
  import ClientsList from '../pages/clients-list.svelte';
  import LogsList from '../pages/logs-list.svelte';
  const product = 'Yellow - Administration';
- const version = '0.01';
+ const version = '0.0.1';
  const link = 'https://yellow.libersoft.org';
  const pages = {
   sysinfo: SysInfo,

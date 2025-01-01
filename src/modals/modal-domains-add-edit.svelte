@@ -2,10 +2,8 @@
  import { onMount } from 'svelte';
  import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
  import Button from '../components/button.svelte';
-
  export let close;
  export let params;
-
  let id = params?.id;
  let domainElement;
  let domainData = null;
@@ -28,14 +26,9 @@
  function clickAddEdit() {
   console.log('clickAddEdit');
   if (domainElement.value) {
-   if (id) {
-    domainsEdit(id, domainElement.value, cb);
-   } else {
-    domainsAdd(domainElement.value, cb);
-   }
-  } else {
-   console.log('domainElement.value is empty');
-  }
+   if (id) domainsEdit(id, domainElement.value, cb);
+   else domainsAdd(domainElement.value, cb);
+  } else console.log('domainElement.value is empty');
  }
 
  function keyEnter() {

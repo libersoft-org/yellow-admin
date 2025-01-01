@@ -4,7 +4,6 @@
  export let params = null;
  export let title = null;
  export let body = '';
-
  let modalEl;
  let posX = 0;
  let posY = 0;

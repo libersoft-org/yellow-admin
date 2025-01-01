@@ -2,10 +2,8 @@
  import { onMount } from 'svelte';
  import { usersAdd, usersEdit, userInfo, domainsList } from '../core.js';
  import Button from '../components/button.svelte';
-
  export let close;
  export let params;
-
  let id = params?.id;
  let usernameElement;
  let domains = [];

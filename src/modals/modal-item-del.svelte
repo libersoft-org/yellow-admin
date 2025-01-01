@@ -1,9 +1,7 @@
 <script>
  import Button from '../components/button.svelte';
-
  export let close;
  export let params;
-
  let name = params?.name;
  let id = params?.id;
  let fn = params?.fn;

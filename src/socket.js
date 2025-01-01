@@ -1,5 +1,4 @@
 import { get, writable } from 'svelte/store';
-
 export const socketState = writable(null);
 export const socketError = writable(null);
 export const socketStates = {

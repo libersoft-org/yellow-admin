@@ -98,9 +98,6 @@
  }
 </script>
 
-<style>
-</style>
-
 {#if hasMore}
  <div class="loader" bind:this={loaderElement}></div>
 {/if}

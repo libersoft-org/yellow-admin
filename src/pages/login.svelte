@@ -48,7 +48,7 @@
   }, 0);
  }
 
- function keyLogin() {
+ function keyLogin(event) {
   if (event.key === 'Enter') {
    event.preventDefault();
    clickLogin();
