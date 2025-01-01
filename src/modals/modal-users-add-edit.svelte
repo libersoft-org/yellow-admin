@@ -26,21 +26,17 @@
    'id',
    'ASC'
   );
-  if (id) {
+  if (id)
    userInfo(id, res => {
     userData = res?.data;
    });
-  }
   usernameElement.focus();
  });
 
  function clickAddEdit() {
   if (usernameElement.value) {
-   if (id) {
-    usersEdit(id, usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
-   } else {
-    usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
-   }
+   if (id) usersEdit(id, usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
+   else usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
   }
  }
 
