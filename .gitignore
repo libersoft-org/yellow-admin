@@ -12,4 +12,5 @@ build/
 bun.lock
 bun.lockb
 bun.lockb.txt
+package-lock.json
 vite.config.js.timestamp-*
