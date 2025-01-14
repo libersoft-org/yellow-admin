@@ -9,4 +9,7 @@ build/
 .vercel
 .idea
 .env
+bun.lock
+bun.lockb
+bun.lockb.txt
 vite.config.js.timestamp-*
