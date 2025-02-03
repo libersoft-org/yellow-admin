@@ -11,15 +11,12 @@
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.15.1",
 		"@sveltejs/vite-plugin-svelte": "^4.0.4",
+		"esm-env": "^1.2.1",
 		"git-format-staged": "^3.1.1",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.2",
 		"svelte": "^5.16.0",
-		"vite": "^5.4.11",
-		"esm-env": "^1.2.1"
+		"vite": "^5.4.11"
 	},
-	"type": "module",
-	"dependencies": {
-		"yellow-server-common": "https://github.com/libersoft-org/yellow-server-common"
-	}
+	"type": "module"
 }
