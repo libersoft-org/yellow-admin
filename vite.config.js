@@ -2,11 +2,13 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import fs from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 
 function getGitCommitHash() {
  try {
   return execSync('git rev-parse --short HEAD').toString().trim();
  } catch (e) {
+  console.error('Error getting git commit hash:', e);
   return null;
  }
 }
