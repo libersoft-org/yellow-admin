@@ -1,7 +1,7 @@
 <script>
  import '../app.css';
  import { socketState, socketStates, connect } from '../socket.js';
- import { hideSidebarMobile, isLoggedIn } from '../core.js';
+ import { hideSidebarMobile, isLoggedIn, product } from '../core.js';
  import Login from '../pages/login.svelte';
  import Menu from '../components/menu.svelte';
  import WelcomeContent from '../pages/welcome-content.svelte';
@@ -13,9 +13,7 @@
  import SessionsList from '../pages/sessions-list.svelte';
  import ClientsList from '../pages/clients-list.svelte';
  import LogsList from '../pages/logs-list.svelte';
- const product = 'Yellow - Administration';
- const version = '0.0.1';
- const link = 'https://yellow.libersoft.org';
+
  const pages = {
   sysinfo: SysInfo,
   admins: AdminsList,
@@ -168,7 +166,7 @@
 
 <div class="app">
  {#if !$isLoggedIn}
-  <Login {product} {version} {link} />
+  <Login />
  {:else}
   <div class="main">
    <div class="sidebar {$hideSidebarMobile ? 'hidden' : ''}" bind:this={sideBar}>
@@ -179,7 +177,7 @@
     {#if selectedPage}
      <svelte:component this={selectedPage} {contentElement} />
     {:else}
-     <WelcomeContent {product} {version} {link} />
+     <WelcomeContent />
     {/if}
    </div>
   </div>

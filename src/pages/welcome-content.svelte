@@ -1,7 +1,5 @@
 <script>
- export let product;
- export let version;
- export let link;
+ import { product, version, build, commit, link } from '../core.js';
 
  function clickLogo() {
   window.open(link, '_blank');
@@ -59,5 +57,13 @@
  <div class="version">
   <div>Version:</div>
   <div class="bold">{version}</div>
+ </div>
+ <div class="version">
+  <div>Build:</div>
+  <div class="bold">{build}</div>
+ </div>
+ <div class="version">
+  <div>Commit:</div>
+  <div class="bold">{commit}</div>
  </div>
 </div>

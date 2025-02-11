@@ -1,11 +1,8 @@
 <script>
  import { onMount } from 'svelte';
  import { socketState, socketStates, connect } from '../socket.js';
- import { isLoggedIn, loginError, login } from '../core.js';
+ import { isLoggedIn, loginError, login, product, version, build, commit, link } from '../core.js';
  import Button from '../components/button.svelte';
- export let product;
- export let version;
- export let link;
  let credentials = { server: '', username: '', password: '' };
  let loggingIn = false;
 
@@ -147,6 +144,14 @@
   <div class="version">
    <div>Version:</div>
    <div class="bold">{version}</div>
+  </div>
+  <div class="version">
+   <div>Build:</div>
+   <div class="bold">{build}</div>
+  </div>
+  <div class="commit">
+   <div>Commit:</div>
+   <div class="bold">{commit}</div>
   </div>
   <div class="form">
    <div class="group">
