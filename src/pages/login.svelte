@@ -149,7 +149,7 @@
    <div>Build:</div>
    <div class="bold">{build}</div>
   </div>
-  <div class="commit">
+  <div class="version">
    <div>Commit:</div>
    <div class="bold">{commit}</div>
   </div>
