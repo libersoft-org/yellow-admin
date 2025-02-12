@@ -22,7 +22,7 @@
  });
 
  function clickAddEdit() {
-  const params = [elModuleName.value, elModuleConnectionString.value, cb];
+  const params = [elModuleName.getValue(), elModuleConnectionString.getValue(), cb];
   if (id) modulesEdit(id, ...params);
   else modulesAdd(...params);
  }
