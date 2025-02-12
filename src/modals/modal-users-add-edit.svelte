@@ -37,12 +37,18 @@
  function clickAddEdit() {
   console.log('asdfjkkjdjkadfjklsdflkjsdfljksdfjkl');
   error = null;
-  if (usernameElement.value) {
-   if (id) usersEdit(id, usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
-   else usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
-  } else {
+
+  if (!usernameElement.getValue()) {
    error = 'Username is required';
+   return;
   }
+  if (!domainElement.value) {
+   error = 'Domain is required';
+   return;
+  }
+
+  if (id) usersEdit(id, usernameElement.getValue(), domainElement.value, visibleNameElement.value, passwordElement.value, cb);
+  else usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
  }
 
  async function cb(res) {
@@ -89,7 +95,7 @@
  <div class="label">Domain:</div>
  <div>
   <Select bind:this={domainElement} value={userData ? userData.id_domains : ''}>
-   <Option text="--- domain ---" selected={true} />
+   <Option text="--- domain ---" selected={true} disabled={true} />
    {#each domains as d (d.id)}
     <Option value={d.id} text={d.name} />
    {/each}
