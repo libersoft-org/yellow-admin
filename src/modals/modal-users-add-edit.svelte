@@ -2,6 +2,9 @@
  import { onMount } from 'svelte';
  import { usersAdd, usersEdit, userInfo, domainsList } from '../core.js';
  import Button from '../components/button.svelte';
+ import Input from '../components/input.svelte';
+ import Select from '../components/select.svelte';
+ import Option from '../components/select-option.svelte';
  export let close;
  export let params;
  let id = params?.id;
@@ -16,7 +19,7 @@
  onMount(() => {
   domainsList(
    res => {
-    if (res.error === 0) domains = [{ id: null, name: '--- domain ---' }, ...res.data.domains];
+    if (res.error === 0) domains = res.data.domains;
    },
    1000000,
    0,
@@ -32,9 +35,13 @@
  });
 
  function clickAddEdit() {
+  console.log('asdfjkkjdjkadfjklsdflkjsdfljksdfjkl');
+  error = null;
   if (usernameElement.value) {
    if (id) usersEdit(id, usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
    else usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
+  } else {
+   error = 'Username is required';
   }
  }
 
@@ -76,25 +83,26 @@
 
 <div class="group">
  <div class="label">Username:</div>
- <div><input type="text" value={userData ? userData.username : ''} placeholder="Username" on:keydown={keyEnter} bind:this={usernameElement} /></div>
+ <div><Input value={userData ? userData.username : ''} placeholder="Username" onKeydown={keyEnter} bind:this={usernameElement} /></div>
 </div>
 <div class="group">
  <div class="label">Domain:</div>
  <div>
-  <select bind:this={domainElement} value={userData ? userData.id_domains : ''}>
+  <Select bind:this={domainElement} value={userData ? userData.id_domains : ''}>
+   <Option text="--- domain ---" selected={true} />
    {#each domains as d (d.id)}
-    <option value={d.id}>{d.name}</option>
+    <Option value={d.id} text={d.name} />
    {/each}
-  </select>
+  </Select>
  </div>
 </div>
 <div class="group">
  <div class="label">Visible name:</div>
- <div><input type="text" bind:this={visibleNameElement} value={userData ? userData.visible_name : ''} placeholder="Visible name" on:keydown={keyEnter} /></div>
+ <div><Input bind:this={visibleNameElement} value={userData ? userData.visible_name : ''} placeholder="Visible name" onKeydown={keyEnter} /></div>
 </div>
 <div class="group">
  <div class="label">Password:</div>
- <div><input type="password" bind:this={passwordElement} placeholder="Password" on:keydown={keyEnter} /></div>
+ <div><Input type="password" bind:this={passwordElement} placeholder="Password" onKeydown={keyEnter} /></div>
 </div>
 <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 {#if error}

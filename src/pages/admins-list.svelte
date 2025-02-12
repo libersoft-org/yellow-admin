@@ -4,6 +4,7 @@
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
+ import Input from '../components/input.svelte';
  import Modal from '../components/modal.svelte';
  import ModalAdminsAdd from '../modals/modal-admins-add-edit.svelte';
  import ModalAdminsDel from '../modals/modal-admins-del.svelte';
@@ -113,11 +114,11 @@
  <div class="buttons">
   <div class="search">
    <div>Admin username:</div>
-   <input type="text" placeholder="Username" bind:value={filterUsername} on:keydown={keySearchForm} />
+   <Input placeholder="Username" bind:value={filterUsername} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
-   <input type="number" min="0" placeholder="0" bind:value={filterOffset} on:keydown={keySearchForm} />
+   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
   <Button on:click={clickSearch} img="img/search.svg" text="Search" />
  </div>

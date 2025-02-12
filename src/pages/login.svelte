@@ -3,6 +3,7 @@
  import { socketState, socketStates, connect } from '../socket.js';
  import { isLoggedIn, loginError, login, product, version, build, commit, link } from '../core.js';
  import Button from '../components/button.svelte';
+ import Input from '../components/input.svelte';
  let credentials = { server: '', username: '', password: '' };
  let loggingIn = false;
 
@@ -93,7 +94,7 @@
   padding: 10px;
   border: 1px solid #999;
   border-radius: 10px;
-  background-color: #ffc;
+  background-color: #ffd;
  }
 
  .login .version table {
@@ -142,6 +143,8 @@
   padding: 10px;
   border: 1px solid #999;
   border-radius: 10px;
+  font-family: inherit;
+  font-size: inherit;
  }
 
  .login .form .error {
@@ -180,15 +183,15 @@
   <div class="form">
    <div class="group">
     <div class="label">Server:</div>
-    <input type="text" placeholder="wss://your_server/" bind:value={credentials.server} on:keydown={keyLogin} />
+    <Input placeholder="wss://your_server/" bind:value={credentials.server} onKeydown={keyLogin} />
    </div>
    <div class="group">
     <div class="label">User name:</div>
-    <input type="text" placeholder="Administrator's user name" bind:value={credentials.username} on:keydown={keyLogin} />
+    <Input placeholder="Administrator's user name" bind:value={credentials.username} onKeydown={keyLogin} />
    </div>
    <div class="group">
     <div class="label">Password:</div>
-    <input type="password" placeholder="Password" bind:value={credentials.password} on:keydown={keyLogin} />
+    <Input type="password" placeholder="Password" bind:value={credentials.password} onKeydown={keyLogin} />
    </div>
    {#if $loginError}
     <div class="error">

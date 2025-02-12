@@ -4,6 +4,7 @@
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
+ import Input from '../components/input.svelte';
  import Cell from '../components/table-cell.svelte';
  export let contentElement;
  let items = [];
@@ -70,15 +71,15 @@
  <div class="buttons">
   <div class="search">
    <div>Client's GUID:</div>
-   <input type="text" placeholder="GUID" bind:value={filterGuid} on:keydown={keySearchForm} />
+   <Input placeholder="GUID" bind:value={filterGuid} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Client's IP address:</div>
-   <input type="text" placeholder="IP address" bind:value={filterIp} on:keydown={keySearchForm} />
+   <Input placeholder="IP address" bind:value={filterIp} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
-   <input type="number" min="0" placeholder="0" bind:value={filterOffset} on:keydown={keySearchForm} />
+   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
   <Button on:click={clickSearch} img="img/search.svg" text="Search" />
  </div>

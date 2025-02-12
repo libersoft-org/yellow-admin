@@ -2,6 +2,7 @@
  import { onMount } from 'svelte';
  import { adminsAdd, adminsEdit, adminInfo } from '../core.js';
  import Button from '../components/button.svelte';
+ import Input from '../components/input.svelte';
  export let close;
  export let params;
  let id = params?.id;
@@ -11,11 +12,7 @@
  let error = null;
 
  onMount(() => {
-  if (id) {
-   adminInfo(id, res => {
-    adminData = res?.data;
-   });
-  }
+  if (id) adminInfo(id, res => (adminData = res?.data));
   usernameElement.focus();
  });
 
@@ -64,11 +61,11 @@
 
 <div class="group">
  <div class="label">Admin username:</div>
- <div><input type="text" value={adminData ? adminData.username : ''} placeholder="Username" on:keydown={keyEnter} bind:this={usernameElement} /></div>
+ <div><Input value={adminData ? adminData.username : ''} placeholder="Username" onKeydown={keyEnter} bind:this={usernameElement} /></div>
 </div>
 <div class="group">
  <div class="label">Password:</div>
- <div><input type="password" bind:value={password} placeholder="Password" on:keydown={keyEnter} /></div>
+ <div><Input type="password" bind:value={password} placeholder="Password" onKeydown={keyEnter} /></div>
 </div>
 <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 {#if error}

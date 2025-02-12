@@ -2,6 +2,7 @@
  import { onMount } from 'svelte';
  import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
  import Button from '../components/button.svelte';
+ import Input from '../components/input.svelte';
  export let close;
  export let params;
  let id = params?.id;
@@ -70,7 +71,7 @@
 
 <div class="group">
  <div class="label">Domain name:</div>
- <div><input type="text" placeholder="domain.tld" on:keydown={keyEnter} bind:this={domainElement} bind:value={name} /></div>
+ <div><Input placeholder="domain.tld" onKeydown={keyEnter} bind:this={domainElement} bind:value={name} /></div>
  <Button disabled={button_disabled} on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 </div>
 {#if error}

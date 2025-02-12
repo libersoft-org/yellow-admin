@@ -2,10 +2,9 @@
  import { onMount } from 'svelte';
  import { modulesAdd, modulesEdit, modulesInfo } from '../core.js';
  import Button from '../components/button.svelte';
-
+ import Input from '../components/input.svelte';
  export let close;
  export let params;
-
  let id = params?.id;
  let elModuleName;
  let elModuleConnectionString;
@@ -65,11 +64,11 @@
 
 <div class="group">
  <div class="label">Module name:</div>
- <div><input type="text" value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" on:keydown={keyEnter} bind:this={elModuleName} /></div>
+ <div><Input value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" onKeydown={keyEnter} bind:this={elModuleName} /></div>
 </div>
 <div class="group">
  <div class="label">Connection string:</div>
- <div><input type="text" value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" on:keydown={keyEnter} bind:this={elModuleConnectionString} /></div>
+ <div><Input value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" onKeydown={keyEnter} bind:this={elModuleConnectionString} /></div>
 </div>
 <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 {#if error}

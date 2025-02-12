@@ -4,6 +4,9 @@
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Button from '../components/button.svelte';
+ import Input from '../components/input.svelte';
+ import Select from '../components/select.svelte';
+ import Option from '../components/select-option.svelte';
  import Modal from '../components/modal.svelte';
  import ModalUsersAdd from '../modals/modal-users-add-edit.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
@@ -14,7 +17,6 @@
  let items = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;
- let filterDomainID = null;
  let userID = null;
  let delAddress = null;
  let filterUsername = null;
@@ -22,11 +24,12 @@
  let lazyLoader;
  let sortBy = 'id';
  let sortDir = 'ASC';
+ let elDomain;
 
  onMount(() => {
   domainsList(
    res => {
-    if (res.error === 0) domains = [{ id: null, name: '--- domain ---' }, ...res.data.domains];
+    if (res.error === 0) domains = res.data.domains;
    },
    1000000,
    0,
@@ -37,7 +40,7 @@
  });
 
  function reloadItems() {
-  lazyLoader.reload({ username: filterUsername, domainID: filterDomainID }, filterOffset);
+  lazyLoader.reload({ username: filterUsername, domainID: elDomain.value }, filterOffset);
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
@@ -123,25 +126,26 @@
 <div class="page">
  <div class="buttons">
   <MenuButton />
-  <Button on:click={() => clickAddEdit()} img="img/add.svg" text="Add a new user" />
-  <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
+  <Button on:click={clickAddEdit} img="img/add.svg" text="Add a new user" />
+  <Button on:click={clickReload} img="img/reload.svg" text="Reload" />
  </div>
  <div class="buttons">
   <div class="search">
    <div>Username:</div>
-   <input type="text" placeholder="Username" bind:value={filterUsername} on:keydown={keySearchForm} />
+   <Input placeholder="Username" bind:value={filterUsername} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>@</div>
-   <select bind:value={filterDomainID}>
+   <Select bind:this={elDomain}>
+    <Option text="--- domain ---" selected={true} />
     {#each domains as d (d.id)}
-     <option value={d.id}>{d.name}</option>
+     <Option value={d.id} text={d.name} />
     {/each}
-   </select>
+   </Select>
   </div>
   <div class="search">
    <div>Offset:</div>
-   <input type="number" min="0" placeholder="0" bind:value={filterOffset} on:keydown={keySearchForm} />
+   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
   <Button on:click={clickSearch} img="img/search.svg" text="Search" />
  </div>
