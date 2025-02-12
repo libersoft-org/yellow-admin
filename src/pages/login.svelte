@@ -90,6 +90,24 @@
   display: flex;
   justify-content: center;
   gap: 5px;
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  background-color: #ffc;
+ }
+
+ .login .version table {
+  table-layout: fixed;
+  display: inline-table;
+  align-self: flex-start;
+ }
+
+ .login .version .left {
+  text-align: right;
+ }
+
+ .login .version .right {
+  font-weight: bold;
  }
 
  .login .logo img {
@@ -142,16 +160,22 @@
    <div class="product">{product}</div>
   </div>
   <div class="version">
-   <div>Version:</div>
-   <div class="bold">{version}</div>
-  </div>
-  <div class="version">
-   <div>Build:</div>
-   <div class="bold">{build}</div>
-  </div>
-  <div class="commit">
-   <div>Commit:</div>
-   <div class="bold">{commit}</div>
+   <table>
+    <tbody>
+     <tr>
+      <td class="left">Version:</td>
+      <td class="right">{version}</td>
+     </tr>
+     <tr>
+      <td class="left">Build:</td>
+      <td class="right">{build}</td>
+     </tr>
+     <tr>
+      <td class="left">Commit:</td>
+      <td class="right">{commit}</td>
+     </tr>
+    </tbody>
+   </table>
   </div>
   <div class="form">
    <div class="group">
