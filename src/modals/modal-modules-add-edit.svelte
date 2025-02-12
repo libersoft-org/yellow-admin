@@ -34,7 +34,7 @@
   } else if (res?.message) error = res.message;
  }
 
- function keyEnter() {
+ function keyEnter(event) {
   if (event.key === 'Enter') {
    event.preventDefault();
    clickAddEdit();

@@ -33,7 +33,7 @@
   } else console.log('domainElement.value is empty');
  }
 
- function keyEnter() {
+ function keyEnter(event) {
   if (event.key === 'Enter') {
    event.preventDefault();
    clickAddEdit();
