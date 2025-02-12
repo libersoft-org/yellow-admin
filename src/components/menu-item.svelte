@@ -1,4 +1,5 @@
 <script>
+ import BaseButton from './base-button.svelte';
  export let title;
  export let icon;
  export let callback;
@@ -6,13 +7,6 @@
 
  function clickFunction() {
   callback();
- }
-
- function keyFunction() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   callback();
-  }
  }
 </script>
 
@@ -41,7 +35,9 @@
  }
 </style>
 
-<div class="item {active ? 'active' : ''}" role="button" tabindex="0" on:click={clickFunction} on:keydown={keyFunction}>
- <img src="img/{icon}" alt={title} />
- <div>{title}</div>
-</div>
+<BaseButton onClick={clickFunction}>
+ <div class="item {active ? 'active' : ''}">
+  <img src="img/{icon}" alt={title} />
+  <div>{title}</div>
+ </div>
+</BaseButton>

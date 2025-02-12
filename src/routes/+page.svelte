@@ -32,7 +32,7 @@
  let contentElement;
 
  $: if ($isLoggedIn && $socketState === socketStates.OPEN) {
-  console.log('Connected to server');
+  //console.log('Connected to server');
   status = { class: 'info', message: 'Connected to server' };
  }
 

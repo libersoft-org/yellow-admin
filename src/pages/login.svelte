@@ -2,6 +2,7 @@
  import { onMount } from 'svelte';
  import { socketState, socketStates, connect } from '../socket.js';
  import { isLoggedIn, loginError, login, product, version, build, commit, link } from '../core.js';
+ import BaseButton from '../components/base-button.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Alert from '../components/alert.svelte';
@@ -23,26 +24,19 @@
  $: if ($socketState === socketStates.OPEN && loggingIn) login(credentials);
  $: if ($loginError) loggingIn = false;
  $: if ($isLoggedIn) loggingIn = false;
- $: console.log('loginError:', $loginError);
+ //$: console-log('loginError:', $loginError);
 
  function clickLogo() {
   window.open(link, '_blank');
  }
 
- function keyLogo() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickLogo();
-  }
- }
-
  function clickLogin() {
-  console.log('clickLogin loggingIn:', loggingIn);
+  //console.log('clickLogin loggingIn:', loggingIn);
   if (loggingIn) return;
   loggingIn = true;
   loginError.set(null);
   setTimeout(() => {
-   console.log('clickLogin credentials:', credentials);
+   //console.log('clickLogin credentials:', credentials);
    connect(credentials.server);
   }, 0);
  }
@@ -143,10 +137,12 @@
 
 <div class="background">
  <div class="login">
-  <div class="logo" role="button" tabindex="0" on:click={clickLogo} on:keydown={keyLogo}>
-   <img src="img/logo.svg" alt={product} />
-   <div class="product">{product}</div>
-  </div>
+  <BaseButton onClick={clickLogo}>
+   <div class="logo">
+    <img src="img/logo.svg" alt={product} />
+    <div class="product">{product}</div>
+   </div>
+  </BaseButton>
   <div class="version">
    <table>
     <tbody>

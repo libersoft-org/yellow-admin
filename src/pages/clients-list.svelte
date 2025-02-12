@@ -3,9 +3,12 @@
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
+ import Buttons from '../components/buttons.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Cell from '../components/table-cell.svelte';
+ import Icons from '../components/icons.svelte';
+ import Icon from '../components/icons-icon.svelte';
  export let contentElement;
  let items = [];
  let filterIp = null;
@@ -20,10 +23,10 @@
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
-  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters', filters);
+  //console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters', filters);
   clientsList(
    res => {
-    console.log(res);
+    //console.log(res);
     show_items_callback({ error: res.error, items: res.data.items });
    },
    count,
@@ -36,7 +39,6 @@
  }
 
  function clickSearch() {
-  console.log('search');
   reloadItems();
  }
 
@@ -64,11 +66,11 @@
 </style>
 
 <div class="page">
- <div class="buttons">
+ <Buttons>
   <MenuButton />
   <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
- </div>
- <div class="buttons">
+ </Buttons>
+ <Buttons>
   <div class="search">
    <div>Client's GUID:</div>
    <Input placeholder="GUID" bind:value={filterGuid} onKeydown={keySearchForm} />
@@ -82,7 +84,7 @@
    <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
- </div>
+ </Buttons>
  <table class="list-table">
   <thead>
    <tr>
@@ -96,7 +98,11 @@
     <tr>
      <Cell align="center">{c.guid}</Cell>
      <Cell>{c.ip}</Cell>
-     <td><Button text="Kick" onClick={() => clientsKick(c.guid)} /></td>
+     <Cell>
+      <Icons>
+       <Icon img="img/kick.svg" onClick={() => clientsKick(c.guid)} />
+      </Icons>
+     </Cell>
     </tr>
    {/each}
   </tbody>

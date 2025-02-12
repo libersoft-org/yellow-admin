@@ -3,12 +3,15 @@
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
+ import Buttons from '../components/buttons.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Modal from '../components/modal.svelte';
  import ModalModulesAdd from '../modals/modal-modules-add-edit.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
+ import Icons from '../components/icons.svelte';
+ import Icon from '../components/icons-icon.svelte';
  import { getContext } from 'svelte';
  let contentElement = getContext('contentElement');
  let items = [];
@@ -27,7 +30,7 @@
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
-  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filter', filters);
+  //console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filter', filters);
   modulesList(res => show_items_callback({ error: res.error, items: res.data.modules }), count, offset, filters?.name, sortBy, sortDir);
  }
 
@@ -44,7 +47,6 @@
  }
 
  function clickSearch() {
-  console.log('search');
   reloadItems();
  }
 
@@ -86,33 +88,15 @@
   align-items: center;
   gap: 10px;
  }
-
- .row .icon {
-  display: flex;
-  padding: 5px;
-  cursor: pointer;
- }
-
- .row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
- }
-
- .row .icon img {
-  width: 20px;
-  height: 20px;
- }
 </style>
 
 <div class="page">
- <div class="buttons">
+ <Buttons>
   <MenuButton />
   <Button img="img/add.svg" text="Add a new module" onClick={() => clickAddEdit()} />
   <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
- </div>
- <div class="buttons">
+ </Buttons>
+ <Buttons>
   <div class="search">
    <div>Module name:</div>
    <Input placeholder="tld.domain.product" bind:value={filterName} onKeydown={keySearchForm} />
@@ -122,7 +106,7 @@
    <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
- </div>
+ </Buttons>
  <table class="list-table">
   <thead>
    <tr>
@@ -141,10 +125,10 @@
      <Cell align="center">{m.connection_string}</Cell>
      <Cell align="center">{new Date(m.created).toLocaleString()}</Cell>
      <Cell align="center">
-      <div class="row">
-       <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(m.id)} on:keydown={() => keyAddEdit(m.id)}><img src="img/edit.svg" alt="Edit" /></div>
-       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(m.id, m.name)} on:keydown={() => keyDel(m.id, m.name)}><img src="img/del.svg" alt="Delete" /></div>
-      </div>
+      <Icons>
+       <Icon img="img/edit.svg" onClick={() => clickAddEdit(m.id)} />
+       <Icon img="img/del.svg" onClick={() => clickDel(m.id, m.name)} />
+      </Icons>
      </Cell>
     </tr>
    {/each}

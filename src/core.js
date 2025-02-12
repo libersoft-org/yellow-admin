@@ -15,7 +15,7 @@ export const commit = __COMMIT_HASH__;
 export const link = 'https://yellow.libersoft.org';
 
 Socket.socketError.subscribe(value => {
- console.log('Socket Error:', value);
+ //console.log('Socket Error:', value);
  if (value) loginError.set(value);
 });
 

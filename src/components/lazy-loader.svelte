@@ -82,7 +82,7 @@
   if (loaderElement) {
    const rect = loaderElement.getBoundingClientRect();
    result = rect.top < contentHeight;
-   console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
+   //console.log('rect.top:' + rect.top + ', contentHeight:' + contentHeight);
   } else result = false;
   */
   result = _loaderIsVisible;

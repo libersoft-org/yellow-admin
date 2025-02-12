@@ -1,4 +1,5 @@
 <script>
+ import Icon from './icons-icon.svelte';
  export let align = 'left';
  export let name;
  export let column = undefined;
@@ -8,20 +9,13 @@
  let sortable = column !== undefined;
 
  function clickSortBy(columnName) {
-  console.log('clickSortBy', columnName, 'sortBy', sortBy, 'sortDir', sortDir);
+  //console.log('clickSortBy', columnName, 'sortBy', sortBy, 'sortDir', sortDir);
   if (sortBy === columnName) sortDir = sortDir === 'ASC' ? 'DESC' : 'ASC';
   else {
    sortBy = columnName;
    sortDir = 'ASC';
   }
   sortingChanged({ sortBy, sortDir });
- }
-
- function keySortBy(columnName) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickSortBy(columnName);
-  }
  }
 </script>
 
@@ -36,17 +30,6 @@
   align-items: center;
  }
 
- th .row .icon {
-  display: flex;
-  padding: 5px;
-  cursor: pointer;
- }
-
- th .row .icon img {
-  width: 20px;
-  height: 20px;
- }
-
  .sortable {
   cursor: pointer;
  }
@@ -54,13 +37,13 @@
 
 <th>
  {#if sortable}
-  <div class="row sortable" style="justify-content: {align}" role="button" tabindex="0" on:click={() => clickSortBy(column)} on:keydown={() => keySortBy(column)}>
+  <div class="row sortable" style="justify-content: {align}">
    <div>{name}</div>
    {#if sortable && sortBy === column}
     {#if sortDir === 'DESC'}
-     <div class="icon"><img src="img/down.svg" alt="▼" /></div>
+     <Icon img="img/down.svg" alt="▼" onClick={() => clickSortBy(column)} />
     {:else}
-     <div class="icon"><img src="img/up.svg" alt="▲" /></div>
+     <Icon img="img/up.svg" alt="▲" onClick={() => clickSortBy(column)} />
     {/if}
    {/if}
   </div>

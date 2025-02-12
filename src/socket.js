@@ -26,14 +26,14 @@ export function connect(server = null) {
  try {
   socket = new WebSocket(url);
  } catch (e) {
-  console.log('Error while creating WebSocket:', e);
+  //console.log('Error while creating WebSocket:', e);
   socketError.set('Error while creating WebSocket: ' + e.message);
   return;
  }
  socketState.set(socket.readyState);
  socket.onopen = () => socketState.set(socket.readyState);
  socket.onerror = event => {
-  console.log('sockerr', event);
+  //console.log('sockerr', event);
   socketState.set(socket.readyState);
   socketError.set('Error while connecting to server.');
  };
@@ -49,7 +49,7 @@ export function disconnect() {
   console.error('Socket is not yet created');
   return;
  }
- console.log('Socket state:', get(socketState));
+ //console.log('Socket state:', get(socketState));
  if (get(socketState) !== socketStates.OPEN) {
   console.error('Socket is not opened');
   return;

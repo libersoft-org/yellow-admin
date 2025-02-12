@@ -1,8 +1,10 @@
 <script>
  import { usersList, domainsList, usersDel } from '../core.js';
+ import { onMount } from 'svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
+ import Buttons from '../components/buttons.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Select from '../components/select.svelte';
@@ -11,7 +13,8 @@
  import ModalUsersAdd from '../modals/modal-users-add-edit.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
- import { onMount } from 'svelte';
+ import Icons from '../components/icons.svelte';
+ import Icon from '../components/icons-icon.svelte';
  export let contentElement;
  let domains = [];
  let items = [];
@@ -44,20 +47,13 @@
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
-  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters:', filters);
+  //console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters:', filters);
   usersList(res => show_items_callback({ error: res.error, items: res.data.users }), count, offset, filters, sortBy, sortDir);
  }
 
  function clickAddEdit(id = null) {
   userID = id;
   isModalAddEditOpen = true;
- }
-
- function keyAddEdit(id) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickAddEdit(id);
-  }
  }
 
  function clickSearch() {
@@ -70,8 +66,7 @@
   reloadItems();
  }
 
- function keySearchForm() {
-  console.log('keySearchForm');
+ function keySearchForm(event) {
   if (event.key === 'Enter') {
    event.preventDefault();
    clickSearch();
@@ -88,13 +83,6 @@
   delAddress = username;
   isModalDelOpen = true;
  }
-
- function keyDel(id, username) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickDel(id, username);
-  }
- }
 </script>
 
 <style>
@@ -103,33 +91,15 @@
   align-items: center;
   gap: 10px;
  }
-
- .row .icon {
-  display: flex;
-  padding: 5px;
-  cursor: pointer;
- }
-
- .row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
- }
-
- .row .icon img {
-  width: 20px;
-  height: 20px;
- }
 </style>
 
 <div class="page">
- <div class="buttons">
+ <Buttons>
   <MenuButton />
   <Button img="img/add.svg" text="Add a new user" onClick={() => clickAddEdit()} />
   <Button img="img/reload.svg" text="Reload" onClick={clickReload} />
- </div>
- <div class="buttons">
+ </Buttons>
+ <Buttons>
   <div class="search">
    <div>Username:</div>
    <Input placeholder="Username" bind:value={filterUsername} onKeydown={keySearchForm} />
@@ -148,7 +118,7 @@
    <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
- </div>
+ </Buttons>
  <table class="list-table">
   <thead>
    <tr>
@@ -167,10 +137,10 @@
      <Cell>{u.visible_name}</Cell>
      <Cell align="center">{new Date(u.created).toLocaleString()}</Cell>
      <Cell align="center">
-      <div class="row">
-       <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(u.id)} on:keydown={() => keyAddEdit(u.id)}><img src="img/edit.svg" alt="Edit" /></div>
-       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(u.id, u.address)} on:keydown={() => keyDel(u.id, u.address)}><img src="img/del.svg" alt="Delete" /></div>
-      </div>
+      <Icons>
+       <Icon img="img/edit.svg" onClick={() => clickAddEdit(u.id)} />
+       <Icon img="img/del.svg" onClick={() => clickDel(u.id, u.address)} />
+      </Icons>
      </Cell>
     </tr>
    {/each}

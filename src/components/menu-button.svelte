@@ -1,15 +1,9 @@
 <script>
  import { hideSidebarMobile } from '../core.js';
+ import BaseButton from './base-button.svelte';
 
  function clickMenu() {
   hideSidebarMobile.set(false);
- }
-
- function keyMenu() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickMenu();
-  }
  }
 </script>
 
@@ -36,6 +30,8 @@
  }
 </style>
 
-<div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
- <img src="img/menu.svg" alt="☰" />
-</div>
+<BaseButton onClick={clickMenu}>
+ <div class="menu-button">
+  <img src="img/menu.svg" alt="☰" />
+ </div>
+</BaseButton>

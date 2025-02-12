@@ -1,5 +1,6 @@
 <script>
  import { tick } from 'svelte';
+ import BaseButton from './base-button.svelte';
  export let show = false;
  export let params = null;
  export let title = null;
@@ -128,9 +129,11 @@
  <div class="modal" style="top: {top}px; left: {left}px;" bind:this={modalEl}>
   <div class="header" role="none" on:mousedown={dragStart}>
    <div class="title">{title}</div>
-   <div class="close" role="button" tabindex="0" on:click={clickCloseModal} on:keydown={keyCloseModal}>
-    <img src="img/close-black.svg" alt="X" />
-   </div>
+   <BaseButton onClick={clickCloseModal}>
+    <div class="close">
+     <img src="img/close-black.svg" alt="X" />
+    </div>
+   </BaseButton>
   </div>
   <div class="body">
    {#if params}

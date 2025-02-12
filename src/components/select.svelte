@@ -6,7 +6,7 @@
  let elSelect;
 
  export function focus() {
-  console.log('select.svelte focus(), elSelect=', elSelect);
+  //console.log('select.svelte focus(), elSelect=', elSelect);
   elSelect?.focus();
  }
 </script>

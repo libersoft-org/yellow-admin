@@ -2,7 +2,9 @@
  import { onMount } from 'svelte';
  import { hideSidebarMobile, sysInfoList, humanSize } from '../core.js';
  import ProgressBar from '../components/progressbar.svelte';
+ import Buttons from '../components/buttons.svelte';
  import Button from '../components/button.svelte';
+ import MenuButton from '../components/menu-button.svelte';
  let sysInfo = null;
  let cpuSummary;
 
@@ -15,26 +17,13 @@
   });
  }
 
- function clickMenu() {
-  hideSidebarMobile.set(false);
- }
-
- function keyMenu() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickMenu();
-  }
- }
-
  function clickReload() {
   showTable();
  }
 
  function groupCPUs(cpus) {
   const counts = {};
-  cpus.forEach(cpu => {
-   counts[cpu] = (counts[cpu] || 0) + 1;
-  });
+  cpus.forEach(cpu => (counts[cpu] = (counts[cpu] || 0) + 1));
   const result = [];
   for (const cpu in counts) result.push(`${counts[cpu]}x ${cpu}`);
   return result;
@@ -80,12 +69,10 @@
 </style>
 
 <div class="page">
- <div class="buttons">
-  <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
-   <img src="img/menu.svg" alt="☰" />
-  </div>
+ <Buttons>
+  <MenuButton />
   <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
- </div>
+ </Buttons>
  {#if sysInfo}
   <div class="title">Application</div>
   <table class="sysinfo">

@@ -1,4 +1,5 @@
 <script>
+ import BaseButton from '../components/base-button.svelte';
  import { product, version, build, commit, link } from '../core.js';
 
  function clickLogo() {
@@ -50,10 +51,12 @@
 </style>
 
 <div class="welcome">
- <div class="logo" role="button" tabindex="0" on:click={clickLogo} on:keydown={keyLogo}>
-  <img src="img/logo.svg" alt={product} />
-  <div class="product">{product}</div>
- </div>
+ <BaseButton onClick={clickLogo}>
+  <div class="logo">
+   <img src="img/logo.svg" alt={product} />
+   <div class="product">{product}</div>
+  </div>
+ </BaseButton>
  <div class="version">
   <div>Version:</div>
   <div class="bold">{version}</div>

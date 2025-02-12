@@ -3,12 +3,15 @@
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
+ import Buttons from '../components/buttons.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Modal from '../components/modal.svelte';
  import ModalDomainsAdd from '../modals/modal-domains-add-edit.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
  import Cell from '../components/table-cell.svelte';
+ import Icons from '../components/icons.svelte';
+ import Icon from '../components/icons-icon.svelte';
  export let contentElement;
  let items = [];
  let isModalAddEditOpen = false;
@@ -26,7 +29,7 @@
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
-  console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filter', filters);
+  //console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filter', filters);
   domainsList(res => show_items_callback({ error: res.error, items: res.data.domains }), count, offset, filters?.name, sortBy, sortDir);
  }
 
@@ -35,15 +38,7 @@
   isModalAddEditOpen = true;
  }
 
- function keyAddEdit(id) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickAddEdit(id);
-  }
- }
-
  function clickSearch() {
-  console.log('search');
   reloadItems();
  }
 
@@ -53,7 +48,7 @@
   reloadItems();
  }
 
- function keySearchForm() {
+ function keySearchForm(event) {
   if (event.key === 'Enter') {
    event.preventDefault();
    clickSearch();
@@ -80,33 +75,15 @@
   align-items: center;
   gap: 10px;
  }
-
- .row .icon {
-  display: flex;
-  padding: 5px;
-  cursor: pointer;
- }
-
- .row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
- }
-
- .row .icon img {
-  width: 20px;
-  height: 20px;
- }
 </style>
 
 <div class="page">
- <div class="buttons">
+ <Buttons>
   <MenuButton />
   <Button img="img/add.svg" text="Add a new domain" onClick={() => clickAddEdit()} />
   <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
- </div>
- <div class="buttons">
+ </Buttons>
+ <Buttons>
   <div class="search">
    <div>Domain name:</div>
    <Input placeholder="domain.tld" bind:value={filterName} onKeydown={keySearchForm} />
@@ -116,7 +93,7 @@
    <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
- </div>
+ </Buttons>
  <table class="list-table">
   <thead>
    <tr>
@@ -135,10 +112,10 @@
      <Cell align="center">{d.users_count}</Cell>
      <Cell align="center">{new Date(d.created).toLocaleString()}</Cell>
      <Cell align="center">
-      <div class="row">
-       <div class="icon" role="button" tabindex="0" on:click={() => clickAddEdit(d.id)} on:keydown={() => keyAddEdit(d.id)}><img src="img/edit.svg" alt="Edit" /></div>
-       <div class="icon" role="button" tabindex="0" on:click={() => clickDel(d.id, d.name)} on:keydown={() => keyDel(d.id, d.name)}><img src="img/del.svg" alt="Delete" /></div>
-      </div>
+      <Icons>
+       <Icon img="img/edit.svg" alt="Edit" onClick={() => clickAddEdit(d.id)} />
+       <Icon img="img/del.svg" alt="Delete" onClick={() => clickDel(d.id, d.name)} />
+      </Icons>
      </Cell>
     </tr>
    {/each}
