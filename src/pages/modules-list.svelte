@@ -45,13 +45,6 @@
   isModalAddEditOpen = true;
  }
 
- function keyAddEdit(id) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickAddEdit(id);
-  }
- }
-
  function clickSearch() {
   reloadItems();
  }
@@ -62,7 +55,7 @@
   reloadItems();
  }
 
- function keySearchForm() {
+ function keySearchForm(event) {
   if (event.key === 'Enter') {
    event.preventDefault();
    clickSearch();

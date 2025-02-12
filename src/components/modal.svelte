@@ -41,13 +41,6 @@
   show = false;
  }
 
- function keyCloseModal(event) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickCloseModal();
-  }
- }
-
  function dragStart(event) {
   isDragging = true;
   event.preventDefault();
