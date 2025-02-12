@@ -4,7 +4,7 @@
 
 <style>
  :root {
-  --spinner-color: #007bff;
+  --spinner-color: #000;
  }
 
  .spinner {
