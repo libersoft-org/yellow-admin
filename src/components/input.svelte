@@ -1,5 +1,5 @@
 <script>
- //export let type = 'text';
+ export let type = 'text';
  export let placeholder = '';
  export let value = '';
  export let grow = false;
@@ -36,4 +36,4 @@
  }
 </style>
 
-<input style:flex-grow={grow && '1'} style:max-width={maxWidth && 'calc(' + maxWidth + ' - 22px)'} style:min-width={minWidth && 'calc(' + minWidth + ' - 22px)'} {placeholder} bind:this={elInput} bind:value on:keydown={e => handleKeydown(e)} />
+<input style:flex-grow={grow && '1'} style:max-width={maxWidth && 'calc(' + maxWidth + ' - 22px)'} style:min-width={minWidth && 'calc(' + minWidth + ' - 22px)'} {placeholder} {type} bind:this={elInput} bind:value on:keydown={e => handleKeydown(e)} />
