@@ -2,6 +2,7 @@
  import { onMount } from 'svelte';
  import { socketState, socketStates, connect } from '../socket.js';
  import { isLoggedIn, loginError, login, product, version, build, commit, link } from '../core.js';
+ import Spinner from '../components/spinner.svelte';
  import BaseButton from '../components/base-button.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
@@ -179,7 +180,7 @@
    {/if}
    <Button disabled={loggingIn} onClick={clickLogin}>
     {#if loggingIn}
-     <div class="loader"></div>
+     <Spinner />
     {:else}
      Login
     {/if}

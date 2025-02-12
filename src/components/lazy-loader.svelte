@@ -1,5 +1,6 @@
 <script>
  import { onMount, onDestroy } from 'svelte';
+ import Spinner from './spinner.svelte';
  export let loadItems;
  export let items;
  export let contentElement;
@@ -99,5 +100,5 @@
 </script>
 
 {#if hasMore}
- <div class="loader" bind:this={loaderElement}></div>
+ <Spinner bind:this={loaderElement} />
 {/if}
