@@ -87,12 +87,19 @@
  }
 
  .login .version {
-  border: 1px solid #999;
-  border-radius: 10px;
-  padding: 10px;
   display: flex;
   justify-content: center;
   gap: 5px;
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 10px;
+  background-color: #ffc;
+ }
+
+ .login .version table {
+  table-layout: fixed;
+  display: inline-table;
+  align-self: flex-start;
  }
 
  .login .version .left {
@@ -153,16 +160,22 @@
    <div class="product">{product}</div>
   </div>
   <div class="version">
-   <div class="left">
-    <div>Version:</div>
-    <div>Build:</div>
-    <div>Commit:</div>
-   </div>
-   <div class="right">
-    <div>{version}</div>
-    <div>{build}</div>
-    <div>{commit}</div>
-   </div>
+   <table>
+    <tbody>
+     <tr>
+      <td class="left">Version:</td>
+      <td class="right">{version}</td>
+     </tr>
+     <tr>
+      <td class="left">Build:</td>
+      <td class="right">{build}</td>
+     </tr>
+     <tr>
+      <td class="left">Commit:</td>
+      <td class="right">{commit}</td>
+     </tr>
+    </tbody>
+   </table>
   </div>
   <div class="form">
    <div class="group">
