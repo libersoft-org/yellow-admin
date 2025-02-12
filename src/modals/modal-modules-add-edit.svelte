@@ -63,7 +63,7 @@
  <div class="label">Connection string:</div>
  <div><Input value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" onKeydown={keyEnter} bind:this={elModuleConnectionString} /></div>
 </div>
-<Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
+<Button text={id ? 'Edit' : 'Add'} onClick={clickAddEdit} />
 {#if error}
  <Alert text={error} />
 {/if}

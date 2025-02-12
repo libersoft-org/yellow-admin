@@ -103,8 +103,8 @@
 <div class="page">
  <div class="buttons">
   <MenuButton />
-  <Button on:click={() => clickAddEdit()} img="img/add.svg" text="Add a new domain" />
-  <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
+  <Button img="img/add.svg" text="Add a new domain" onClick={() => clickAddEdit()} />
+  <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
  </div>
  <div class="buttons">
   <div class="search">
@@ -115,7 +115,7 @@
    <div>Offset:</div>
    <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
-  <Button on:click={clickSearch} img="img/search.svg" text="Search" />
+  <Button img="img/search.svg" text="Search" onClick={clickSearch} />
  </div>
  <table class="list-table">
   <thead>

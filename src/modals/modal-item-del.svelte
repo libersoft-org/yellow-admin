@@ -21,7 +21,7 @@
 </script>
 
 <div>Would you like to delete "<span class="bold">{name}</span>" (id: {id})?</div>
-<Button on:click={clickDel} text="Delete" />
+<Button text="Delete" onClick={clickDel} />
 {#if error}
  <Alert text={error} />
 {/if}

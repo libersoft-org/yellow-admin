@@ -1,15 +1,15 @@
 <script>
- import { createEventDispatcher } from 'svelte';
+ import BaseButton from './base-button.svelte';
  export let img = '';
  export let text = '';
- export let disabled = false;
- const dispatch = createEventDispatcher();
+ export let enabled = true;
+ export let hiddenOnDesktop = false;
+ export let width;
+ export let onClick;
+ export let padding = '10px';
 
- function handleKeydown(event) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   dispatch('click');
-  }
+ function handleClick(e) {
+  if (enabled) onClick(e);
  }
 </script>
 
@@ -20,12 +20,10 @@
   justify-content: center;
   gap: 5px;
   text-align: center;
-  padding: 10px;
   border: 1px solid #b90;
   border-radius: 10px;
   background-color: #fd1;
   font-weight: bold;
-  cursor: pointer;
  }
 
  .button.disabled {
@@ -37,13 +35,23 @@
   width: 20px;
   height: 20px;
  }
+
+ @media (min-width: 769px) {
+  .hidden-on-desktop {
+   display: none;
+  }
+ }
 </style>
 
-<div class="button {disabled ? 'disabled' : ''}" role="button" tabindex="0" on:click on:keydown={handleKeydown}>
- <slot>
-  {#if img}
-   <img src={img} alt={text} />
-  {/if}
-  <div>{text}</div>
- </slot>
-</div>
+<BaseButton onClick={handleClick}>
+ <div class="button {!enabled ? 'disabled' : ''} {hiddenOnDesktop ? 'hidden-on-desktop' : ''}" style={(width ? 'width: ' + width + ';' : '') + 'padding: ' + padding + ';'}>
+  <slot>
+   {#if img}
+    <img src={img} alt={text} />
+   {/if}
+   {#if text}
+    <div>{text}</div>
+   {/if}
+  </slot>
+ </div>
+</BaseButton>

@@ -66,7 +66,7 @@
 <div class="page">
  <div class="buttons">
   <MenuButton />
-  <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
+  <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
  </div>
  <div class="buttons">
   <div class="search">
@@ -81,7 +81,7 @@
    <div>Offset:</div>
    <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
-  <Button on:click={clickSearch} img="img/search.svg" text="Search" />
+  <Button img="img/search.svg" text="Search" onClick={clickSearch} />
  </div>
  <table class="list-table">
   <thead>
@@ -96,7 +96,7 @@
     <tr>
      <Cell align="center">{c.guid}</Cell>
      <Cell>{c.ip}</Cell>
-     <td><Button text="Kick" on:click={() => clientsKick(c.guid)} /></td>
+     <td><Button text="Kick" onClick={() => clientsKick(c.guid)} /></td>
     </tr>
    {/each}
   </tbody>

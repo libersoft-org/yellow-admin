@@ -84,7 +84,7 @@
   <div class="menu-button" role="button" tabindex="0" on:click={clickMenu} on:keydown={keyMenu}>
    <img src="img/menu.svg" alt="☰" />
   </div>
-  <Button on:click={() => clickReload()} img="img/reload.svg" text="Reload" />
+  <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
  </div>
  {#if sysInfo}
   <div class="title">Application</div>

@@ -181,7 +181,7 @@
    {#if $loginError}
     <Alert text={$loginError} />
    {/if}
-   <Button disabled={loggingIn} on:click={clickLogin}>
+   <Button disabled={loggingIn} onClick={clickLogin}>
     {#if loggingIn}
      <div class="loader"></div>
     {:else}

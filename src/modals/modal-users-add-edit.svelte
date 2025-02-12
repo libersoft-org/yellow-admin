@@ -96,5 +96,5 @@
  {#if error}
   <Alert text={error} />
  {/if}
- <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
+ <Button text={id ? 'Edit' : 'Add'} onClick={clickAddEdit} />
 </div>

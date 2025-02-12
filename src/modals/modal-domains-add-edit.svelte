@@ -65,7 +65,7 @@
 <div class="group">
  <div class="label">Domain name:</div>
  <div><Input placeholder="domain.tld" onKeydown={keyEnter} bind:this={domainElement} bind:value={name} /></div>
- <Button disabled={button_disabled} on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
+ <Button text={id ? 'Edit' : 'Add'} disabled={button_disabled} onClick={clickAddEdit} />
 </div>
 {#if error}
  <Alert text={error} />

@@ -60,7 +60,7 @@
  <div class="label">Password:</div>
  <div><Input type="password" bind:value={password} placeholder="Password" onKeydown={keyEnter} /></div>
 </div>
-<Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
+<Button text={id ? 'Edit' : 'Add'} onClick={clickAddEdit} />
 {#if error}
  <Alert text={error} />
 {/if}
