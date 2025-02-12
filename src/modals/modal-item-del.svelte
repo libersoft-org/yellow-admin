@@ -1,5 +1,6 @@
 <script>
  import Button from '../components/button.svelte';
+ import Alert from '../components/alert.svelte';
  export let close;
  export let params;
  let name = params?.name;
@@ -19,21 +20,8 @@
  }
 </script>
 
-<style>
- .error {
-  display: flex;
-  gap: 5px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #f33;
- }
-</style>
-
 <div>Would you like to delete "<span class="bold">{name}</span>" (id: {id})?</div>
 <Button on:click={clickDel} text="Delete" />
 {#if error}
- <div class="error">
-  <div class="bold">Error:</div>
-  <div>{error}</div>
- </div>
+ <Alert text={error} />
 {/if}

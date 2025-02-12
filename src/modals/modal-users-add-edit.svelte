@@ -5,6 +5,7 @@
  import Input from '../components/input.svelte';
  import Select from '../components/select.svelte';
  import Option from '../components/select-option.svelte';
+ import Alert from '../components/alert.svelte';
  export let close;
  export let params;
  let id = params?.id;
@@ -27,26 +28,11 @@
    'id',
    'ASC'
   );
-  if (id)
-   userInfo(id, res => {
-    userData = res?.data;
-   });
+  if (id) userInfo(id, res => (userData = res?.data));
   usernameElement.focus();
  });
 
  function clickAddEdit() {
-  console.log('asdfjkkjdjkadfjklsdflkjsdfljksdfjkl');
-  error = null;
-
-  if (!usernameElement.getValue()) {
-   error = 'Username is required';
-   return;
-  }
-  if (!domainElement.value) {
-   error = 'Domain is required';
-   return;
-  }
-
   if (id) usersEdit(id, usernameElement.getValue(), domainElement.value, visibleNameElement.value, passwordElement.value, cb);
   else usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
  }
@@ -58,7 +44,7 @@
   } else if (res?.message) error = res.message;
  }
 
- function keyEnter() {
+ function keyEnter(event) {
   if (event.key === 'Enter') {
    event.preventDefault();
    clickAddEdit();
@@ -67,6 +53,12 @@
 </script>
 
 <style>
+ .users-add-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+ }
+
  .group {
   display: flex;
   flex-direction: column;
@@ -77,43 +69,32 @@
   font-size: 15px;
   font-weight: bold;
  }
-
- .error {
-  display: flex;
-  gap: 5px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #f33;
- }
 </style>
 
-<div class="group">
- <div class="label">Username:</div>
- <div><Input value={userData ? userData.username : ''} placeholder="Username" onKeydown={keyEnter} bind:this={usernameElement} /></div>
-</div>
-<div class="group">
- <div class="label">Domain:</div>
- <div>
-  <Select bind:this={domainElement} value={userData ? userData.id_domains : ''}>
+<div class="users-add-edit">
+ <div class="group">
+  <div class="label">Username:</div>
+  <Input value={userData ? userData.username : ''} placeholder="Username" onKeydown={keyEnter} bind:this={usernameElement} />
+ </div>
+ <div class="group">
+  <div class="label">Domain:</div>
+  <Select grow={true} bind:this={domainElement} value={userData ? userData.id_domains : ''}>
    <Option text="--- domain ---" selected={true} disabled={true} />
    {#each domains as d (d.id)}
     <Option value={d.id} text={d.name} />
    {/each}
   </Select>
  </div>
-</div>
-<div class="group">
- <div class="label">Visible name:</div>
- <div><Input bind:this={visibleNameElement} value={userData ? userData.visible_name : ''} placeholder="Visible name" onKeydown={keyEnter} /></div>
-</div>
-<div class="group">
- <div class="label">Password:</div>
- <div><Input type="password" bind:this={passwordElement} placeholder="Password" onKeydown={keyEnter} /></div>
-</div>
-<Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
-{#if error}
- <div class="error">
-  <div class="bold">Error:</div>
-  <div>{error}</div>
+ <div class="group">
+  <div class="label">Visible name:</div>
+  <Input bind:this={visibleNameElement} value={userData ? userData.visible_name : ''} placeholder="Visible name" onKeydown={keyEnter} />
  </div>
-{/if}
+ <div class="group">
+  <div class="label">Password:</div>
+  <Input type="password" bind:this={passwordElement} placeholder="Password" onKeydown={keyEnter} />
+ </div>
+ {#if error}
+  <Alert text={error} />
+ {/if}
+ <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
+</div>

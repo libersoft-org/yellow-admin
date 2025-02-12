@@ -3,6 +3,7 @@
  import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
+ import Alert from '../components/alert.svelte';
  export let close;
  export let params;
  let id = params?.id;
@@ -59,14 +60,6 @@
   padding-left: 5px;
   font-weight: bold;
  }
-
- .error {
-  display: flex;
-  gap: 5px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #f33;
- }
 </style>
 
 <div class="group">
@@ -75,8 +68,5 @@
  <Button disabled={button_disabled} on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 </div>
 {#if error}
- <div class="error">
-  <div class="bold">Error:</div>
-  <div>{error}</div>
- </div>
+ <Alert text={error} />
 {/if}

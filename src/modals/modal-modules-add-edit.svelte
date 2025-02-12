@@ -3,6 +3,7 @@
  import { modulesAdd, modulesEdit, modulesInfo } from '../core.js';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
+ import Alert from '../components/alert.svelte';
  export let close;
  export let params;
  let id = params?.id;
@@ -52,14 +53,6 @@
   font-size: 15px;
   font-weight: bold;
  }
-
- .error {
-  display: flex;
-  gap: 5px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #f33;
- }
 </style>
 
 <div class="group">
@@ -72,8 +65,5 @@
 </div>
 <Button on:click={clickAddEdit} text={id ? 'Edit' : 'Add'} />
 {#if error}
- <div class="error">
-  <div class="bold">Error:</div>
-  <div>{error}</div>
- </div>
+ <Alert text={error} />
 {/if}

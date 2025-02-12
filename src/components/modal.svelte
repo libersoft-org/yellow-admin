@@ -117,9 +117,6 @@
  }
 
  .modal .body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   padding: 10px;
   overflow-y: auto;
   background-color: #fff;
