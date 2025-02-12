@@ -1,6 +1,7 @@
 <script>
  import { usersList, domainsList, usersDel } from '../core.js';
  import { onMount } from 'svelte';
+ import Page from '../components/page.svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
@@ -12,7 +13,12 @@
  import Modal from '../components/modal.svelte';
  import ModalUsersAdd from '../modals/modal-users-add-edit.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
- import Cell from '../components/table-cell.svelte';
+ import Table from '../components/table.svelte';
+ import Thead from '../components/table-thead.svelte';
+ import TheadTr from '../components/table-thead-tr.svelte';
+ import Tbody from '../components/table-tbody.svelte';
+ import TbodyTr from '../components/table-tbody-tr.svelte';
+ import Td from '../components/table-td.svelte';
  import Icons from '../components/icons.svelte';
  import Icon from '../components/icons-icon.svelte';
  export let contentElement;
@@ -93,7 +99,7 @@
  }
 </style>
 
-<div class="page">
+<Page>
  <Buttons>
   <MenuButton />
   <Button img="img/add.svg" text="Add a new user" onClick={() => clickAddEdit()} />
@@ -119,35 +125,35 @@
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <table class="list-table">
-  <thead>
-   <tr>
+ <Table>
+  <Thead>
+   <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="address" name="Address" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="visible_name" name="Visible name" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader align="center" name="Action" />
-   </tr>
-  </thead>
-  <tbody>
+   </TheadTr>
+  </Thead>
+  <Tbody>
    {#each items as u (u.id)}
-    <tr>
-     <Cell align="center">{u.id}</Cell>
-     <Cell>{u.address}</Cell>
-     <Cell>{u.visible_name}</Cell>
-     <Cell align="center">{new Date(u.created).toLocaleString()}</Cell>
-     <Cell align="center">
+    <TbodyTr>
+     <Td align="center">{u.id}</Td>
+     <Td>{u.address}</Td>
+     <Td>{u.visible_name}</Td>
+     <Td align="center">{new Date(u.created).toLocaleString()}</Td>
+     <Td align="center">
       <Icons>
        <Icon img="img/edit.svg" onClick={() => clickAddEdit(u.id)} />
        <Icon img="img/del.svg" onClick={() => clickDel(u.id, u.address)} />
       </Icons>
-     </Cell>
-    </tr>
+     </Td>
+    </TbodyTr>
    {/each}
-  </tbody>
- </table>
+  </Tbody>
+ </Table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
-</div>
+</Page>
 
 <Modal title={userID ? 'Edit the user (ID: ' + userID + ')' : 'Add a new user'} body={ModalUsersAdd} params={{ onSubmit: reloadItems, id: userID }} bind:show={isModalAddEditOpen} />
 <Modal title="Delete the user" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: usersDel, id: userID, name: delAddress }} bind:show={isModalDelOpen} />

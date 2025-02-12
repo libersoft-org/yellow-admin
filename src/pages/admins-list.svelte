@@ -1,5 +1,6 @@
 <script>
  import { adminsList } from '../core.js';
+ import Page from '../components/page.svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
@@ -9,7 +10,12 @@
  import Modal from '../components/modal.svelte';
  import ModalAdminsAdd from '../modals/modal-admins-add-edit.svelte';
  import ModalAdminsDel from '../modals/modal-admins-del.svelte';
- import Cell from '../components/table-cell.svelte';
+ import Table from '../components/table.svelte';
+ import Thead from '../components/table-thead.svelte';
+ import TheadTr from '../components/table-thead-tr.svelte';
+ import Tbody from '../components/table-tbody.svelte';
+ import TbodyTr from '../components/table-tbody-tr.svelte';
+ import Td from '../components/table-td.svelte';
  import Icons from '../components/icons.svelte';
  import Icon from '../components/icons-icon.svelte';
  export let contentElement;
@@ -75,7 +81,7 @@
  }
 </style>
 
-<div class="page">
+<Page>
  <Buttons>
   <MenuButton />
   <Button img="img/add.svg" text="Add a new admin" onClick={() => clickAddEdit()} />
@@ -92,33 +98,33 @@
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <table class="list-table">
-  <thead>
-   <tr>
+ <Table>
+  <Thead>
+   <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="username" name="Username" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader align="center" name="Action" />
-   </tr>
-  </thead>
-  <tbody>
+   </TheadTr>
+  </Thead>
+  <Tbody>
    {#each items as a (a.id)}
-    <tr>
-     <Cell align="center">{a.id}</Cell>
-     <Cell>{a.username}</Cell>
-     <Cell align="center">{new Date(a.created).toLocaleString()}</Cell>
-     <Cell align="center">
+    <TbodyTr>
+     <Td align="center">{a.id}</Td>
+     <Td>{a.username}</Td>
+     <Td align="center">{new Date(a.created).toLocaleString()}</Td>
+     <Td align="center">
       <Icons>
        <Icon img="img/edit.svg" alt="Edit" onClick={() => clickAddEdit(a.id)} />
        <Icon img="img/del.svg" alt="Delete" onClick={() => clickDel(a.id, a.username)} />
       </Icons>
-     </Cell>
-    </tr>
+     </Td>
+    </TbodyTr>
    {/each}
-  </tbody>
- </table>
+  </Tbody>
+ </Table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
-</div>
+</Page>
 
 <Modal title={adminID ? 'Edit the admin' : 'Add a new admin'} body={ModalAdminsAdd} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalAddEditOpen} />
 <Modal title="Delete the admin" body={ModalAdminsDel} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalDelOpen} />

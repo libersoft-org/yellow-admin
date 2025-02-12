@@ -1,5 +1,6 @@
 <script>
  import { modulesList, modulesDel } from '../core.js';
+ import Page from '../components/page.svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
@@ -9,7 +10,12 @@
  import Modal from '../components/modal.svelte';
  import ModalModulesAdd from '../modals/modal-modules-add-edit.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
- import Cell from '../components/table-cell.svelte';
+ import Table from '../components/table.svelte';
+ import Thead from '../components/table-thead.svelte';
+ import TheadTr from '../components/table-thead-tr.svelte';
+ import Tbody from '../components/table-tbody.svelte';
+ import TbodyTr from '../components/table-tbody-tr.svelte';
+ import Td from '../components/table-td.svelte';
  import Icons from '../components/icons.svelte';
  import Icon from '../components/icons-icon.svelte';
  import { getContext } from 'svelte';
@@ -73,13 +79,6 @@
   moduleName = name;
   isModalDelOpen = true;
  }
-
- function keyDel(id, name) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickDel(id, name);
-  }
- }
 </script>
 
 <style>
@@ -90,7 +89,7 @@
  }
 </style>
 
-<div class="page">
+<Page>
  <Buttons>
   <MenuButton />
   <Button img="img/add.svg" text="Add a new module" onClick={() => clickAddEdit()} />
@@ -107,35 +106,35 @@
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <table class="list-table">
-  <thead>
-   <tr>
+ <Table>
+  <Thead>
+   <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="name" name="Name" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="connection-string" name="Connection string" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader align="center" name="Action" />
-   </tr>
-  </thead>
-  <tbody>
+   </TheadTr>
+  </Thead>
+  <Tbody>
    {#each items as m (m.id)}
-    <tr>
-     <Cell align="center">{m.id}</Cell>
-     <Cell>{m.name}</Cell>
-     <Cell align="center">{m.connection_string}</Cell>
-     <Cell align="center">{new Date(m.created).toLocaleString()}</Cell>
-     <Cell align="center">
+    <TbodyTr>
+     <Td align="center">{m.id}</Td>
+     <Td>{m.name}</Td>
+     <Td align="center">{m.connection_string}</Td>
+     <Td align="center">{new Date(m.created).toLocaleString()}</Td>
+     <Td align="center">
       <Icons>
        <Icon img="img/edit.svg" onClick={() => clickAddEdit(m.id)} />
        <Icon img="img/del.svg" onClick={() => clickDel(m.id, m.name)} />
       </Icons>
-     </Cell>
-    </tr>
+     </Td>
+    </TbodyTr>
    {/each}
-  </tbody>
- </table>
+  </Tbody>
+ </Table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
-</div>
+</Page>
 
 <Modal title={moduleID ? 'Edit the module' : 'Add a new module'} body={ModalModulesAdd} params={{ onSubmit: reloadItems, id: moduleID }} bind:show={isModalAddEditOpen} />
 <Modal title="Delete the module" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: modulesDel, id: moduleID, name: moduleName }} bind:show={isModalDelOpen} />

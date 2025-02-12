@@ -1,12 +1,18 @@
 <script>
  import { clientsList, clientsKick } from '../core.js';
+ import Page from '../components/page.svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
  import Buttons from '../components/buttons.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
- import Cell from '../components/table-cell.svelte';
+ import Table from '../components/table.svelte';
+ import Thead from '../components/table-thead.svelte';
+ import TheadTr from '../components/table-thead-tr.svelte';
+ import Tbody from '../components/table-tbody.svelte';
+ import TbodyTr from '../components/table-tbody-tr.svelte';
+ import Td from '../components/table-td.svelte';
  import Icons from '../components/icons.svelte';
  import Icon from '../components/icons-icon.svelte';
  export let contentElement;
@@ -49,7 +55,7 @@
   reloadItems();
  }
 
- function keySearchForm() {
+ function keySearchForm(event) {
   if (event.key === 'Enter') {
    event.preventDefault();
    clickSearch();
@@ -65,7 +71,7 @@
  }
 </style>
 
-<div class="page">
+<Page>
  <Buttons>
   <MenuButton />
   <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
@@ -85,27 +91,27 @@
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <table class="list-table">
-  <thead>
-   <tr>
+ <Table>
+  <Thead>
+   <TheadTr>
     <ColumnHeader column="guid" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="ip" name="IP address" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <td>Action</td>
-   </tr>
-  </thead>
-  <tbody>
+   </TheadTr>
+  </Thead>
+  <Tbody>
    {#each items as c (c.guid)}
-    <tr>
-     <Cell align="center">{c.guid}</Cell>
-     <Cell>{c.ip}</Cell>
-     <Cell>
+    <TbodyTr>
+     <Td align="center">{c.guid}</Td>
+     <Td>{c.ip}</Td>
+     <Td>
       <Icons>
        <Icon img="img/kick.svg" onClick={() => clientsKick(c.guid)} />
       </Icons>
-     </Cell>
-    </tr>
+     </Td>
+    </TbodyTr>
    {/each}
-  </tbody>
- </table>
+  </Tbody>
+ </Table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
-</div>
+</Page>

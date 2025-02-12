@@ -5,13 +5,6 @@
  function clickLogo() {
   window.open(link, '_blank');
  }
-
- function keyLogo() {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickLogo();
-  }
- }
 </script>
 
 <style>

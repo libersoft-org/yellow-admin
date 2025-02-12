@@ -34,35 +34,3 @@ body {
   transform: rotate(1turn);
  }
 }
-
-.page {
- display: flex;
- flex-direction: column;
- align-items: flex-start;
- gap: 10px;
-}
-
-.list-table {
- border-spacing: 0;
- border: 1px solid #000;
- border-radius: 10px;
- overflow: hidden;
-}
-
-.list-table thead tr {
- background-color: #222;
- color: #fff;
- text-align: left;
-}
-
-.list-table tbody tr:nth-child(even) {
- background-color: #ffdd1130;
-}
-
-.list-table tbody tr:nth-child(odd) {
- background-color: #ffdd1150;
-}
-
-.list-table tbody tr:hover {
- background-color: #fd1;
-}

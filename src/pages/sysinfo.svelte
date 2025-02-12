@@ -1,6 +1,7 @@
 <script>
  import { onMount } from 'svelte';
  import { hideSidebarMobile, sysInfoList, humanSize } from '../core.js';
+ import Page from '../components/page.svelte';
  import ProgressBar from '../components/progressbar.svelte';
  import Buttons from '../components/buttons.svelte';
  import Button from '../components/button.svelte';
@@ -68,7 +69,7 @@
  }
 </style>
 
-<div class="page">
+<Page>
  <Buttons>
   <MenuButton />
   <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
@@ -162,4 +163,4 @@
    </tbody>
   </table>
  {/if}
-</div>
+</Page>

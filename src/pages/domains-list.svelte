@@ -1,5 +1,6 @@
 <script>
  import { domainsList, domainsDel } from '../core.js';
+ import Page from '../components/page.svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
@@ -9,7 +10,12 @@
  import Modal from '../components/modal.svelte';
  import ModalDomainsAdd from '../modals/modal-domains-add-edit.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
- import Cell from '../components/table-cell.svelte';
+ import Table from '../components/table.svelte';
+ import Thead from '../components/table-thead.svelte';
+ import TheadTr from '../components/table-thead-tr.svelte';
+ import Tbody from '../components/table-tbody.svelte';
+ import TbodyTr from '../components/table-tbody-tr.svelte';
+ import Td from '../components/table-td.svelte';
  import Icons from '../components/icons.svelte';
  import Icon from '../components/icons-icon.svelte';
  export let contentElement;
@@ -60,13 +66,6 @@
   domainName = name;
   isModalDelOpen = true;
  }
-
- function keyDel(id, name) {
-  if (event.key === 'Enter' || event.key === ' ') {
-   event.preventDefault();
-   clickDel(id, name);
-  }
- }
 </script>
 
 <style>
@@ -77,7 +76,7 @@
  }
 </style>
 
-<div class="page">
+<Page>
  <Buttons>
   <MenuButton />
   <Button img="img/add.svg" text="Add a new domain" onClick={() => clickAddEdit()} />
@@ -94,35 +93,35 @@
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <table class="list-table">
-  <thead>
-   <tr>
+ <Table>
+  <Thead>
+   <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="name" name="Name" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="users_count" align="center" name="Number of users" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader align="center" name="Action" />
-   </tr>
-  </thead>
-  <tbody>
+   </TheadTr>
+  </Thead>
+  <Tbody>
    {#each items as d (d.id)}
-    <tr>
-     <Cell align="center">{d.id}</Cell>
-     <Cell>{d.name}</Cell>
-     <Cell align="center">{d.users_count}</Cell>
-     <Cell align="center">{new Date(d.created).toLocaleString()}</Cell>
-     <Cell align="center">
+    <TbodyTr>
+     <Td align="center">{d.id}</Td>
+     <Td>{d.name}</Td>
+     <Td align="center">{d.users_count}</Td>
+     <Td align="center">{new Date(d.created).toLocaleString()}</Td>
+     <Td align="center">
       <Icons>
        <Icon img="img/edit.svg" alt="Edit" onClick={() => clickAddEdit(d.id)} />
        <Icon img="img/del.svg" alt="Delete" onClick={() => clickDel(d.id, d.name)} />
       </Icons>
-     </Cell>
-    </tr>
+     </Td>
+    </TbodyTr>
    {/each}
-  </tbody>
- </table>
+  </Tbody>
+ </Table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
-</div>
+</Page>
 
 <Modal title={domainID ? 'Edit the domain' : 'Add a new domain'} body={ModalDomainsAdd} params={{ onSubmit: reloadItems, id: domainID }} bind:show={isModalAddEditOpen} />
 <Modal title="Delete the domain" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: domainsDel, id: domainID, name: domainName }} bind:show={isModalDelOpen} />

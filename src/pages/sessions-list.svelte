@@ -1,5 +1,6 @@
 <script>
  import { sessionsList, sessionsDel } from '../core.js';
+ import Page from '../components/page.svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
  import LazyLoader from '../components/lazy-loader.svelte';
@@ -8,7 +9,12 @@
  import Input from '../components/input.svelte';
  import Modal from '../components/modal.svelte';
  import ModalItemDel from '../modals/modal-item-del.svelte';
- import Cell from '../components/table-cell.svelte';
+ import Table from '../components/table.svelte';
+ import Thead from '../components/table-thead.svelte';
+ import TheadTr from '../components/table-thead-tr.svelte';
+ import Tbody from '../components/table-tbody.svelte';
+ import TbodyTr from '../components/table-tbody-tr.svelte';
+ import Td from '../components/table-td.svelte';
  import Icons from '../components/icons.svelte';
  import Icon from '../components/icons-icon.svelte';
  export let contentElement;
@@ -63,7 +69,7 @@
  }
 </style>
 
-<div class="page">
+<Page>
  <Buttons>
   <MenuButton />
   <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
@@ -79,33 +85,33 @@
   </div>
   <Button img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <table class="list-table">
-  <thead>
-   <tr>
+ <Table>
+  <Thead>
+   <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="session" name="Session" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="last" align="center" name="Last used" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader align="center" name="Action" />
-   </tr>
-  </thead>
-  <tbody>
+   </TheadTr>
+  </Thead>
+  <Tbody>
    {#each items as s (s.id)}
-    <tr>
-     <Cell align="center">{s.id}</Cell>
-     <Cell>{s.session}</Cell>
-     <Cell align="center">{new Date(s.last).toLocaleString()}</Cell>
-     <Cell align="center">{new Date(s.created).toLocaleString()}</Cell>
-     <Cell align="center">
+    <TbodyTr>
+     <Td align="center">{s.id}</Td>
+     <Td>{s.session}</Td>
+     <Td align="center">{new Date(s.last).toLocaleString()}</Td>
+     <Td align="center">{new Date(s.created).toLocaleString()}</Td>
+     <Td align="center">
       <Icons>
        <Icon img="img/del.svg" alt="Delete" onClick={() => clickDel(s.id, s.session)} />
       </Icons>
-     </Cell>
-    </tr>
+     </Td>
+    </TbodyTr>
    {/each}
-  </tbody>
- </table>
+  </Tbody>
+ </Table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
-</div>
+</Page>
 
 <Modal title="Delete the session" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: _id => sessionsDel(sessionName), id: sessionID, name: sessionName }} bind:show={isModalDelOpen} />
