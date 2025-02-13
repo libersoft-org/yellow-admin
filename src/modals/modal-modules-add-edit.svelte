@@ -27,7 +27,7 @@
 
  function clickAddEdit(do_close) {
   console.log('clickAddEdit:', do_close);
-  const params = [elModuleName.getValue(), elModuleConnectionString.getValue(), elModuleEnabled.checked, async (res) => await cb(res, do_close)];
+  const params = [elModuleName.getValue(), elModuleConnectionString.getValue(), elModuleEnabled.checked, async res => await cb(res, do_close)];
   if (id) modulesEdit(id, ...params);
   else modulesAdd(...params);
  }

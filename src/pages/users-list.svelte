@@ -113,7 +113,7 @@
   <div class="search">
    <div>@</div>
    <Select bind:this={elDomain}>
-    <Option text="--- domain ---" selected={true} />
+    <Option text="--- domain ---" selected={true} disabled={true} />
     {#each domains as d (d.id)}
      <Option value={d.id} text={d.name} />
     {/each}
