@@ -1,27 +1,40 @@
 <script>
  import { onMount } from 'svelte';
  import { adminsAdd, adminsEdit, adminInfo } from '../core.js';
+ import Spinner from '../components/spinner.svelte';
+ import Form from '../components/form.svelte';
+ import Group from '../components/form-group.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Alert from '../components/alert.svelte';
  export let close;
  export let params;
  let id = params?.id;
- let usernameElement;
- let password;
+ let elUsername;
  let adminData = null;
  let error = null;
+ let loadingForm = false;
+ let loadingSubmit = false;
+ let form = {};
 
  onMount(() => {
-  if (id) adminInfo(id, res => (adminData = res?.data));
-  usernameElement.focus();
+  if (id) {
+   loadingForm = true;
+   adminInfo(id, res => {
+    adminData = res?.data;
+    form = {
+     username: adminData?.username ? adminData.username : ''
+    };
+    loadingForm = false;
+   });
+  }
+  elUsername.focus();
  });
 
  function clickAddEdit() {
-  if (usernameElement.value) {
-   if (id) adminsEdit(id, usernameElement.value, password, cb);
-   else adminsAdd(usernameElement.value, password, cb);
-  }
+  loadingSubmit = true;
+  if (id) adminsEdit(id, form.username, form.password, cb);
+  else adminsAdd(form.username, form.password, cb);
  }
 
  async function cb(res) {
@@ -29,6 +42,7 @@
    close();
    await params.onSubmit.call();
   } else if (res?.message) error = res.message;
+  loadingSubmit = false;
  }
 
  function keyEnter(event) {
@@ -39,28 +53,25 @@
  }
 </script>
 
-<style>
- .group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
- }
-
- .group .label {
-  font-size: 15px;
-  font-weight: bold;
- }
-</style>
-
-<div class="group">
- <div class="label">Admin username:</div>
- <div><Input value={adminData ? adminData.username : ''} placeholder="Username" onKeydown={keyEnter} bind:this={usernameElement} /></div>
-</div>
-<div class="group">
- <div class="label">Password:</div>
- <div><Input type="password" bind:value={password} placeholder="Password" onKeydown={keyEnter} /></div>
-</div>
-<Button text={id ? 'Edit' : 'Add'} onClick={clickAddEdit} />
-{#if error}
- <Alert text={error} />
-{/if}
+<Form>
+ {#if loadingForm}
+  <Spinner />
+ {:else}
+  <Group label="Admin username">
+   <Input bind:value={form.username} placeholder="Username" onKeydown={keyEnter} bind:this={elUsername} />
+  </Group>
+  <Group label="Password">
+   <Input type="password" bind:value={form.password} placeholder="Password" onKeydown={keyEnter} />
+  </Group>
+  {#if error}
+   <Alert text={error} />
+  {/if}
+  <Button enabled={!loadingSubmit} onClick={clickAddEdit}>
+   {#if loadingSubmit}
+    <Spinner />
+   {:else}
+    {id ? 'Edit' : 'Add'}
+   {/if}
+  </Button>
+ {/if}
+</Form>

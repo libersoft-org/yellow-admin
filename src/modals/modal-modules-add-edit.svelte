@@ -1,6 +1,9 @@
 <script>
  import { onMount } from 'svelte';
  import { modulesAdd, modulesEdit, modulesInfo } from '../core.js';
+ import Form from '../components/form.svelte';
+ import Group from '../components/form-group.svelte';
+ import Switch from '../components/switch.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Alert from '../components/alert.svelte';
@@ -50,32 +53,18 @@
  }
 </script>
 
-<style>
- .group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
- }
-
- .group .label {
-  font-size: 15px;
-  font-weight: bold;
- }
-</style>
-
-<div class="group">
- <div class="label">Module name:</div>
- <div><Input value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" bind:this={elModuleName} onKeydown={keyEnter} /></div>
-</div>
-<div class="group">
- <div class="label">Connection string:</div>
- <div><Input value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" bind:this={elModuleConnectionString} onKeydown={keyEnter} /></div>
-</div>
-<div class="group">
- <div class="label">Enabled:</div>
- <div><input type="checkbox" bind:checked={enabled} bind:this={elModuleEnabled} /></div>
-</div>
-<Button text={id ? 'Edit' : 'Add'} onClick={clickAddEdit} />
-{#if error}
- <Alert text={error} />
-{/if}
+<Form>
+ <Group label="Module name">
+  <Input value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" bind:this={elModuleName} onKeydown={keyEnter} />
+ </Group>
+ <Group label="Connection string">
+  <Input value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" bind:this={elModuleConnectionString} onKeydown={keyEnter} />
+ </Group>
+ <Group label="Enabled">
+  <Switch bind:checked={enabled} bind:this={elModuleEnabled} />
+ </Group>
+ <Button text={id ? 'Edit' : 'Add'} onClick={clickAddEdit} />
+ {#if error}
+  <Alert text={error} />
+ {/if}
+</Form>

@@ -1,6 +1,8 @@
 <script>
  import { onMount } from 'svelte';
  import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
+ import Form from '../components/form.svelte';
+ import Group from '../components/form-group.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Alert from '../components/alert.svelte';
@@ -48,25 +50,12 @@
  }
 </script>
 
-<style>
- .group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
- }
-
- .group .label {
-  font-size: 15px;
-  padding-left: 5px;
-  font-weight: bold;
- }
-</style>
-
-<div class="group">
- <div class="label">Domain name:</div>
- <div><Input placeholder="domain.tld" onKeydown={keyEnter} bind:this={domainElement} bind:value={name} /></div>
+<Form>
+ <Group label="Domain name">
+  <Input placeholder="domain.tld" onKeydown={keyEnter} bind:this={domainElement} bind:value={name} />
+ </Group>
  <Button text={id ? 'Edit' : 'Add'} disabled={button_disabled} onClick={clickAddEdit} />
-</div>
-{#if error}
- <Alert text={error} />
-{/if}
+ {#if error}
+  <Alert text={error} />
+ {/if}
+</Form>
