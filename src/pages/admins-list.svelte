@@ -9,7 +9,7 @@
  import Input from '../components/input.svelte';
  import Modal from '../components/modal.svelte';
  import ModalAdminsAdd from '../modals/modal-admins-add-edit.svelte';
- import ModalAdminsDel from '../modals/modal-admins-del.svelte';
+ import ModalItemDel from '../modals/modal-item-del.svelte';
  import Table from '../components/table.svelte';
  import Thead from '../components/table-thead.svelte';
  import TheadTr from '../components/table-thead-tr.svelte';
@@ -127,4 +127,4 @@
 </Page>
 
 <Modal title={adminID ? 'Edit the admin' : 'Add a new admin'} body={ModalAdminsAdd} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalAddEditOpen} />
-<Modal title="Delete the admin" body={ModalAdminsDel} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalDelOpen} />
+<Modal title="Delete the admin" body={ModalItemDel} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalDelOpen} />
