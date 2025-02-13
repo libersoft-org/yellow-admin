@@ -125,5 +125,5 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </Page>
 
-<Modal title={moduleID ? 'Edit the module' : 'Add a new module'} body={ModalModulesAdd} params={{ onSubmit: reloadItems, id: moduleID }} bind:show={isModalAddEditOpen} />
+<Modal title={moduleID ? 'Edit the module (ID: ' + moduleID + ')' : 'Add a new module'} body={ModalModulesAdd} params={{ onSubmit: reloadItems, id: moduleID }} bind:show={isModalAddEditOpen} />
 <Modal title="Delete the module" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: modulesDel, id: moduleID, name: moduleName }} bind:show={isModalDelOpen} />

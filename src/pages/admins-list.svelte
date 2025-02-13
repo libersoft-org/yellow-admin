@@ -121,4 +121,4 @@
 </Page>
 
 <Modal title={adminID ? 'Edit the admin (ID: ' + adminID + ')' : 'Add a new admin'} body={ModalAdminsAdd} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalAddEditOpen} />
-<Modal title="Delete the admin" body={ModalItemDel} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalDelOpen} />
+<Modal title="Delete the admin" body={ModalItemDel} params={{ onSubmit: reloadItems, id: adminID, name: adminUsername }} bind:show={isModalDelOpen} />
