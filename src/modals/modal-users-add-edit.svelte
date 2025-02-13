@@ -1,39 +1,24 @@
 <script>
  import { onMount } from 'svelte';
  import { usersAdd, usersEdit, userInfo, domainsList } from '../core.js';
+ import Spinner from '../components/spinner.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Select from '../components/select.svelte';
  import Option from '../components/select-option.svelte';
  import Alert from '../components/alert.svelte';
- import { writable } from 'svelte/store';
-
  export let close;
  export let params;
  let id = params?.id;
- let usernameElement;
+ let elUsername;
  let domains = [];
- let domainElement;
- let visibleNameElement;
- let passwordElement;
  let userData = null;
  let error = null;
- console.warn("userData ? userData.username : ''", userData ? userData.username : '');
- // let userNameValue = writable(userData ? userData.username : '');
- let userNameValue = userData ? userData.username : '';
+ let loadingForm = false;
+ let loadingSubmit = false;
+ let form = {};
 
- const form = {};
-
- let loading = false;
-
- const obj = {
-  test: 123,
-  deep: {
-   test2: 321
-  }
- };
  onMount(() => {
-  loading = true;
   domainsList(
    res => {
     if (res.error === 0) domains = res.data.domains;
@@ -45,30 +30,24 @@
    'ASC'
   );
   if (id) {
+   loadingForm = true;
    userInfo(id, res => {
     userData = res?.data;
-
-    form.username = userData ? userData.username : '';
-    form.domain = userData ? userData.id_domains : '';
-    form.visibleName = userData ? userData.visible_name : '';
-    form.password = '';
-
-    console.log('onMount form', form);
-    console.log('onMount userNameValue', form.username);
-    loading = false;
+    form = {
+     username: userData?.username ? userData.username : '',
+     idDomains: userData?.id_domains ? userData.id_domains : '',
+     visibleName: userData?.visible_name ? userData.visible_name : ''
+    };
+    loadingForm = false;
    });
   }
-  usernameElement.focus();
+  elUsername.focus();
  });
 
  function clickAddEdit() {
-  console.log('form', form);
-  console.log('userData', userData);
-  console.log('userNameValue', userNameValue);
-  console.log('usernameElement.value', usernameElement.value);
-  console.log('domainElement.value', domainElement.value);
-  // if (id) usersEdit(id, usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
-  // else usersAdd(usernameElement.value, domainElement.value, visibleNameElement.value, passwordElement.value, cb);
+  loadingSubmit = true;
+  if (id) usersEdit(id, form.username, form.idDomains, form.visibleName, form.password, cb);
+  else usersAdd(form.username, form.idDomains, form.visibleName, form.password, cb);
  }
 
  async function cb(res) {
@@ -76,6 +55,7 @@
    close();
    await params.onSubmit.call();
   } else if (res?.message) error = res.message;
+  loadingSubmit = false;
  }
 
  function keyEnter(event) {
@@ -106,17 +86,16 @@
 </style>
 
 <div class="users-add-edit">
- {#if loading}
-  <div>Loading...</div>
+ {#if loadingForm}
+  <Spinner />
  {:else}
   <div class="group">
    <div class="label">Username:</div>
-   {form.username}
-   <Input bind:value={form.username} placeholder="Username" onKeydown={keyEnter} bind:this={usernameElement} />
+   <Input bind:value={form.username} placeholder="Username" onKeydown={keyEnter} bind:this={elUsername} />
   </div>
   <div class="group">
    <div class="label">Domain:</div>
-   <Select grow={true} bind:this={domainElement} value={userData ? userData.id_domains : ''}>
+   <Select grow={true} bind:value={form.idDomains}>
     <Option text="--- domain ---" selected={true} disabled={true} />
     {#each domains as d (d.id)}
      <Option value={d.id} text={d.name} />
@@ -125,15 +104,21 @@
   </div>
   <div class="group">
    <div class="label">Visible name:</div>
-   <Input bind:this={visibleNameElement} value={userData ? userData.visible_name : ''} placeholder="Visible name" onKeydown={keyEnter} />
+   <Input bind:value={form.visibleName} placeholder="Visible name" onKeydown={keyEnter} />
   </div>
   <div class="group">
    <div class="label">Password:</div>
-   <Input type="password" bind:this={passwordElement} placeholder="Password" onKeydown={keyEnter} />
+   <Input type="password" bind:value={form.password} placeholder="Password" onKeydown={keyEnter} />
   </div>
   {#if error}
    <Alert text={error} />
   {/if}
-  <Button text={id ? 'Edit' : 'Add'} onClick={clickAddEdit} />
+  <Button enabled={!loadingSubmit} onClick={clickAddEdit}>
+   {#if loadingSubmit}
+    <Spinner />
+   {:else}
+    {id ? 'Edit' : 'Add'}
+   {/if}
+  </Button>
  {/if}
 </div>

@@ -1,6 +1,6 @@
 <script>
- import { usersList, domainsList, usersDel } from '../core.js';
  import { onMount } from 'svelte';
+ import { usersList, domainsList, usersDel } from '../core.js';
  import Page from '../components/page.svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';

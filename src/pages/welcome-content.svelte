@@ -1,6 +1,6 @@
 <script>
- import BaseButton from '../components/base-button.svelte';
  import { product, version, build, commit, link } from '../core.js';
+ import BaseButton from '../components/base-button.svelte';
 
  function clickLogo() {
   window.open(link, '_blank');
