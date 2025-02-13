@@ -73,7 +73,7 @@
 
 <style>
  .modal {
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   position: fixed;

@@ -92,6 +92,7 @@
  }
 
  .main .sidebar {
+  z-index: 10;
   display: flex;
   flex-direction: column;
   min-width: var(--sidebar-width);
