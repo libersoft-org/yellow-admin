@@ -8,10 +8,6 @@
  export let onKeydown;
  let elInput;
 
- export function getValue() {
-  return value;
- }
-
  function handleKeydown(e) {
   if (onKeydown) onKeydown(e);
  }

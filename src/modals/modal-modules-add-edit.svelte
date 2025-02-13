@@ -13,27 +13,30 @@
  let id = params?.id;
  let enabled = true;
  let elModuleName;
- let elModuleConnectionString;
- let elModuleEnabled;
  let moduleData = null;
  let error = null;
  let loadingForm = false;
  let loadingSubmit = false;
+ let form = {};
 
  onMount(() => {
   if (id) {
+   loadingForm = true;
    modulesInfo(id, res => {
     moduleData = res?.data;
-    enabled = moduleData?.enabled;
-    console.log('moduleData:', moduleData, 'enabled:', enabled);
+    form = {
+     name: moduleData?.name ? moduleData.name : '',
+     connectionString: moduleData?.connection_string ? moduleData.connection_string : '',
+     enabled: moduleData?.enabled ? (moduleData.enabled === 1 ? true : false) : false
+    };
+    loadingForm = false;
    });
   }
   elModuleName.focus();
  });
 
  function clickAddEdit(do_close) {
-  console.log('clickAddEdit:', do_close);
-  const params = [elModuleName.getValue(), elModuleConnectionString.getValue(), elModuleEnabled.checked, async res => await cb(res, do_close)];
+  const params = [form.name, form.connectionString, form.enabled, async res => await cb(res, do_close)];
   if (id) modulesEdit(id, ...params);
   else modulesAdd(...params);
  }
@@ -61,13 +64,13 @@
   <Spinner />
  {:else}
   <Group label="Module name">
-   <Input value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" bind:this={elModuleName} onKeydown={keyEnter} />
+   <Input bind:value={form.name} placeholder="tld.domain.product" bind:this={elModuleName} onKeydown={keyEnter} />
   </Group>
   <Group label="Connection string">
-   <Input value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" bind:this={elModuleConnectionString} onKeydown={keyEnter} />
+   <Input bind:value={form.connectionString} placeholder="ws://127.0.0.1:25000/" onKeydown={keyEnter} />
   </Group>
   <Group label="Enabled">
-   <Switch bind:checked={enabled} bind:this={elModuleEnabled} />
+   <Switch bind:checked={form.enabled} />
   </Group>
   {#if error}
    <Alert text={error} />

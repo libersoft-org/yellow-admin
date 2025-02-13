@@ -18,9 +18,7 @@
  import Td from '../components/table-td.svelte';
  import Icons from '../components/icons.svelte';
  import Icon from '../components/icons-icon.svelte';
-
  export let contentElement;
-
  let items = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;
@@ -101,6 +99,7 @@
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="name" name="Name" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="connection-string" name="Connection string" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <ColumnHeader column="enabled" align="center" name="Enabled" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="created" align="center" name="Created" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader align="center" name="Action" />
    </TheadTr>
@@ -111,6 +110,7 @@
      <Td align="center">{m.id}</Td>
      <Td>{m.name}</Td>
      <Td align="center">{m.connection_string}</Td>
+     <Td align="center"><Icons><Icon img="img/{m.enabled === 1 ? 'yes' : 'no'}.svg" alt={m.enabled === 1 ? 'Yes' : 'No'} /></Icons></Td>
      <Td align="center">{new Date(m.created).toLocaleString()}</Td>
      <Td align="center">
       <Icons>
