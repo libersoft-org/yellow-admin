@@ -18,8 +18,9 @@
  import Td from '../components/table-td.svelte';
  import Icons from '../components/icons.svelte';
  import Icon from '../components/icons-icon.svelte';
- import { getContext } from 'svelte';
- let contentElement = getContext('contentElement');
+
+ export let contentElement;
+
  let items = [];
  let isModalAddEditOpen = false;
  let isModalDelOpen = false;

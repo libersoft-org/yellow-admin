@@ -18,8 +18,8 @@
 
  onMount(() => {
   //console.log('contentElement is ' + contentElement);
-  //console.log('loaderElement is ' + loaderElement);
   observer = new IntersectionObserver(handleIntersect, { threshold, root: contentElement });
+  //console.log('loaderElement is ' + loaderElement);
   if (loaderElement) {
    observer.observe(loaderElement);
    observing = true;
@@ -100,5 +100,5 @@
 </script>
 
 {#if hasMore}
- <Spinner bind:this={loaderElement} />
+ <Spinner bind:elSpinner={loaderElement} />
 {/if}
