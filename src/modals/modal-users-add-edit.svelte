@@ -2,12 +2,14 @@
  import { onMount } from 'svelte';
  import { usersAdd, usersEdit, userInfo, domainsList } from '../core.js';
  import Spinner from '../components/spinner.svelte';
+ import Form from '../components/form.svelte';
  import Group from '../components/form-group.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
  import Select from '../components/select.svelte';
  import Option from '../components/select-option.svelte';
  import Alert from '../components/alert.svelte';
+ import FormGroup from '../components/form-group.svelte';
  export let close;
  export let params;
  let id = params?.id;
@@ -67,15 +69,7 @@
  }
 </script>
 
-<style>
- .add-edit {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
- }
-</style>
-
-<div class="add-edit">
+<Form>
  {#if loadingForm}
   <Spinner />
  {:else}
@@ -107,4 +101,4 @@
    {/if}
   </Button>
  {/if}
-</div>
+</Form>
