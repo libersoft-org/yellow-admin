@@ -79,11 +79,6 @@
   }
  }
 
- function onModalDelClose(reload = false) {
-  isModalDelOpen = false;
-  reloadItems();
- }
-
  function clickDel(id, username) {
   userID = id;
   delAddress = username;

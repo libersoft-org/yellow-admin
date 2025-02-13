@@ -35,7 +35,6 @@
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
-  //console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filter', filters);
   domainsList(res => show_items_callback({ error: res.error, items: res.data.domains }), count, offset, filters?.name, sortBy, sortDir);
  }
 

@@ -1,6 +1,7 @@
 <script>
  import { onMount } from 'svelte';
  import { modulesAdd, modulesEdit, modulesInfo } from '../core.js';
+ import Spinner from '../components/spinner.svelte';
  import Form from '../components/form.svelte';
  import Group from '../components/form-group.svelte';
  import Switch from '../components/switch.svelte';
@@ -16,6 +17,8 @@
  let elModuleEnabled;
  let moduleData = null;
  let error = null;
+ let loadingForm = false;
+ let loadingSubmit = false;
 
  onMount(() => {
   if (id) {
@@ -54,17 +57,27 @@
 </script>
 
 <Form>
- <Group label="Module name">
-  <Input value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" bind:this={elModuleName} onKeydown={keyEnter} />
- </Group>
- <Group label="Connection string">
-  <Input value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" bind:this={elModuleConnectionString} onKeydown={keyEnter} />
- </Group>
- <Group label="Enabled">
-  <Switch bind:checked={enabled} bind:this={elModuleEnabled} />
- </Group>
- <Button text={id ? 'Edit' : 'Add'} onClick={clickAddEdit} />
- {#if error}
-  <Alert text={error} />
+ {#if loadingForm}
+  <Spinner />
+ {:else}
+  <Group label="Module name">
+   <Input value={moduleData ? moduleData.name : ''} placeholder="tld.domain.product" bind:this={elModuleName} onKeydown={keyEnter} />
+  </Group>
+  <Group label="Connection string">
+   <Input value={moduleData ? moduleData.connection_string : ''} placeholder="ws://127.0.0.1:25000/" bind:this={elModuleConnectionString} onKeydown={keyEnter} />
+  </Group>
+  <Group label="Enabled">
+   <Switch bind:checked={enabled} bind:this={elModuleEnabled} />
+  </Group>
+  {#if error}
+   <Alert text={error} />
+  {/if}
+  <Button enabled={!loadingSubmit} onClick={clickAddEdit}>
+   {#if loadingSubmit}
+    <Spinner />
+   {:else}
+    {id ? 'Edit' : 'Add'}
+   {/if}
+  </Button>
  {/if}
 </Form>

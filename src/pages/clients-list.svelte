@@ -29,10 +29,8 @@
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
-  //console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters', filters);
   clientsList(
    res => {
-    //console.log(res);
     show_items_callback({ error: res.error, items: res.data.items });
    },
    count,

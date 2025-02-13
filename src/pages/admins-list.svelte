@@ -35,7 +35,6 @@
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
-  //console.log('loadItems count:', count, 'offset:', offset, 'sortBy:', sortBy, 'sortDir:', sortDir, 'filters', filters);
   adminsList(res => show_items_callback({ error: res.error, items: res.data.admins }), count, offset, filters?.name, sortBy, sortDir);
  }
 
@@ -59,11 +58,6 @@
    event.preventDefault();
    clickSearch();
   }
- }
-
- function onModalDelClose(reload = false) {
-  isModalDelOpen = false;
-  reloadItems();
  }
 
  function clickDel(id, name) {
@@ -126,5 +120,5 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </Page>
 
-<Modal title={adminID ? 'Edit the admin' : 'Add a new admin'} body={ModalAdminsAdd} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalAddEditOpen} />
+<Modal title={adminID ? 'Edit the admin (ID: ' + adminID + ')' : 'Add a new admin'} body={ModalAdminsAdd} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalAddEditOpen} />
 <Modal title="Delete the admin" body={ModalItemDel} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalDelOpen} />

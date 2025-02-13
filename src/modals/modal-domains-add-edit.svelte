@@ -1,6 +1,7 @@
 <script>
  import { onMount } from 'svelte';
  import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
+ import Spinner from '../components/spinner.svelte';
  import Form from '../components/form.svelte';
  import Group from '../components/form-group.svelte';
  import Button from '../components/button.svelte';
@@ -9,30 +10,39 @@
  export let close;
  export let params;
  let id = params?.id;
- let domainElement;
+ let elDomain;
  let domainData = null;
  let error = null;
- let name = '';
- let button_disabled = false;
-
- $: button_disabled = !name;
+ let loadingForm = false;
+ let loadingSubmit = false;
+ let form = {};
 
  onMount(() => {
   if (id) {
+   loadingForm = true;
    domainInfo(id, res => {
     domainData = res?.data;
-    name = domainData ? domainData.name : '';
+    form = {
+     name: domainData?.name ? domainData.name : ''
+    };
+    loadingForm = false;
    });
   }
-  domainElement.focus();
+  elDomain.focus();
  });
 
  function clickAddEdit() {
-  console.log('clickAddEdit');
-  if (domainElement.value) {
-   if (id) domainsEdit(id, domainElement.value, cb);
-   else domainsAdd(domainElement.value, cb);
-  } else console.log('domainElement.value is empty');
+  loadingSubmit = true;
+  if (id) domainsEdit(id, form.name, cb);
+  else domainsAdd(form.name, cb);
+ }
+
+ async function cb(res) {
+  if (res?.error === 0) {
+   close();
+   await params.onSubmit.call();
+  } else if (res?.message) error = res.message;
+  loadingSubmit = false;
  }
 
  function keyEnter(event) {
@@ -41,21 +51,24 @@
    clickAddEdit();
   }
  }
-
- async function cb(res) {
-  if (res?.error === 0) {
-   close();
-   await params.onSubmit.call();
-  } else if (res?.message) error = res.message;
- }
 </script>
 
 <Form>
- <Group label="Domain name">
-  <Input placeholder="domain.tld" onKeydown={keyEnter} bind:this={domainElement} bind:value={name} />
- </Group>
- <Button text={id ? 'Edit' : 'Add'} disabled={button_disabled} onClick={clickAddEdit} />
- {#if error}
-  <Alert text={error} />
+ {#if loadingForm}
+  <Spinner />
+ {:else}
+  <Group label="Domain name">
+   <Input placeholder="domain.tld" onKeydown={keyEnter} bind:this={elDomain} bind:value={form.name} />
+  </Group>
+  {#if error}
+   <Alert text={error} />
+  {/if}
+  <Button enabled={!loadingSubmit} onClick={clickAddEdit}>
+   {#if loadingSubmit}
+    <Spinner />
+   {:else}
+    {id ? 'Edit' : 'Add'}
+   {/if}
+  </Button>
  {/if}
 </Form>

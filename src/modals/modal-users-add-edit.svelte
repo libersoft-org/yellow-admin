@@ -9,7 +9,6 @@
  import Select from '../components/select.svelte';
  import Option from '../components/select-option.svelte';
  import Alert from '../components/alert.svelte';
- import FormGroup from '../components/form-group.svelte';
  export let close;
  export let params;
  let id = params?.id;

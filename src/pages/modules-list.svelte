@@ -63,11 +63,6 @@
   }
  }
 
- function onModalDelClose(reload = false) {
-  isModalDelOpen = false;
-  reloadItems();
- }
-
  function clickDel(id, name) {
   moduleID = id;
   moduleName = name;
