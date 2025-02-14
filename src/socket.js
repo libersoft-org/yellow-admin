@@ -57,14 +57,14 @@ export function disconnect() {
  socket.close();
 }
 
-export function send(command, params = {}, sessionID = null, callback = null) {
- //console.log('------------------');
- //console.log('SENDING COMMAND:');
- //console.log('COMMAND:', command);
- //console.log('PARAMS:', params);
- //console.log('SESSION ID:', sessionID);
- //console.log('CALLBACK:', callback);
- //console.log('------------------');
+export function send(command, params = {}, sessionName = null, callback = null) {
+ console.log('------------------');
+ console.log('SENDING COMMAND:');
+ console.log('COMMAND:', command);
+ console.log('PARAMS:', params);
+ console.log('SESSION NAME:', sessionName);
+ console.log('CALLBACK:', callback);
+ console.log('------------------');
  if (!socket || get(socketState) !== socketStates.OPEN) {
   console.error('Error while sending command: WebSocket is not open');
   return;
@@ -74,16 +74,17 @@ export function send(command, params = {}, sessionID = null, callback = null) {
   target: 'core',
   requestID
  };
- if (sessionID) req.sessionID = sessionID;
+ if (sessionName) req.sessionID = sessionName;
  if (command || params) req.data = {};
  if (command) req.data.command = command;
  if (params) req.data.params = params;
  requests[requestID] = { req, callback };
+ console.log('REQ:', req);
  socket.send(JSON.stringify(req));
 }
 
 function handleResponse(res) {
- //console.log('RESPONSE', res);
+ console.log('RESPONSE', res);
  if (res.requestID) {
   const reqData = requests[res.requestID];
   if (reqData.callback) reqData.callback(reqData.req, res);

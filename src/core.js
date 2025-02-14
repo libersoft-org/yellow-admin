@@ -4,7 +4,7 @@ export const hideSidebarMobile = writable(false);
 export const isLoggedIn = writable(false);
 export const loginError = writable(null);
 export let username = null;
-export let sessionID = null;
+export let sessionName = null;
 export const product = 'Yellow - Administration';
 export const version = '0.0.1';
 export const build = new Date(__BUILD_DATE__)
@@ -20,12 +20,13 @@ Socket.socketError.subscribe(value => {
 });
 
 export function logout() {
- sessionsDel(sessionID, res => {
+ console.log('sessionName:', sessionName);
+ sessionsDelName(sessionName, res => {
   //console.log('logout Response:', res);
   if (res.error !== 0) alert(res.message);
   frontend_logout();
  });
- sessionID = null;
+ sessionName = null;
 }
 
 function frontend_logout() {
@@ -34,7 +35,7 @@ function frontend_logout() {
   hideSidebarMobile.set(false);
   isLoggedIn.set(false);
   username = null;
-  sessionID = null;
+  sessionName = null;
  });
  Socket.disconnect();
 }
@@ -48,14 +49,14 @@ export function login(credentials) {
   }
   loginError.set(null);
   username = credentials.username;
-  sessionID = res.data.sessionID;
-  //console.log('Session ID:', sessionID);
+  console.log(res.data);
+  sessionName = res.data.sessionID;
   isLoggedIn.set(true);
  });
 }
 
 function send(command, params, callback) {
- Socket.send(command, params, sessionID, async (req, res) => {
+ Socket.send(command, params, sessionName, async (req, res) => {
   if (res.error >= 900 && res.error <= 999) console.error('Error:', res.error);
   if (res.error === 997 || res.error === 994) {
    frontend_logout();
@@ -169,6 +170,10 @@ export function sessionsDel(id, callback = null) {
  send('admin_sessions_del', { sessionID: id }, callback);
 }
 
+export function sessionsDelName(name, callback = null) {
+ send('admin_sessions_del_name', { session_name: name }, callback);
+}
+
 export function clientsList(callback = null, count = 10, offset = 0, filterIp = null, filterGuid = null, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filterIp) params.filterIp = filterIp;
@@ -194,6 +199,6 @@ export default {
  isLoggedIn,
  loginError,
  username,
- sessionID,
+ sessionName,
  logout
 };
