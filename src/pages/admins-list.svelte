@@ -1,5 +1,5 @@
 <script>
- import { adminsList } from '../core.js';
+ import { adminsList, adminsDel } from '../core.js';
  import Page from '../components/page.svelte';
  import MenuButton from '../components/menu-button.svelte';
  import ColumnHeader from '../components/table-column-header.svelte';
@@ -121,4 +121,4 @@
 </Page>
 
 <Modal title={adminID ? 'Edit the admin (ID: ' + adminID + ')' : 'Add a new admin'} body={ModalAdminsAdd} params={{ onSubmit: reloadItems, id: adminID }} bind:show={isModalAddEditOpen} />
-<Modal title="Delete the admin" body={ModalItemDel} params={{ onSubmit: reloadItems, id: adminID, name: adminUsername }} bind:show={isModalDelOpen} />
+<Modal title="Delete the admin" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: adminsDel, id: adminID, name: adminUsername }} bind:show={isModalDelOpen} />

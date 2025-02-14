@@ -1,4 +1,5 @@
 <script>
+ import Form from '../components/form.svelte';
  import Button from '../components/button.svelte';
  import Alert from '../components/alert.svelte';
  export let close;
@@ -20,8 +21,10 @@
  }
 </script>
 
-<div>Would you like to delete "<span class="bold">{name}</span>" (id: {id})?</div>
-<Button text="Delete" onClick={clickDel} />
-{#if error}
- <Alert text={error} />
-{/if}
+<Form>
+ <div>Would you like to delete "<span class="bold">{name}</span>" (id: {id})?</div>
+ <Button text="Delete" onClick={clickDel} />
+ {#if error}
+  <Alert text={error} />
+ {/if}
+</Form>

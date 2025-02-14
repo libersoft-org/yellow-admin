@@ -114,4 +114,4 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </Page>
 
-<Modal title="Delete the session" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: _id => sessionsDel(sessionName), id: sessionID, name: sessionName }} bind:show={isModalDelOpen} />
+<Modal title="Delete the session" body={ModalItemDel} params={{ onSubmit: reloadItems, fn: sessionsDel, id: sessionID, name: sessionName }} bind:show={isModalDelOpen} />
