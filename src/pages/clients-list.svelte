@@ -7,6 +7,8 @@
  import Buttons from '../components/buttons.svelte';
  import Button from '../components/button.svelte';
  import Input from '../components/input.svelte';
+ import Modal from '../components/modal.svelte';
+ import ModalClientsKick from '../modals/modal-clients-kick.svelte';
  import Table from '../components/table.svelte';
  import Thead from '../components/table-thead.svelte';
  import TheadTr from '../components/table-thead-tr.svelte';
@@ -23,6 +25,8 @@
  let lazyLoader;
  let sortBy = 'guid';
  let sortDir = 'ASC';
+ let clientID = null;
+ let isModalKickOpen = false;
 
  function reloadItems() {
   lazyLoader.reload({ filterIp, filterGuid }, filterOffset);
@@ -40,6 +44,11 @@
    sortBy,
    sortDir
   );
+ }
+
+ function clientKick(id) {
+  clientID = id;
+  isModalKickOpen = true;
  }
 
  function clickSearch() {
@@ -94,7 +103,7 @@
    <TheadTr>
     <ColumnHeader column="guid" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="ip" name="IP address" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
-    <td>Action</td>
+    <ColumnHeader name="Action" />
    </TheadTr>
   </Thead>
   <Tbody>
@@ -104,7 +113,8 @@
      <Td>{c.ip}</Td>
      <Td>
       <Icons>
-       <Icon img="img/kick.svg" onClick={() => clientsKick(c.guid)} />
+       <!--<Icon img="img/kick.svg" onClick={() => clientsKick(c.guid)} />-->
+       <Icon img="img/kick.svg" onClick={(isModalKickOpen = true)} />
       </Icons>
      </Td>
     </TbodyTr>
@@ -113,3 +123,5 @@
  </Table>
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </Page>
+
+<Modal title="Disconnect the client" body={ModalClientsKick} params={{ onSubmit: reloadItems, fn: clientKick, id: clientID }} bind:show={isModalKickOpen} />
