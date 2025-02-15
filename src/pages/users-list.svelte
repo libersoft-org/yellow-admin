@@ -38,7 +38,7 @@
  onMount(() => {
   domainsList(
    res => {
-    if (res.error === 0) domains = res.data.domains;
+    if (res.error === false) domains = res.data.domains;
    },
    1000000,
    0,

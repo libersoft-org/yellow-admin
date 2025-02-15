@@ -43,7 +43,7 @@
 
  async function cb(res, do_close) {
   console.log('cb:', res, do_close);
-  if (res?.error === 0) {
+  if (res?.error === false) {
    if (do_close) {
     close();
     await params.onSubmit.call();

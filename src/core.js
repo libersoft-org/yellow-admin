@@ -23,7 +23,7 @@ export function logout() {
  console.log('sessionName:', sessionName);
  sessionsDelName(sessionName, res => {
   //console.log('logout Response:', res);
-  if (res.error !== 0) alert(res.message);
+  if (res.error !== false) alert(res.message);
   frontend_logout();
  });
  sessionName = null;
@@ -42,7 +42,7 @@ function frontend_logout() {
 
 export function login(credentials) {
  send('admin_login', { username: credentials.username, password: credentials.password }, res => {
-  if (res.error !== 0) {
+  if (res.error !== false) {
    Socket.disconnect();
    loginError.set(res.message);
    return;

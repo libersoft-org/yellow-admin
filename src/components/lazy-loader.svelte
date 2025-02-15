@@ -52,7 +52,7 @@
   loading = true;
   loadItems(
    res => {
-    if (res.error === 0) {
+    if (res.error === false) {
      items = [...items, ...res.items];
      //if (res.items.length > 0) lastID = res.items[res.items.length - 1].id;
      //console.log('items.length:' + items.length);

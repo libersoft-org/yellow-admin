@@ -23,7 +23,7 @@
  onMount(() => {
   domainsList(
    res => {
-    if (res.error === 0) domains = res.data.domains;
+    if (res.error === false) domains = res.data.domains;
    },
    1000000,
    0,
@@ -53,7 +53,7 @@
  }
 
  async function cb(res) {
-  if (res?.error === 0) {
+  if (res?.error === false) {
    close();
    await params.onSubmit.call();
   } else if (res?.message) error = res.message;
