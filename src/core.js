@@ -56,6 +56,7 @@ export function login(credentials) {
 }
 
 function send(command, params, callback) {
+ //console.log('send: command:', command, 'params:', params);
  Socket.send(command, params, sessionName, async (req, res) => {
   if (res.error >= 900 && res.error <= 999) console.error('Error:', res.error);
   if (res.error === 997 || res.error === 994) {

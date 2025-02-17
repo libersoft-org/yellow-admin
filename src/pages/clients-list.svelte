@@ -46,11 +46,6 @@
   );
  }
 
- function clientKick(id) {
-  clientID = id;
-  isModalKickOpen = true;
- }
-
  function clickSearch() {
   reloadItems();
  }
@@ -103,6 +98,7 @@
    <TheadTr>
     <ColumnHeader column="guid" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader column="ip" name="IP address" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
+    <ColumnHeader column="userAddress" name="User" align="left" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
     <ColumnHeader name="Action" />
    </TheadTr>
   </Thead>
@@ -111,10 +107,17 @@
     <TbodyTr>
      <Td align="center">{c.guid}</Td>
      <Td>{c.ip}</Td>
+     <Td>{c.userAddress}</Td>
      <Td>
       <Icons>
        <!--<Icon img="img/kick.svg" onClick={() => clientsKick(c.guid)} />-->
-       <Icon img="img/kick.svg" onClick={(isModalKickOpen = true)} />
+       <Icon
+        img="img/kick.svg"
+        onClick={() => {
+         clientID = c.guid;
+         isModalKickOpen = true;
+        }}
+       />
       </Icons>
      </Td>
     </TbodyTr>
@@ -124,4 +127,4 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </Page>
 
-<Modal title="Disconnect the client" body={ModalClientsKick} params={{ onSubmit: reloadItems, fn: clientKick, id: clientID }} bind:show={isModalKickOpen} />
+<Modal title="Disconnect the client" body={ModalClientsKick} params={{ onSubmit: reloadItems, fn: clientsKick, id: clientID }} bind:show={isModalKickOpen} />
