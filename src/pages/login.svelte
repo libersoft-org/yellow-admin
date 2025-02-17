@@ -12,7 +12,7 @@
 
  onMount(() => {
   credentials.server = (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host + '/';
-  if (import.meta.env.VITE_SERVER) {
+  if (import.meta.env.VITE_ADMIN_SERVER) {
    credentials = {
     server: import.meta.env.VITE_ADMIN_SERVER,
     username: import.meta.env.VITE_ADMIN_USERNAME,
