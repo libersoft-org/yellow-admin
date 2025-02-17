@@ -127,4 +127,17 @@
  <LazyLoader bind:this={lazyLoader} {loadItems} {contentElement} bind:items />
 </Page>
 
-<Modal title="Disconnect the client" body={ModalClientsKick} params={{ onSubmit: reloadItems, fn: clientsKick, id: clientID }} bind:show={isModalKickOpen} />
+<Modal
+ title="Disconnect the client"
+ body={ModalClientsKick}
+ params={{
+  fn: () => {
+   clientsKick(clientID, () => {
+    reloadItems();
+    isModalKickOpen = false;
+   });
+  },
+  id: clientID
+ }}
+ bind:show={isModalKickOpen}
+/>

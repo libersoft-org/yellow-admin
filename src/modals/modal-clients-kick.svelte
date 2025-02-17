@@ -9,7 +9,7 @@
  let error = null;
 
  function clickDel() {
-  console.log('clickDel id:', id);
+  console.log('clickDel id:', id, 'fn:', fn, 'cb:', cb);
   fn(id, cb);
  }
 
