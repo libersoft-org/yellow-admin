@@ -59,6 +59,7 @@ function send(command, params, callback) {
  Socket.send(command, params, sessionName, async (req, res) => {
   if (res.error >= 900 && res.error <= 999) console.error('Error:', res.error);
   if (res.error === 997 || res.error === 994) {
+   loginError.set(res.message);
    frontend_logout();
    return;
   }
