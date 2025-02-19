@@ -22,6 +22,7 @@
  let filterIp = null;
  let filterGuid = null;
  let filterOffset = 0;
+ let filterUserAddress = null;
  let lazyLoader;
  let sortBy = 'guid';
  let sortDir = 'ASC';
@@ -29,7 +30,7 @@
  let isModalKickOpen = false;
 
  function reloadItems() {
-  lazyLoader.reload({ filterIp, filterGuid }, filterOffset);
+  lazyLoader.reload({ filterIp, filterGuid, filterUserAddress }, filterOffset);
  }
 
  async function loadItems(show_items_callback, count, offset, filters) {
@@ -41,6 +42,7 @@
    offset,
    filters?.filterIp,
    filters?.filterGuid,
+   filters?.filterUserAddress,
    sortBy,
    sortDir
   );
@@ -53,6 +55,7 @@
  function clickReload() {
   filterIp = null;
   filterGuid = null;
+  filterUserAddress = null;
   filterOffset = 0;
   reloadItems();
  }
@@ -86,6 +89,10 @@
   <div class="search">
    <div>Client's IP address:</div>
    <Input placeholder="IP address" bind:value={filterIp} onKeydown={keySearchForm} />
+  </div>
+  <div class="search">
+   <div>User address:</div>
+   <Input placeholder="User address" bind:value={filterUserAddress} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
