@@ -27,11 +27,11 @@
     };
     loadingForm = false;
     await tick();
-    elDomain.focus();
+    elDomain?.focus();
    });
   }
   await tick();
-  elDomain.focus();
+  elDomain?.focus();
  });
 
  function clickAddEdit() {

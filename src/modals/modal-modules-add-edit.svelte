@@ -35,7 +35,7 @@
    });
   }
   await tick();
-  elModuleName.focus();
+  elModuleName?.focus();
  });
 
  function clickAddEdit(do_close) {

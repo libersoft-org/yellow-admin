@@ -27,11 +27,11 @@
     };
     loadingForm = false;
     await tick();
-    elUsername.focus();
+    elUsername?.focus();
    });
   }
   await tick();
-  elUsername.focus();
+  elUsername?.focus();
  });
 
  function clickAddEdit() {
