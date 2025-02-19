@@ -1,5 +1,5 @@
 <script>
- import { onMount } from 'svelte';
+ import {onMount, tick} from 'svelte';
  import { adminsAdd, adminsEdit, adminInfo } from '../core.js';
  import Spinner from '../components/spinner.svelte';
  import Form from '../components/form.svelte';
@@ -17,17 +17,20 @@
  let loadingSubmit = false;
  let form = {};
 
- onMount(() => {
+ onMount(async () => {
   if (id) {
    loadingForm = true;
-   adminInfo(id, res => {
+   adminInfo(id, async res => {
     adminData = res?.data;
     form = {
      username: adminData?.username ? adminData.username : ''
     };
     loadingForm = false;
+    await tick();
+    elUsername.focus();
    });
   }
+  await tick();
   elUsername.focus();
  });
 

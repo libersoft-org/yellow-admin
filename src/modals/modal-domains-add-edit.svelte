@@ -1,5 +1,5 @@
 <script>
- import { onMount } from 'svelte';
+ import {onMount, tick} from 'svelte';
  import { domainsAdd, domainsEdit, domainInfo } from '../core.js';
  import Spinner from '../components/spinner.svelte';
  import Form from '../components/form.svelte';
@@ -17,17 +17,20 @@
  let loadingSubmit = false;
  let form = {};
 
- onMount(() => {
+ onMount(async () => {
   if (id) {
    loadingForm = true;
-   domainInfo(id, res => {
+   domainInfo(id, async res => {
     domainData = res?.data;
     form = {
      name: domainData?.name ? domainData.name : ''
     };
     loadingForm = false;
+    await tick();
+    elDomain.focus();
    });
   }
+  await tick();
   elDomain.focus();
  });
 

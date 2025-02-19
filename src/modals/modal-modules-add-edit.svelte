@@ -1,5 +1,5 @@
 <script>
- import { onMount } from 'svelte';
+ import {onMount, tick} from 'svelte';
  import { modulesAdd, modulesEdit, modulesInfo } from '../core.js';
  import Spinner from '../components/spinner.svelte';
  import Form from '../components/form.svelte';
@@ -19,10 +19,10 @@
  let loadingSubmit = false;
  let form = {};
 
- onMount(() => {
+ onMount(async () => {
   if (id) {
    loadingForm = true;
-   modulesInfo(id, res => {
+   modulesInfo(id, async res => {
     moduleData = res?.data;
     form = {
      name: moduleData?.name ? moduleData.name : '',
@@ -30,8 +30,11 @@
      enabled: moduleData?.enabled ? (moduleData.enabled === 1 ? true : false) : false
     };
     loadingForm = false;
+    await tick();
+    elModuleName?.focus();
    });
   }
+  await tick();
   elModuleName.focus();
  });
 

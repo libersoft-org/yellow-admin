@@ -1,5 +1,5 @@
 <script>
- import { onMount } from 'svelte';
+ import { onMount, tick } from 'svelte';
  import { usersAdd, usersEdit, userInfo, domainsList } from '../core.js';
  import Spinner from '../components/spinner.svelte';
  import Form from '../components/form.svelte';
@@ -20,7 +20,7 @@
  let loadingSubmit = false;
  let form = {};
 
- onMount(() => {
+ onMount(async () => {
   domainsList(
    res => {
     if (res.error === false) domains = res.data.domains;
@@ -33,7 +33,7 @@
   );
   if (id) {
    loadingForm = true;
-   userInfo(id, res => {
+   userInfo(id, async res => {
     userData = res?.data;
     form = {
      username: userData?.username ? userData.username : '',
@@ -41,9 +41,12 @@
      visibleName: userData?.visible_name ? userData.visible_name : ''
     };
     loadingForm = false;
+    await tick();
+    elUsername?.focus();
    });
   }
-  elUsername.focus();
+  await tick();
+  elUsername?.focus();
  });
 
  function clickAddEdit() {
