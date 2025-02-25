@@ -176,7 +176,7 @@ export function sessionsDelName(name, callback = null) {
  send('admin_sessions_del_name', { session_name: name }, callback);
 }
 
-export function clientsList(callback = null, count = 10, offset = 0, filterIp = null, filterGuid = null, filterUserAddress = null,  sortBy = null, sortDir = null) {
+export function clientsList(callback = null, count = 10, offset = 0, filterIp = null, filterGuid = null, filterUserAddress = null, sortBy = null, sortDir = null) {
  const params = { count, offset, orderBy: sortBy, direction: sortDir };
  if (filterIp) params.filterIp = filterIp;
  if (filterGuid) params.filterGuid = filterGuid;
