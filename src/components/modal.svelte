@@ -1,36 +1,45 @@
 <script>
- import { tick } from 'svelte';
+ import { setContext, tick } from 'svelte';
  import BaseButton from './base-button.svelte';
  export let show = false;
  export let params = null;
  export let title = null;
  export let body = '';
+ export let width;
+ export let height;
  let modalEl;
  let posX = 0;
  let posY = 0;
  let isDragging = false;
  let left;
  let top;
+ let showContent = false;
 
- $: update(show);
+ $: showUpdated(!!(show && body));
 
- async function update(show) {
+ async function showUpdated(show) {
+  console.log('showUpdated', show);
   if (show) {
    await tick();
+   modalEl.focus();
+   showContent = true;
+   await tick();
    await positionModal();
+  } else {
+   showContent = false;
   }
  }
 
  async function positionModal() {
   if (modalEl) {
    const modalRect = modalEl.getBoundingClientRect();
-   const modalWidth = modalRect.width;
-   const modalHeight = modalRect.height;
-   const windowWidth = window.innerWidth;
-   const windowHeight = window.innerHeight;
-   top = (windowHeight - modalHeight) / 2;
-   left = (windowWidth - modalWidth) / 2;
+   top = (window.innerHeight - modalRect.height) / 2;
+   left = (window.innerWidth - modalRect.width) / 2;
   }
+ }
+
+ async function reposition() {
+  await positionModal();
  }
 
  function close() {
@@ -130,9 +139,9 @@
   </div>
   <div class="body">
    {#if params}
-    <svelte:component this={body} {close} {params} />
+    <svelte:component this={body} {close} {reposition} {params} />
    {:else}
-    <svelte:component this={body} {close} />
+    <svelte:component this={body} {close} {reposition} />
    {/if}
   </div>
  </div>

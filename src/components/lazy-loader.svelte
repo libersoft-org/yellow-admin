@@ -94,7 +94,7 @@
  function handleIntersect(entries) {
   //console.log('handleIntersect:')
   //console.log(entries);
-  _loaderIsVisible = entries[0].isIntersecting;
+  _loaderIsVisible = entries[entries.length - 1].isIntersecting;
   if (_loaderIsVisible && !loading && hasMore) loadMore();
  }
 </script>
