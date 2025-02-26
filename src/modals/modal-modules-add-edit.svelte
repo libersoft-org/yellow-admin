@@ -1,5 +1,5 @@
 <script>
- import {onMount, tick} from 'svelte';
+ import { onMount, tick } from 'svelte';
  import { modulesAdd, modulesEdit, modulesInfo } from '../core.js';
  import Spinner from '../components/spinner.svelte';
  import Form from '../components/form.svelte';
