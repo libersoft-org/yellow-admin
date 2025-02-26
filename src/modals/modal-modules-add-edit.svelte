@@ -10,6 +10,7 @@
  import Alert from '../components/alert.svelte';
  export let close;
  export let params;
+ export let reposition;
  let id = params?.id;
  let enabled = true;
  let elModuleName;
@@ -32,6 +33,7 @@
     loadingForm = false;
     await tick();
     elModuleName?.focus();
+    await reposition();
    });
   }
   await tick();

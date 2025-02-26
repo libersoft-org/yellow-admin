@@ -9,6 +9,7 @@
  import Alert from '../components/alert.svelte';
  export let close;
  export let params;
+ export let reposition;
  let id = params?.id;
  let elUsername;
  let adminData = null;
@@ -28,6 +29,7 @@
     loadingForm = false;
     await tick();
     elUsername?.focus();
+    await reposition();
    });
   }
   await tick();
