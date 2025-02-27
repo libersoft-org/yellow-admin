@@ -1,5 +1,5 @@
 <script>
- import { onMount, onDestroy } from 'svelte';
+ import { tick, onMount, onDestroy } from 'svelte';
  import Spinner from './spinner.svelte';
  export let loadItems;
  export let items;
@@ -54,17 +54,15 @@
    res => {
     if (res.error === false) {
      items = [...items, ...res.items];
-     //if (res.items.length > 0) lastID = res.items[res.items.length - 1].id;
-     //console.log('items.length:' + items.length);
      loading = false;
      offset += res.items.length;
      if (res.items.length < count) {
       hasMore = false;
       if (observer) observer.disconnect();
      } else {
-      setTimeout(() => {
+      tick().then(() => {
        if (isLoaderVisible()) loadMore();
-      }, 500);
+      });
      }
     } else {
      console.error('Error: ' + res.message);
