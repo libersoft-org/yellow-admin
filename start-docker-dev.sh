@@ -2,7 +2,7 @@
 
 set -e
 
-[ ! -d "./node_modules/" ] && ./docker-dev-init.sh
+./docker-dev-init.sh
 
 
 export VITE_ADMIN_SERVER="ws://localhost:8085/"
