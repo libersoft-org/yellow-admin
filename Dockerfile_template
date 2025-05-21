@@ -1,8 +1,7 @@
 FROM node:18
 
-ARG UID=1000
-ARG GID=1000
-
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 
 
 RUN mkdir -p /tmp && chmod 1777 /tmp
@@ -15,17 +14,17 @@ RUN mkdir -p /var/tmp
 RUN apt update && apt install -y curl tini unzip
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
-RUN mkdir -p /.npm && chown -R $UID:$GID /.npm
+RUN mkdir -p /.npm && chown -R $USER_ID:$GROUP_ID /.npm
 
 
 ARG APP_DIR=/app/app/
 RUN mkdir -p $APP_DIR
-RUN chown -R $UID:$GID $APP_DIR
+RUN chown -R $USER_ID:$GROUP_ID $APP_DIR
 # Create .bun directory for bun installation
 RUN mkdir -p /.bun
-RUN chown -R $UID:$GID /.bun
+RUN chown -R $USER_ID:$GROUP_ID /.bun
 
-USER $UID:$GID
+USER $USER_ID:$GROUP_ID
 WORKDIR $APP_DIR
 
 # Install Bun (same pattern as other Dockerfiles)
