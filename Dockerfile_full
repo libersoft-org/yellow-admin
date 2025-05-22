@@ -1,0 +1,46 @@
+FROM node:18
+
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+
+RUN mkdir -p /tmp && chmod 1777 /tmp
+RUN touch /tmp/.test
+
+ENV TMPDIR=/var/tmp
+RUN mkdir -p /var/tmp
+
+# Install dependencies
+RUN apt update && apt install -y curl tini unzip
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+RUN mkdir -p /.npm && chown -R $USER_ID:$GROUP_ID /.npm
+
+
+ARG APP_DIR=/app/app/
+RUN mkdir -p $APP_DIR
+RUN chown -R $USER_ID:$GROUP_ID $APP_DIR
+# Create .bun directory for bun installation
+RUN mkdir -p /.bun
+RUN chown -R $USER_ID:$GROUP_ID /.bun
+
+USER $USER_ID:$GROUP_ID
+WORKDIR $APP_DIR
+
+# Install Bun (same pattern as other Dockerfiles)
+RUN curl -fsSL https://bun.sh/install | bash
+
+# BEGIN COPY FRAGMENT
+# Copy package files first for better layer caching
+COPY --chown=$USER_ID:$GROUP_ID package*.json ./
+COPY --chown=$USER_ID:$GROUP_ID bun.lock ./
+
+# Install dependencies
+RUN ~/.bun/bin/bun i --frozen-lockfile
+
+# Copy application code
+COPY --chown=$USER_ID:$GROUP_ID . .
+# END COPY FRAGMENT
+
+
+CMD ./start-docker-dev.sh
