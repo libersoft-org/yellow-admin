@@ -32,6 +32,6 @@
  }
 </style>
 
-<select style:flex-grow={grow && '1'} style:max-width={maxWidth && 'calc(' + maxWidth + ' - 32px)'} style:min-width={minWidth && 'calc(' + minWidth + ' - 32px)'} bind:this={elSelect} bind:value>
+<select style:flex-grow={grow && '1'} style:max-width={maxWidth && 'calc(' + maxWidth + ' - 32px)'} style:min-width={minWidth && 'calc(' + minWidth + ' - 32px)'} bind:this={elSelect} bind:value {...$$restProps}>
  <slot></slot>
 </select>

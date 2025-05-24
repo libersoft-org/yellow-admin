@@ -69,18 +69,18 @@
   <Spinner />
  {:else}
   <Group label="Module name">
-   <Input bind:value={form.name} placeholder="tld.domain.product" bind:this={elModuleName} onKeydown={keyEnter} />
+   <Input data-testid="module-form-name" bind:value={form.name} placeholder="tld.domain.product" bind:this={elModuleName} onKeydown={keyEnter} />
   </Group>
   <Group label="Connection string">
-   <Input bind:value={form.connectionString} placeholder="ws://127.0.0.1:25000/" onKeydown={keyEnter} />
+   <Input data-testid="module-form-connection" bind:value={form.connectionString} placeholder="ws://127.0.0.1:25000/" onKeydown={keyEnter} />
   </Group>
   <Group label="Enabled">
-   <Switch bind:checked={form.enabled} />
+   <Switch data-testid="module-form-enabled" bind:checked={form.enabled} />
   </Group>
   {#if error}
    <Alert text={error} />
   {/if}
-  <Button enabled={!loadingSubmit} onClick={clickAddEdit}>
+  <Button data-testid="module-form-submit" enabled={!loadingSubmit} onClick={clickAddEdit}>
    {#if loadingSubmit}
     <Spinner />
    {:else}

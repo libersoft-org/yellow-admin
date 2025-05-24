@@ -72,11 +72,11 @@
 <Page>
  <Buttons>
   <MenuButton />
-  <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
+  <Button data-testid="sysinfo-reload-button" img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
  </Buttons>
  {#if sysInfo}
   <div class="title">Application</div>
-  <table class="sysinfo">
+  <table class="sysinfo" data-testid="sysinfo-app-table">
    <tbody>
     <tr>
      <th>Application name:</th>
@@ -89,7 +89,7 @@
    </tbody>
   </table>
   <div class="title">System</div>
-  <table class="sysinfo">
+  <table class="sysinfo" data-testid="sysinfo-system-table">
    <tbody>
     <tr>
      <th>OS:</th>
@@ -106,7 +106,7 @@
    </tbody>
   </table>
   <div class="title">System resources</div>
-  <table class="sysinfo">
+  <table class="sysinfo" data-testid="sysinfo-resources-table">
    <tbody>
     <tr>
      <th>CPU(s):</th>

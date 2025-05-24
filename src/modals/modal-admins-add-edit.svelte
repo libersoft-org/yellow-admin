@@ -63,15 +63,15 @@
   <Spinner />
  {:else}
   <Group label="Admin username">
-   <Input bind:value={form.username} placeholder="Username" onKeydown={keyEnter} bind:this={elUsername} />
+   <Input data-testid="admin-form-username" bind:value={form.username} placeholder="Username" onKeydown={keyEnter} bind:this={elUsername} />
   </Group>
   <Group label="Password">
-   <Input type="password" bind:value={form.password} placeholder="Password" onKeydown={keyEnter} />
+   <Input data-testid="admin-form-password" type="password" bind:value={form.password} placeholder="Password" onKeydown={keyEnter} />
   </Group>
   {#if error}
    <Alert text={error} />
   {/if}
-  <Button enabled={!loadingSubmit} onClick={clickAddEdit}>
+  <Button data-testid="admin-form-submit" enabled={!loadingSubmit} onClick={clickAddEdit}>
    {#if loadingSubmit}
     <Spinner />
    {:else}

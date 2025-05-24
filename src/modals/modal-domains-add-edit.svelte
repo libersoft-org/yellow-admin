@@ -63,12 +63,12 @@
   <Spinner />
  {:else}
   <Group label="Domain name">
-   <Input placeholder="domain.tld" onKeydown={keyEnter} bind:this={elDomain} bind:value={form.name} />
+   <Input data-testid="domain-form-name" placeholder="domain.tld" onKeydown={keyEnter} bind:this={elDomain} bind:value={form.name} />
   </Group>
   {#if error}
    <Alert text={error} />
   {/if}
-  <Button enabled={!loadingSubmit} onClick={clickAddEdit}>
+  <Button data-testid="domain-form-submit" enabled={!loadingSubmit} onClick={clickAddEdit}>
    {#if loadingSubmit}
     <Spinner />
    {:else}

@@ -10,5 +10,5 @@
 
 <Buttons>
  <MenuButton />
- <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
+ <Button data-testid="logs-reload-button" img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
 </Buttons>
