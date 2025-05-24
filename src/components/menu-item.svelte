@@ -35,7 +35,7 @@
  }
 </style>
 
-<BaseButton onClick={clickFunction}>
+<BaseButton onClick={clickFunction} {...$$restProps}>
  <div class="item {active ? 'active' : ''}">
   <img src="img/{icon}" alt={title} />
   <div>{title}</div>

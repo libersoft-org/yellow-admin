@@ -165,20 +165,20 @@
   <div class="form">
    <div class="group">
     <div class="label">Server:</div>
-    <Input placeholder="wss://your_server/" bind:value={credentials.server} onKeydown={keyLogin} />
+    <Input data-testid="login-server" placeholder="wss://your_server/" bind:value={credentials.server} onKeydown={keyLogin} />
    </div>
    <div class="group">
     <div class="label">User name:</div>
-    <Input placeholder="Administrator's user name" bind:value={credentials.username} onKeydown={keyLogin} />
+    <Input data-testid="login-username" placeholder="Administrator's user name" bind:value={credentials.username} onKeydown={keyLogin} />
    </div>
    <div class="group">
     <div class="label">Password:</div>
-    <Input type="password" placeholder="Password" bind:value={credentials.password} onKeydown={keyLogin} />
+    <Input data-testid="login-password" type="password" placeholder="Password" bind:value={credentials.password} onKeydown={keyLogin} />
    </div>
    {#if $loginError}
     <Alert text={$loginError} />
    {/if}
-   <Button disabled={loggingIn} onClick={clickLogin}>
+   <Button data-testid="login-button" disabled={loggingIn} onClick={clickLogin}>
     {#if loggingIn}
      <Spinner />
     {:else}

@@ -30,7 +30,7 @@
  }
 </style>
 
-<BaseButton onClick={clickMenu}>
+<BaseButton onClick={clickMenu} data-testid="menu-button">
  <div class="menu-button">
   <img src="img/menu.svg" alt="☰" />
  </div>

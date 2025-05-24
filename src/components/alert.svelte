@@ -39,7 +39,7 @@
  }
 </style>
 
-<div class="alert {types[type].class}">
+<div class="alert {types[type].class}" {...$$restProps}>
  <img src="img/{types[type].icon}" alt="" />
  <div>{text}</div>
 </div>
