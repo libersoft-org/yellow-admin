@@ -79,21 +79,21 @@
 <Page>
  <Buttons>
   <MenuButton />
-  <Button img="img/add.svg" text="Add a new module" onClick={() => clickAddEdit()} />
-  <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
+  <Button data-testid="modules-add-button" img="img/add.svg" text="Add a new module" onClick={() => clickAddEdit()} />
+  <Button data-testid="modules-reload-button" img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
  </Buttons>
  <Buttons>
   <div class="search">
    <div>Module name:</div>
-   <Input placeholder="tld.domain.product" bind:value={filterName} onKeydown={keySearchForm} />
+   <Input data-testid="modules-filter-name" placeholder="tld.domain.product" bind:value={filterName} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
-   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
+   <Input data-testid="modules-filter-offset" type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
-  <Button img="img/search.svg" text="Search" onClick={clickSearch} />
+  <Button data-testid="modules-search-button" img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <Table>
+ <Table data-testid="modules-table">
   <Thead>
    <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
@@ -114,8 +114,8 @@
      <Td align="center">{new Date(m.created).toLocaleString()}</Td>
      <Td align="center">
       <Icons>
-       <Icon img="img/edit.svg" onClick={() => clickAddEdit(m.id)} />
-       <Icon img="img/del.svg" onClick={() => clickDel(m.id, m.name)} />
+       <Icon data-testid="modules-edit-{m.id}" img="img/edit.svg" onClick={() => clickAddEdit(m.id)} />
+       <Icon data-testid="modules-delete-{m.id}" img="img/del.svg" onClick={() => clickDel(m.id, m.name)} />
       </Icons>
      </Td>
     </TbodyTr>

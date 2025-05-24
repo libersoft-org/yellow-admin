@@ -7,6 +7,6 @@
  }
 </style>
 
-<table>
+<table {...$$restProps}>
  <slot></slot>
 </table>

@@ -72,20 +72,20 @@
 <Page>
  <Buttons>
   <MenuButton />
-  <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
+  <Button data-testid="sessions-reload-button" img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
  </Buttons>
  <Buttons>
   <div class="search">
    <div>Session name:</div>
-   <Input placeholder="Session" bind:value={filterName} onKeydown={keySearchForm} />
+   <Input data-testid="sessions-filter-name" placeholder="Session" bind:value={filterName} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
-   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
+   <Input data-testid="sessions-filter-offset" type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
-  <Button img="img/search.svg" text="Search" onClick={clickSearch} />
+  <Button data-testid="sessions-search-button" img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <Table>
+ <Table data-testid="sessions-table">
   <Thead>
    <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
@@ -104,7 +104,7 @@
      <Td align="center">{new Date(s.created).toLocaleString()}</Td>
      <Td align="center">
       <Icons>
-       <Icon img="img/del.svg" alt="Delete" onClick={() => clickDel(s.id, s.session)} />
+       <Icon data-testid="sessions-delete-{s.id}" img="img/del.svg" alt="Delete" onClick={() => clickDel(s.id, s.session)} />
       </Icons>
      </Td>
     </TbodyTr>

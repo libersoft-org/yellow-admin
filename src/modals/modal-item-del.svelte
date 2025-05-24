@@ -23,7 +23,7 @@
 
 <Form>
  <div>Would you like to delete "<span class="bold">{name}</span>" (id: {id})?</div>
- <Button text="Delete" onClick={clickDel} />
+ <Button data-testid="delete-confirm-button" text="Delete" onClick={clickDel} />
  {#if error}
   <Alert text={error} />
  {/if}

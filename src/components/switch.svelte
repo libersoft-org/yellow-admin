@@ -76,7 +76,7 @@
  }
 </style>
 
-<label class="switch">
+<label class="switch" {...$$restProps}>
  <input type="checkbox" bind:checked on:keydown={keyPress} />
  <span class="slider {mounted ? 'transition' : ''}"></span>
 </label>

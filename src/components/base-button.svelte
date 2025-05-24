@@ -18,6 +18,6 @@
  }
 </style>
 
-<div class="base-button" role="button" tabindex="0" on:click={onClick} on:mousedown={onMousedown} on:keydown={handleKeydown} on:contextmenu={onRightClick}>
+<div class="base-button" role="button" tabindex="0" on:click={onClick} on:mousedown={onMousedown} on:keydown={handleKeydown} on:contextmenu={onRightClick} {...$$restProps}>
  <slot />
 </div>
