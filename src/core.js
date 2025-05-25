@@ -188,6 +188,16 @@ export function clientsKick(guid, callback = null) {
  send('admin_clients_kick', { guid }, callback);
 }
 
+export function logsList(callback = null, count = 50, offset = 0, filters = {}, sortBy = null, sortDir = null) {
+ const params = { count, offset, orderBy: sortBy, direction: sortDir };
+ if (filters.filterLevel) params.filterLevel = filters.filterLevel;
+ if (filters.filterTopic) params.filterTopic = filters.filterTopic;
+ if (filters.filterMessage) params.filterMessage = filters.filterMessage;
+ if (filters.filterFromDate) params.filterFromDate = filters.filterFromDate;
+ if (filters.filterToDate) params.filterToDate = filters.filterToDate;
+ send('admin_logs_list', params, callback);
+}
+
 export function humanSize(bytes, decimals = 2) {
  if (bytes === 0) return '0 B';
  const k = 1024;
