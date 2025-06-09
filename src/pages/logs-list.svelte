@@ -137,12 +137,12 @@
 <Page>
  <Buttons>
   <MenuButton />
-  <Button img="img/reload.svg" text="Reload" onClick={clickReload} />
+  <Button data-testid="logs-reload-button" img="img/reload.svg" text="Reload" onClick={clickReload} />
  </Buttons>
  <Buttons style="flex-wrap: wrap;">
   <div class="search">
    <div>Level:</div>
-   <Select bind:value={filterLevel} style="width: 120px;">
+   <Select data-testid="logs-filter-level" bind:value={filterLevel} style="width: 120px;">
     <SelectOption value="">All levels</SelectOption>
     <SelectOption value="10">TRACE</SelectOption>
     <SelectOption value="20">DEBUG</SelectOption>
@@ -154,27 +154,27 @@
   </div>
   <div class="search">
    <div>Topic:</div>
-   <Input placeholder="e.g., api, data" bind:value={filterTopic} onKeydown={keySearchForm} />
+   <Input data-testid="logs-filter-topic" placeholder="e.g., api, data" bind:value={filterTopic} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Message:</div>
-   <Input placeholder="Search in messages" bind:value={filterMessage} onKeydown={keySearchForm} />
+   <Input data-testid="logs-filter-message" placeholder="Search in messages" bind:value={filterMessage} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>From date:</div>
-   <Input type="datetime-local" bind:value={filterFromDate} onKeydown={keySearchForm} />
+   <Input data-testid="logs-filter-from-date" type="datetime-local" bind:value={filterFromDate} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>To date:</div>
-   <Input type="datetime-local" bind:value={filterToDate} onKeydown={keySearchForm} />
+   <Input data-testid="logs-filter-to-date" type="datetime-local" bind:value={filterToDate} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
-   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
+   <Input data-testid="logs-filter-offset" type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
-  <Button img="img/search.svg" text="Search" onClick={clickSearch} />
+  <Button data-testid="logs-search-button" img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <Table>
+ <Table data-testid="logs-table">
   <Thead>
    <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />

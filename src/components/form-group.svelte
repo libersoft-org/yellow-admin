@@ -15,7 +15,7 @@
  }
 </style>
 
-<div class="group">
+<div class="group" {...$$restProps}>
  <div class="label">{label}:</div>
  <slot></slot>
 </div>

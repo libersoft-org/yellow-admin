@@ -26,7 +26,12 @@ export class CrudHelper {
    
    case 'users':
     await this.page.getByTestId('user-form-username').fill(itemData.username);
-    await this.page.getByTestId('user-form-domain').selectOption(itemData.domainId);
+    // Support both domainId (for ID selection) and domainName (for text selection)
+    if (itemData.domainId) {
+     await this.page.getByTestId('user-form-domain').selectOption(itemData.domainId);
+    } else if (itemData.domainName) {
+     await this.page.getByTestId('user-form-domain').selectOption({ label: itemData.domainName });
+    }
     await this.page.getByTestId('user-form-visible-name').fill(itemData.visibleName);
     await this.page.getByTestId('user-form-password').fill(itemData.password);
     break;
@@ -99,7 +104,7 @@ export class CrudHelper {
 
  async search(searchTerm) {
   // Fill search field based on section
-  const filterTestId = `${this.section}-filter-${this.section === 'admins' ? 'username' : 'name'}`;
+  const filterTestId = `${this.section}-filter-${this.section === 'admins' || this.section === 'users' ? 'username' : 'name'}`;
   await this.page.getByTestId(filterTestId).fill(searchTerm);
   
   // Click search button
@@ -146,9 +151,14 @@ export class CrudHelper {
   }
   
   if (shouldExist) {
-   await expect(table.getByText(searchText)).toBeVisible();
+   // Use getByRole to find a cell that starts with the search text for usernames
+   if (this.entityType === 'users') {
+    await expect(table.getByRole('cell', { name: new RegExp('^' + searchText + '@') })).toBeVisible();
+   } else {
+    await expect(table.getByText(searchText).first()).toBeVisible();
+   }
   } else {
-   await expect(table.getByText(searchText)).not.toBeVisible();
+   await expect(table.getByText(searchText)).toHaveCount(0);
   }
  }
 }

@@ -1,0 +1,78 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [ "**" ]
+#  pull_request:
+#    branches: [ master ]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Print working directory
+      run: |
+        pwd
+
+    # Checkout the yellow-admin code
+    - name: Checkout yellow-admin code
+      uses: actions/checkout@v3
+      with:
+        path: source-admin
+    
+    # Checkout yellow-dev
+    - name: Checkout yellow-dev
+      uses: actions/checkout@v3
+      with:
+        repository: koo5/yellow-dev
+        ref: master
+        path: yellow-dev
+        submodules: recursive
+
+    # Replace yellow-admin code with custom source
+    - name: Replace yellow-admin code with custom source
+      run: |
+        rm -rf yellow-dev/yellow-admin && echo "Removed old yellow-admin code"
+        cp -r source-admin yellow-dev/yellow-admin && echo "Replaced yellow-admin code with custom source"
+
+    # Install Docker Compose v2
+    - name: Install Docker Compose
+      run: |
+        # Docker Compose V2 is part of Docker CLI
+        docker compose version || {
+          echo "Docker Compose not found, installing..."
+          # Ensure Docker CLI is installed and has compose plugin
+          sudo apt-get update
+          sudo apt-get install -y docker-compose-plugin
+        }
+        
+        # Verify installation
+        docker compose version
+
+    - name: Run E2E Tests
+      run: |
+        pwd
+        ls -l
+        cd yellow-dev
+        ls -l
+        # Run CI script with full mode and stack network, focusing on admin tests
+        ./ci-run.sh false false true true true false false
+
+    - name: Upload Playwright Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-results-${{ github.run_id }}
+        path: |
+          yellow-dev/yellow-admin/test-results/
+          yellow-dev/yellow-admin/playwright-report/
+        retention-days: 30
+
+    - name: Upload Docker Logs
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: docker-logs-${{ github.run_id }}
+        path: yellow-dev/docker-compose.log
+        retention-days: 7

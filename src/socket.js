@@ -33,7 +33,7 @@ export function connect(server = null) {
  socketState.set(socket.readyState);
  socket.onopen = () => socketState.set(socket.readyState);
  socket.onerror = event => {
-  //console.log('sockerr', event);
+  console.log('sockerr', event);
   socketState.set(socket.readyState);
   socketError.set('Error while connecting to server.');
  };
@@ -63,7 +63,7 @@ export function send(command, params = {}, sessionName = null, callback = null) 
  console.log('COMMAND:', command);
  console.log('PARAMS:', params);
  console.log('SESSION NAME:', sessionName);
- console.log('CALLBACK:', callback);
+ //console.log('CALLBACK:', callback);
  console.log('------------------');
  if (!socket || get(socketState) !== socketStates.OPEN) {
   console.error('Error while sending command: WebSocket is not open');

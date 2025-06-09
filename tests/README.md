@@ -153,7 +153,7 @@ The tests create sample data for thorough testing:
 
 ## Expected Test Flow
 
-1. Login with admin/admin credentials
+1. Login with admin/password credentials
 2. Navigate to each admin section
 3. Add multiple items (5-7 per section)
 4. Test search/filtering functionality

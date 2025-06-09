@@ -5,7 +5,7 @@ export class AuthHelper {
   this.page = page;
  }
 
- async login(username = 'admin', password = 'admin') {
+ async login(username = 'admin', password = 'password') {
   await this.page.goto('/');
 
   // Wait for login form to be visible

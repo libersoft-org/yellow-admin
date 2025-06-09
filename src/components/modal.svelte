@@ -128,7 +128,7 @@
 </style>
 
 {#if show && body}
- <div class="modal" style="top: {top}px; left: {left}px;" bind:this={modalEl} data-testid="modal">
+ <div class="modal" style="top: {top}px; left: {left}px;" bind:this={modalEl} data-testid="modal" {...$$restProps}>
   <div class="header" role="none" on:mousedown={dragStart}>
    <div class="title">{title}</div>
    <BaseButton onClick={clickCloseModal} data-testid="modal-close">
