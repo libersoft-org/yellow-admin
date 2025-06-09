@@ -26,7 +26,7 @@ npx playwright install
 The tests can be configured using environment variables:
 
 - `PLAYWRIGHT_ADMIN_URL`: Admin interface URL (default: `http://localhost:4000`)
-- `PLAYWRIGHT_SERVER_URL`: WebSocket server URL (default: `ws://localhost:8085/`)
+- `PLAYWRIGHT_SERVER_URL`: WebSocket server URL (default: `ws://localhost:8084/`)
 
 ## Running Tests
 

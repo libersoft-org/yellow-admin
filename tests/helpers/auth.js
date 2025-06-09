@@ -7,19 +7,19 @@ export class AuthHelper {
 
  async login(username = 'admin', password = 'admin') {
   await this.page.goto('/');
-  
+
   // Wait for login form to be visible
   await expect(this.page.getByTestId('login-username')).toBeVisible();
-  
-  // Fill in credentials - use env var or default to ws://localhost:8085/
-  const serverUrl = process.env.PLAYWRIGHT_SERVER_URL || 'ws://localhost:8085/';
+
+  // Fill in credentials - use env var or default to ws://localhost:8084/
+  const serverUrl = process.env.PLAYWRIGHT_SERVER_URL || 'ws://localhost:8084/';
   await this.page.getByTestId('login-server').fill(serverUrl);
   await this.page.getByTestId('login-username').fill(username);
   await this.page.getByTestId('login-password').fill(password);
-  
+
   // Click login button
   await this.page.getByTestId('login-button').click();
-  
+
   // Wait for successful login - sidebar should be visible
   await expect(this.page.getByTestId('admin-sidebar')).toBeVisible();
   await expect(this.page.getByTestId('admin-menu')).toBeVisible();
@@ -27,7 +27,7 @@ export class AuthHelper {
 
  async logout() {
   await this.page.getByTestId('menu-logout').click();
-  
+
   // Wait for login form to appear again
   await expect(this.page.getByTestId('login-username')).toBeVisible();
  }
