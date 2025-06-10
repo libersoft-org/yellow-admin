@@ -78,10 +78,10 @@
   <Spinner />
  {:else}
   <Group label="Username">
-   <Input bind:value={form.username} placeholder="Username" onKeydown={keyEnter} bind:this={elUsername} />
+   <Input data-testid="user-form-username" bind:value={form.username} placeholder="Username" onKeydown={keyEnter} bind:this={elUsername} />
   </Group>
   <Group label="Domain">
-   <Select grow={true} bind:value={form.idDomains}>
+   <Select data-testid="user-form-domain" grow={true} bind:value={form.idDomains}>
     <Option text="--- domain ---" selected={true} disabled={true} />
     {#each domains as d (d.id)}
      <Option value={d.id} text={d.name} />
@@ -89,15 +89,15 @@
    </Select>
   </Group>
   <Group label="Visible name">
-   <Input bind:value={form.visibleName} placeholder="Visible name" onKeydown={keyEnter} />
+   <Input data-testid="user-form-visible-name" bind:value={form.visibleName} placeholder="Visible name" onKeydown={keyEnter} />
   </Group>
   <Group label="Password">
-   <Input type="password" bind:value={form.password} placeholder="Password" onKeydown={keyEnter} />
+   <Input data-testid="user-form-password" type="password" bind:value={form.password} placeholder="Password" onKeydown={keyEnter} />
   </Group>
   {#if error}
    <Alert text={error} />
   {/if}
-  <Button enabled={!loadingSubmit} onClick={clickAddEdit}>
+  <Button data-testid="user-form-submit" enabled={!loadingSubmit} onClick={clickAddEdit}>
    {#if loadingSubmit}
     <Spinner />
    {:else}

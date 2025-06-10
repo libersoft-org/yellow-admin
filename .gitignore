@@ -12,3 +12,5 @@ build/
 bun.lockb
 bun.lockb.txt
 vite.config.js.timestamp-*
+playwright-report/
+test-results/

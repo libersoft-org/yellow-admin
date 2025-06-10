@@ -97,17 +97,17 @@
 <Page>
  <Buttons>
   <MenuButton />
-  <Button img="img/add.svg" text="Add a new user" onClick={() => clickAddEdit()} />
-  <Button img="img/reload.svg" text="Reload" onClick={clickReload} />
+  <Button data-testid="users-add-button" img="img/add.svg" text="Add a new user" onClick={() => clickAddEdit()} />
+  <Button data-testid="users-reload-button" img="img/reload.svg" text="Reload" onClick={clickReload} />
  </Buttons>
  <Buttons>
   <div class="search">
    <div>Username:</div>
-   <Input placeholder="Username" bind:value={filterUsername} onKeydown={keySearchForm} />
+   <Input data-testid="users-filter-username" placeholder="Username" bind:value={filterUsername} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>@</div>
-   <Select bind:this={elDomain}>
+   <Select data-testid="users-filter-domain" bind:this={elDomain}>
     <Option text="--- domain ---" selected={true} disabled={true} />
     {#each domains as d (d.id)}
      <Option value={d.id} text={d.name} />
@@ -116,11 +116,11 @@
   </div>
   <div class="search">
    <div>Offset:</div>
-   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
+   <Input data-testid="users-filter-offset" type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
-  <Button img="img/search.svg" text="Search" onClick={clickSearch} />
+  <Button data-testid="users-search-button" img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <Table>
+ <Table data-testid="users-table">
   <Thead>
    <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
@@ -139,8 +139,8 @@
      <Td align="center">{new Date(u.created).toLocaleString()}</Td>
      <Td align="center">
       <Icons>
-       <Icon img="img/edit.svg" onClick={() => clickAddEdit(u.id)} />
-       <Icon img="img/del.svg" onClick={() => clickDel(u.id, u.address)} />
+       <Icon data-testid="users-edit-{u.id}" img="img/edit.svg" onClick={() => clickAddEdit(u.id)} />
+       <Icon data-testid="users-delete-{u.id}" img="img/del.svg" onClick={() => clickDel(u.id, u.address)} />
       </Icons>
      </Td>
     </TbodyTr>

@@ -78,21 +78,21 @@
 <Page>
  <Buttons>
   <MenuButton />
-  <Button img="img/add.svg" text="Add a new domain" onClick={() => clickAddEdit()} />
-  <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
+  <Button data-testid="domains-add-button" img="img/add.svg" text="Add a new domain" onClick={() => clickAddEdit()} />
+  <Button data-testid="domains-reload-button" img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
  </Buttons>
  <Buttons>
   <div class="search">
    <div>Domain name:</div>
-   <Input placeholder="domain.tld" bind:value={filterName} onKeydown={keySearchForm} />
+   <Input data-testid="domains-filter-name" placeholder="domain.tld" bind:value={filterName} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
-   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
+   <Input data-testid="domains-filter-offset" type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
-  <Button img="img/search.svg" text="Search" onClick={clickSearch} />
+  <Button data-testid="domains-search-button" img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <Table>
+ <Table data-testid="domains-table">
   <Thead>
    <TheadTr>
     <ColumnHeader column="id" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
@@ -111,8 +111,8 @@
      <Td align="center">{new Date(d.created).toLocaleString()}</Td>
      <Td align="center">
       <Icons>
-       <Icon img="img/edit.svg" alt="Edit" onClick={() => clickAddEdit(d.id)} />
-       <Icon img="img/del.svg" alt="Delete" onClick={() => clickDel(d.id, d.name)} />
+       <Icon data-testid="domains-edit-{d.id}" img="img/edit.svg" alt="Edit" onClick={() => clickAddEdit(d.id)} />
+       <Icon data-testid="domains-delete-{d.id}" img="img/del.svg" alt="Delete" onClick={() => clickDel(d.id, d.name)} />
       </Icons>
      </Td>
     </TbodyTr>

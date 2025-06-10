@@ -79,28 +79,28 @@
 <Page>
  <Buttons>
   <MenuButton />
-  <Button img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
+  <Button data-testid="clients-reload-button" img="img/reload.svg" text="Reload" onClick={() => clickReload()} />
  </Buttons>
  <Buttons>
   <div class="search">
    <div>Client's GUID:</div>
-   <Input placeholder="GUID" bind:value={filterGuid} onKeydown={keySearchForm} />
+   <Input data-testid="clients-filter-guid" placeholder="GUID" bind:value={filterGuid} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Client's IP address:</div>
-   <Input placeholder="IP address" bind:value={filterIp} onKeydown={keySearchForm} />
+   <Input data-testid="clients-filter-ip" placeholder="IP address" bind:value={filterIp} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>User address:</div>
-   <Input placeholder="User address" bind:value={filterUserAddress} onKeydown={keySearchForm} />
+   <Input data-testid="clients-filter-user" placeholder="User address" bind:value={filterUserAddress} onKeydown={keySearchForm} />
   </div>
   <div class="search">
    <div>Offset:</div>
-   <Input type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
+   <Input data-testid="clients-filter-offset" type="number" min="0" placeholder="0" bind:value={filterOffset} onKeydown={keySearchForm} />
   </div>
-  <Button img="img/search.svg" text="Search" onClick={clickSearch} />
+  <Button data-testid="clients-search-button" img="img/search.svg" text="Search" onClick={clickSearch} />
  </Buttons>
- <Table>
+ <Table data-testid="clients-table">
   <Thead>
    <TheadTr>
     <ColumnHeader column="guid" name="ID" align="center" bind:sortBy bind:sortDir sortingChanged={() => reloadItems()} />
@@ -119,6 +119,7 @@
       <Icons>
        <!--<Icon img="img/kick.svg" onClick={() => clientsKick(c.guid)} />-->
        <Icon
+        data-testid="clients-kick-{c.guid}"
         img="img/kick.svg"
         onClick={() => {
          clientID = c.guid;

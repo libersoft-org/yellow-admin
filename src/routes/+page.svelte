@@ -170,11 +170,11 @@
   <Login />
  {:else}
   <div class="main">
-   <div class="sidebar {$hideSidebarMobile ? 'hidden' : ''}" bind:this={sideBar}>
+   <div class="sidebar {$hideSidebarMobile ? 'hidden' : ''}" data-testid="admin-sidebar" bind:this={sideBar}>
     <Menu {onSelectPage} />
    </div>
    <div class="resizer" role="none" bind:this={resizer} on:mousedown={startResizeSideBar}></div>
-   <div class="content" bind:this={contentElement}>
+   <div class="content" data-testid="admin-content" bind:this={contentElement}>
     {#if selectedPage}
      <svelte:component this={selectedPage} {contentElement} />
     {:else}
@@ -182,7 +182,7 @@
     {/if}
    </div>
   </div>
-  <div class="status">
+  <div class="status" data-testid="admin-status">
    <div class="indicator {status?.class ? status.class : ''}"></div>
    <div>{status?.message ? status.message : ''}</div>
   </div>

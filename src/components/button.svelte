@@ -43,7 +43,7 @@
  }
 </style>
 
-<BaseButton onClick={handleClick}>
+<BaseButton onClick={handleClick} {...$$restProps}>
  <div class="button {!enabled ? 'disabled' : ''} {hiddenOnDesktop ? 'hidden-on-desktop' : ''}" style={(width ? 'width: ' + width + ';' : '') + 'padding: ' + padding + ';'}>
   <slot>
    {#if img}
